@@ -1,9 +1,12 @@
 # Godot specific
 .import/
 export.cfg
-# Ignore Godot files globally, but allow tracking in certain directories
-*.pck
+*.gd
+*.tscn
+*.tres
+*.res
 *.godot
+*.pck
 
 # Compiled files
 *.import/
