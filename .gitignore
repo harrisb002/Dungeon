@@ -1,0 +1,29 @@
+# Godot specific
+.import/
+export.cfg
+# Ignore Godot files globally, but allow tracking in certain directories
+*.pck
+*.godot
+
+# Compiled files
+*.import/
+*.d
+*.so
+*.dll
+*.exe
+*.pdb
+*.app
+
+# User-specific files
+/.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Build directory
+build/
+bin/

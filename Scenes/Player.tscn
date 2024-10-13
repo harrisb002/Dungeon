@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://chxd6ijec3lqs"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_3s2n2"]
+[ext_resource type="Texture2D" uid="uid://cdy1tykqwbw7e" path="res://allart/2D Pixel Dungeon Asset Pack/Character_animation/priests_idle/priest1/v1/priest1_v1_1.png" id="2_1vjyt"]
+[ext_resource type="Texture2D" uid="uid://bmtke1jbpxuld" path="res://allart/2D Pixel Dungeon Asset Pack/Character_animation/priests_idle/priest1/v1/priest1_v1_2.png" id="3_v3b4p"]
+[ext_resource type="Texture2D" uid="uid://bwkevj5i7vggn" path="res://allart/2D Pixel Dungeon Asset Pack/Character_animation/priests_idle/priest1/v1/priest1_v1_3.png" id="4_wxtr8"]
+[ext_resource type="Texture2D" uid="uid://cvwdssfendrpk" path="res://allart/2D Pixel Dungeon Asset Pack/Character_animation/priests_idle/priest1/v1/priest1_v1_4.png" id="5_6rgp6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acllo"]
+radius = 9.2
+height = 18.4
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vbrsu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1vjyt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_v3b4p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wxtr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6rgp6")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jsuv1"]
+radius = 1.8
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(5.96046e-08, 1000)
+scale = Vector2(5, 5)
+collision_mask = 2
+safe_margin = 0.5
+script = ExtResource("1_3s2n2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.2, -5)
+shape = SubResource("CapsuleShape2D_acllo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1.8, -5.6)
+sprite_frames = SubResource("SpriteFrames_vbrsu")
+animation = &"walk"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(1, -4.8)
+shape = SubResource("CircleShape2D_jsuv1")
+
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
