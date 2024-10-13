@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://vlacgqrvfnmw"]
+
+[ext_resource type="Script" path="res://Scripts/Hud.gd" id="1_okguj"]
+
+[node name="Hud" type="CanvasLayer"]
+script = ExtResource("1_okguj")
+
+[node name="Message" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.788085, 0.19805, 4.81307e-07, 1)
+theme_override_font_sizes/font_size = 80
+text = "Save the princess!"
+max_lines_visible = 3
+
+[node name="StartButton" type="Button" parent="."]
+z_index = 2
+offset_left = 407.0
+offset_top = 870.0
+offset_right = 1079.0
+offset_bottom = 1061.0
+scale = Vector2(1.02361, 1.01058)
+theme_override_font_sizes/font_size = 70
+text = "Start Crawling!"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
