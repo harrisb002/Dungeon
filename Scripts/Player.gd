@@ -74,6 +74,7 @@ func start():
 
 
 func _on_hit_box_body_entered(body: Node2D) -> void:
+	
 	inside_hole = true
 
 func _on_hit_box_body_exited(body: Node2D) -> void:
