@@ -24,6 +24,11 @@ window/size/viewport_height=1200
 
 project/assembly_name="351_project_game"
 
+[global_group]
+
+player=""
+portal=""
+
 [input]
 
 move_right={
