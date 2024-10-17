@@ -1,37 +1,164 @@
-[gd_scene load_steps=9 format=3 uid="uid://chxd6ijec3lqs"]
+[gd_scene load_steps=26 format=3 uid="uid://chxd6ijec3lqs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_3s2n2"]
-[ext_resource type="Texture2D" uid="uid://cdy1tykqwbw7e" path="res://allart/2D Pixel Dungeon Asset Pack/Character_animation/priests_idle/priest1/v1/priest1_v1_1.png" id="2_1vjyt"]
-[ext_resource type="Texture2D" uid="uid://bmtke1jbpxuld" path="res://allart/2D Pixel Dungeon Asset Pack/Character_animation/priests_idle/priest1/v1/priest1_v1_2.png" id="3_v3b4p"]
-[ext_resource type="Texture2D" uid="uid://bwkevj5i7vggn" path="res://allart/2D Pixel Dungeon Asset Pack/Character_animation/priests_idle/priest1/v1/priest1_v1_3.png" id="4_wxtr8"]
-[ext_resource type="Texture2D" uid="uid://cvwdssfendrpk" path="res://allart/2D Pixel Dungeon Asset Pack/Character_animation/priests_idle/priest1/v1/priest1_v1_4.png" id="5_6rgp6"]
+[ext_resource type="Texture2D" uid="uid://blv4i26r0svx5" path="res://allart/Knightwalkcycle/rightwalk.png" id="5_ltp2s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acllo"]
-radius = 9.2
-height = 18.4
+radius = 16.5
+height = 37.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ricn2"]
+load_path = "res://.godot/imported/back.png-916da03673e7fb03e00a998a12b0002d.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_00u7u"]
+atlas = SubResource("CompressedTexture2D_ricn2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67n45"]
+atlas = SubResource("CompressedTexture2D_ricn2")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_em17o"]
+atlas = SubResource("CompressedTexture2D_ricn2")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_733yn"]
+atlas = SubResource("CompressedTexture2D_ricn2")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tup7x"]
+atlas = SubResource("CompressedTexture2D_ricn2")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qq1p"]
+atlas = SubResource("CompressedTexture2D_ricn2")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lht4q"]
+atlas = SubResource("CompressedTexture2D_ricn2")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_p415s"]
+load_path = "res://.godot/imported/forward.png-fb8680f0967c9cf53dcf4a9212ee3776.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptkkg"]
+atlas = SubResource("CompressedTexture2D_p415s")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krk6c"]
+atlas = SubResource("CompressedTexture2D_p415s")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmkqe"]
+atlas = SubResource("CompressedTexture2D_p415s")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g7bg"]
+atlas = SubResource("CompressedTexture2D_p415s")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyul7"]
+atlas = SubResource("CompressedTexture2D_p415s")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4n4rw"]
+atlas = SubResource("CompressedTexture2D_p415s")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6f4i"]
+atlas = SubResource("CompressedTexture2D_p415s")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2ysh"]
+atlas = ExtResource("5_ltp2s")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xqmv"]
+atlas = ExtResource("5_ltp2s")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7eyk6"]
+atlas = ExtResource("5_ltp2s")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpb3i"]
+atlas = ExtResource("5_ltp2s")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vbrsu"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_1vjyt")
+"texture": SubResource("AtlasTexture_00u7u")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_v3b4p")
+"texture": SubResource("AtlasTexture_67n45")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_wxtr8")
+"texture": SubResource("AtlasTexture_em17o")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_6rgp6")
+"texture": SubResource("AtlasTexture_733yn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tup7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qq1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lht4q")
 }],
 "loop": true,
-"name": &"walk",
+"name": &"backward",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ptkkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krk6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmkqe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1g7bg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nyul7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4n4rw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i6f4i")
+}],
+"loop": true,
+"name": &"forward",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2ysh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xqmv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7eyk6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpb3i")
+}],
+"loop": true,
+"name": &"right",
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_jsuv1"]
-radius = 1.8
+[sub_resource type="CircleShape2D" id="CircleShape2D_hrxyr"]
+radius = 5.22015
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(5.96046e-08, 1000)
@@ -47,7 +174,7 @@ shape = SubResource("CapsuleShape2D_acllo")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1.8, -5.6)
 sprite_frames = SubResource("SpriteFrames_vbrsu")
-animation = &"walk"
+animation = &"forward"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -56,7 +183,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(1, -4.8)
-shape = SubResource("CircleShape2D_jsuv1")
+shape = SubResource("CircleShape2D_hrxyr")
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
