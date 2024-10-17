@@ -53,12 +53,16 @@ func _physics_process(delta: float) -> void:
 
 # Change which animation the AnimatedSprite is playing based on direction
 	if velocity.x !=0:
-		$AnimatedSprite2D.animation = "walk"
+		$AnimatedSprite2D.animation = "right"
 # “walk” animation, which should be flipped horz. using the flip_h for left movement,
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	elif velocity.y != 0:
 #“up” animation, which should be flipped vertically with flip_v for down movement
-		$AnimatedSprite2D.animation = "walk" # Using both for same animation
+		if Input.is_action_pressed("move_up"):#checks what animation to add depending if key is going up or down
+			$AnimatedSprite2D.animation = "backward" #sets the backwards movment
+		else:
+			$AnimatedSprite2D.animation = "forward"#sets forward movment
+			
 		
 	# Move the player
 	position += velocity * delta
@@ -67,7 +71,7 @@ func _physics_process(delta: float) -> void:
 # Reset the player when starting a new game.
 func start():
 	can_move = true  # Allow movement now that the game has started
-	$AnimatedSprite2D.animation = "walk"  # Set default animation
+	$AnimatedSprite2D.animation = "right"  # Set default animation
 	$AnimatedSprite2D.play()  # Start playing the animation
 	position = start_position  # Reset position
 	show()
