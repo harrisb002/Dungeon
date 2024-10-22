@@ -1,8 +1,6 @@
 # Godot specific
 .import/
 export.cfg
-*.gd
-*.tscn
 *.tres
 *.res
 *.godot
