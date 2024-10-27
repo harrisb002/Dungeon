@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://beyb6gfsi63nm"]
+
+[ext_resource type="Script" path="res://Scripts/chest.gd" id="1_m0rmf"]
+[ext_resource type="Texture2D" uid="uid://7iusdhgtkfuf" path="res://allart/2D Pixel Dungeon Asset Pack/items and trap_animation/chest/chest_3.png" id="2_0su54"]
+[ext_resource type="Texture2D" uid="uid://6b8ivkrnkbbo" path="res://allart/2D Pixel Dungeon Asset Pack/items and trap_animation/chest/chest_open_3.png" id="3_2j6nt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n8f4y"]
+size = Vector2(63, 55)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bc8hy"]
+size = Vector2(87.9849, 75)
+
+[node name="chest" type="StaticBody2D"]
+collision_layer = 16
+script = ExtResource("1_m0rmf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(872.5, -1125.5)
+shape = SubResource("RectangleShape2D_n8f4y")
+
+[node name="closed" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(870, -1124)
+scale = Vector2(3, 3)
+texture = ExtResource("2_0su54")
+
+[node name="open" type="Sprite2D" parent="."]
+position = Vector2(870, -1120)
+scale = Vector2(3, 3)
+texture = ExtResource("3_2j6nt")
+
+[node name="chest zone" type="Area2D" parent="."]
+scale = Vector2(1.00017, 1)
+collision_layer = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chest zone"]
+position = Vector2(869.851, -1124.5)
+shape = SubResource("RectangleShape2D_bc8hy")
+metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="chest zone" to="." method="_on_chest_zone_body_entered"]
+[connection signal="body_exited" from="chest zone" to="." method="_on_chest_zone_body_exited"]
