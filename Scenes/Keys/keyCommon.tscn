@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://diiorgvc5er16"]
+
+[ext_resource type="Script" path="res://Scripts/key.gd" id="1_3ow8y"]
+[ext_resource type="Texture2D" uid="uid://c8ohv7engf3oo" path="res://allart/2D Pixel Dungeon Asset Pack/items and trap_animation/keys/keys_2_3.png" id="2_sy1ok"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a26ch"]
+size = Vector2(22, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jemqg"]
+size = Vector2(39.5, 29)
+
+[node name="key" type="StaticBody2D"]
+collision_layer = 64
+script = ExtResource("1_3ow8y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(168, -1090.5)
+shape = SubResource("RectangleShape2D_a26ch")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(168, -1091)
+scale = Vector2(2, 2)
+texture = ExtResource("2_sy1ok")
+
+[node name="keyArea" type="Area2D" parent="."]
+position = Vector2(167, -1091)
+collision_layer = 64
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="keyArea"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_jemqg")
+
+[connection signal="body_entered" from="keyArea" to="." method="_on_area_2d_body_entered"]

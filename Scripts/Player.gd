@@ -1,17 +1,27 @@
 extends CharacterBody2D
 
+# Send signal to try to open chest
+signal openingChest
+
 # Defines a custom signal called “hit” that we will have 
 #  our player emit (send out) when it collides with an enemy
 #signal hit
 
-@export var speed = 500  # How fast the player will move (pixels/sec).
+@export var speed = 700  # How fast the player will move (pixels/sec).
+
 var screen_size  # Size of the game window.
 var can_move = false  # Flag to allow movement only after the game starts
 var inside_hole = false # Flag for falling in holes
 var start_position = Vector2.ZERO  # Variable to store the player's starting position
 var original_scale = Vector2.ONE  # Variable to store the player's original scale
-var curr_direction ="move_right"#used to check what side we are currenlty moving is set to right first since thats what its first looking at in the begining 
-var is_attacking = false  #used to check if attack frames are on
+var curr_direction = "move_right" # Check what side we are currenlty moving 
+var is_attacking = false  # Check if attack frames are on
+
+var Keys = [] # Contains all collected keys
+
+# Store specific chest the player is near
+var nearby_chest = null  
+
 # Run as soon as the object/scene is ready in the game, done before everything else
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -113,7 +123,6 @@ func start():
 
 
 func _on_hit_box_body_entered(_body: Node2D) -> void:
-	
 	inside_hole = true
 
 func _on_hit_box_body_exited(_body: Node2D) -> void:
@@ -134,8 +143,31 @@ func reset_player():
 	await get_tree().create_timer(0.5).timeout  # Small delay before showing
 	show()
 
-
 func _on_attack_time_out_timeout() -> void:
 	$attack_time_out.stop()
 	is_attacking =false
 	
+# Function to handle key collection
+func collect_key(key_type):
+	Keys.push_back(key_type) # Add to keys
+	
+# Handles collecting all types of keys by player
+func _on_key_collected(KeyType: Variant) -> void:
+	collect_key(KeyType)
+
+# Once chest zone is entered, once can open it
+func _on_chest_zone_entered(chest: Node2D) -> void:
+	nearby_chest = chest  
+  
+# When player exits the chest zone
+func _on_chest_zone_exited() -> void:
+	nearby_chest = null    
+
+
+func _process(delta):
+	if inside_hole:
+		fall()
+		
+	if nearby_chest and Input.is_action_just_pressed("ui_accept"):
+		# Pass the reference to the chest
+		emit_signal("openingChest", nearby_chest)
