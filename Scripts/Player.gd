@@ -23,6 +23,9 @@ var nearby_chest = null
 
 # Run as soon as the object/scene is ready in the game, done before everything else
 func _ready():
+	# Set the Player reference instance to access the player globally
+	Global.set_player_ref(self)
+	
 	screen_size = get_viewport_rect().size
 	original_scale = scale  # Store the player's original scale
 	start_position = position  # Store the player's start position
@@ -128,7 +131,7 @@ func _on_chest_zone_entered(chest: Node2D) -> void:
 	nearby_chest = chest  
   
 # When player exits the chest zone
-func _on_chest_zone_exited() -> void:
+func _on_chest_zone_exited(s) -> void:
 	nearby_chest = null    
 
 func _process(delta):
