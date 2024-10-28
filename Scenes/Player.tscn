@@ -1,8 +1,10 @@
-[gd_scene load_steps=51 format=3 uid="uid://chxd6ijec3lqs"]
+[gd_scene load_steps=65 format=3 uid="uid://chxd6ijec3lqs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_3s2n2"]
 [ext_resource type="Texture2D" uid="uid://cdfnu26fcrtlj" path="res://allart/Knightattacks/backattack.png" id="2_btk8a"]
 [ext_resource type="Texture2D" uid="uid://csvhxisu8u3qp" path="res://allart/Knightattacks/forwardattack.png" id="3_1bhn6"]
+[ext_resource type="Texture2D" uid="uid://cpao5bh5ibbct" path="res://allart/Knightwalkcycle/leftwalk.png" id="4_hq1dm"]
+[ext_resource type="Texture2D" uid="uid://d2qv5ifs7n0gl" path="res://allart/Knightattacks/leftattack.png" id="5_dmukw"]
 [ext_resource type="Texture2D" uid="uid://chtwsjyfql011" path="res://allart/Knightattacks/rightattack.png" id="5_dsvnd"]
 [ext_resource type="Texture2D" uid="uid://blv4i26r0svx5" path="res://allart/Knightwalkcycle/rightwalk.png" id="5_ltp2s"]
 
@@ -127,6 +129,54 @@ region = Rect2(320, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_luarc"]
 atlas = ExtResource("3_1bhn6")
 region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijgv5"]
+atlas = ExtResource("4_hq1dm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbqe0"]
+atlas = ExtResource("4_hq1dm")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ls3w"]
+atlas = ExtResource("4_hq1dm")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5543n"]
+atlas = ExtResource("4_hq1dm")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_urt13"]
+atlas = ExtResource("5_dmukw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayupa"]
+atlas = ExtResource("5_dmukw")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2md55"]
+atlas = ExtResource("5_dmukw")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bjhk"]
+atlas = ExtResource("5_dmukw")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w63o5"]
+atlas = ExtResource("5_dmukw")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdbpl"]
+atlas = ExtResource("5_dmukw")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpaao"]
+atlas = ExtResource("5_dmukw")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx4c0"]
+atlas = ExtResource("5_dmukw")
+region = Rect2(448, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f2ysh"]
 atlas = ExtResource("5_ltp2s")
@@ -284,6 +334,52 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ijgv5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbqe0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ls3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5543n")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_urt13")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayupa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2md55")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bjhk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w63o5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdbpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpaao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx4c0")
+}],
+"loop": true,
+"name": &"left_attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_f2ysh")
 }, {
 "duration": 1.0,
@@ -325,7 +421,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_jpido")
 }],
 "loop": true,
-"name": &"side_attack",
+"name": &"right_attack",
 "speed": 8.0
 }]
 
@@ -346,7 +442,7 @@ shape = SubResource("CapsuleShape2D_acllo")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1.8, -5.6)
 sprite_frames = SubResource("SpriteFrames_vbrsu")
-animation = &"forward"
+animation = &"left_attack"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
