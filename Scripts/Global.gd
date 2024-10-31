@@ -14,7 +14,15 @@ func _ready():
 	inventory.resize(30)
 
 # Adds item and returns true if successfull
-func add_item():
+func add_item(item):
+	for i in range(inventory.size()):
+		# Stack the item if it already exists in inventory
+		# Based on dict. defined in inventory_item.gd, pickup_items
+		if inventory[i] != null and inventory[i]["type"] == item["type"] and inventory[i]["effect"] == item["effect"]:
+			inventory[i]["quantity"] += item["quantity"]
+			inventory_updated.emit()
+			return true
+			
 	inventory_updated.emit()
 
 func remove_item():

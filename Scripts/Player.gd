@@ -7,6 +7,8 @@ signal openingChest
 
 # Delays the nodes initialization until its added to the scene
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var interact_ui = $InventoryUI
+
 
 var screen_size  # Size of the game window.
 var start_position = Vector2.ZERO  # Variable to store the player's starting position
