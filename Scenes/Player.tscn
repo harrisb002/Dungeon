@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d2qv5ifs7n0gl" path="res://allart/Knightattacks/leftattack.png" id="5_dmukw"]
 [ext_resource type="Texture2D" uid="uid://chtwsjyfql011" path="res://allart/Knightattacks/rightattack.png" id="5_dsvnd"]
 [ext_resource type="Texture2D" uid="uid://blv4i26r0svx5" path="res://allart/Knightwalkcycle/rightwalk.png" id="5_ltp2s"]
-[ext_resource type="PackedScene" uid="uid://onmcrrbo426g" path="res://Scenes/Inventory_UI.tscn" id="8_2xf0b"]
+[ext_resource type="PackedScene" uid="uid://onmcrrbo426g" path="res://Scenes/Inventory/Inventory_UI.tscn" id="8_2xf0b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acllo"]
 radius = 13.0
