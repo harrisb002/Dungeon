@@ -44,9 +44,11 @@ func pickup_item():
 
 
 func _on_area_2d_body_entered(body) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group("player"):
 		player_in_range = true
+		body.interact_ui.visible = true
 
 func _on_area_2d_body_exited(body) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group("player"):
 		player_in_range = false
+		body.interact_ui.visible = false

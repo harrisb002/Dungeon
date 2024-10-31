@@ -1,14 +1,12 @@
 extends CharacterBody2D
 
-# Send signal to try to open chest
 signal openingChest
 
-@export var speed = 700  # How fast the player will move (pixels/sec).
+@export var speed = 700  
 
-# Delays the nodes initialization until its added to the scene
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var interact_ui = $InventoryUI
-
+@onready var interact_ui = $InteractUI
+@onready var inventory_ui = $InventoryUI
 
 var screen_size  # Size of the game window.
 var start_position = Vector2.ZERO  # Variable to store the player's starting position
@@ -45,6 +43,14 @@ func get_input():
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = input_direction * speed
 	
+
+func _input(event):
+	if event.is_action_pressed("inventory"):
+		# Create a toggle switch
+		inventory_ui.visible = !inventory_ui.visible
+		# Pause the game, on/off
+		get_tree().paused = !get_tree().paused
+
 func update_animations():
 	if is_attacking:
 		return  
@@ -118,15 +124,6 @@ func _on_attack_time_out_timeout() -> void:
 	$attack_time_out.stop()
 	is_attacking = false
 	update_animations()
-
-	
-# Function to handle key collection
-func collect_key(key_type):
-	Keys.push_back(key_type) # Add to keys
-	
-# Handles collecting all types of keys by player
-func _on_key_collected(KeyType: Variant) -> void:
-	collect_key(KeyType)
 
 # Once chest zone is entered, once can open it
 func _on_chest_zone_entered(chest: Node2D) -> void:
