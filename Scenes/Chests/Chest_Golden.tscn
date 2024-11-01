@@ -21,13 +21,13 @@ shape = SubResource("RectangleShape2D_n8f4y")
 
 [node name="closed" type="Sprite2D" parent="."]
 position = Vector2(870, -1124)
-scale = Vector2(3, 3)
+scale = Vector2(5, 5)
 texture = ExtResource("2_0su54")
 
 [node name="open" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(870, -1120)
-scale = Vector2(3, 3)
+scale = Vector2(5, 5)
 texture = ExtResource("3_2j6nt")
 
 [node name="chest zone" type="Area2D" parent="."]
