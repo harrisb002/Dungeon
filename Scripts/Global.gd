@@ -32,8 +32,29 @@ func add_item(item):
 			return true
 	return false
 
-func remove_item():
-	inventory_updated.emit()
+# Decrement/Remove item based on name and type
+func remove_item(item_name, item_type):
+	for i in range(inventory.size()):
+		if inventory[i] != null and inventory[i]["name"] == item_name and inventory[i]["type"] == item_type:
+			inventory[i]["quantity"] -= 1
+			if inventory[i] <= 0:
+				inventory[i] = null
+			inventory_updated.emit()
+			return true
+	return false
+	
+# Check the position to test it is valid
+func adjust_drop_position(pos):
+	## Create a drop radius to prevent overlapping
+	var radius = 25
+	var nearby_items = get_tree().get_nodes_in_group("Items")
+	## Make sure its in the spawn area of the radius
+	for item in nearby_items:
+		if item.global_position.distance_to(pos) < radius:
+			var random_offset = Vector2(randf_range(-radius, radius),randf_range(-radius, radius))
+			pos += random_offset
+			break
+	return pos
 
 func increase_inventory_size():
 	inventory_updated.emit()
