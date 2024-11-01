@@ -40,6 +40,6 @@ func set_item(new_item):
 	item_type.text = str(item["type"])
 	
 	if item["effect"] != "":
-		item_effect.text = str("+ ", item["effect"])
+		item_effect.text = str(item["effect"])
 	else:
 		item_effect.text = ""

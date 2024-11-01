@@ -28,9 +28,9 @@ func _on_player_opening_chest(chest: StaticBody2D) -> void:
 			print("You need a ", chest_type, "key to open this chest.")
 
 
-func _on_chest_zone_body_entered(body: Node2D) -> void:
+func _on_chest_zone_body_entered():
 	# Pass reference to the chess
 	emit_signal("chest_zone_entered", self)
 
-func _on_chest_zone_body_exited(body: Node2D) -> void:
+func _on_chest_zone_body_exited():
 	emit_signal("chest_zone_exited")

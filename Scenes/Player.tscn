@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://chxd6ijec3lqs"]
+[gd_scene load_steps=67 format=3 uid="uid://chxd6ijec3lqs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_3s2n2"]
 [ext_resource type="Texture2D" uid="uid://cdfnu26fcrtlj" path="res://allart/Knightattacks/backattack.png" id="2_btk8a"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://chtwsjyfql011" path="res://allart/Knightattacks/rightattack.png" id="5_dsvnd"]
 [ext_resource type="Texture2D" uid="uid://blv4i26r0svx5" path="res://allart/Knightwalkcycle/rightwalk.png" id="5_ltp2s"]
 [ext_resource type="PackedScene" uid="uid://onmcrrbo426g" path="res://Scenes/Inventory/Inventory_UI.tscn" id="8_2xf0b"]
+[ext_resource type="FontFile" uid="uid://bi04iecmbt37l" path="res://allart/Fonts/ARCADECLASSIC.TTF" id="8_vxe05"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acllo"]
 radius = 13.0
@@ -477,12 +478,13 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -37.5
+offset_left = -198.0
 offset_top = 50.0
-offset_right = 37.5
-offset_bottom = 73.0
+offset_right = 242.0
+offset_bottom = 131.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 60
+theme_override_fonts/font = ExtResource("8_vxe05")
+theme_override_font_sizes/font_size = 90
 text = "Inventory"
 
 [node name="Inventory_UI" parent="InventoryUI/ColorRect" instance=ExtResource("8_2xf0b")]

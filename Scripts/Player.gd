@@ -137,6 +137,6 @@ func _process(delta):
 	if inside_hole:
 		fall()
 		
-	if nearby_chest and Input.is_action_just_pressed("ui_accept"):
+	if nearby_chest and Input.is_action_just_pressed("open"):
 		# Pass the reference to the chest
 		emit_signal("openingChest", nearby_chest)

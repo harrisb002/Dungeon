@@ -20,7 +20,7 @@ func add_item(item):
 	for i in range(inventory.size()):
 		# Stack the item if it already exists in inventory
 		# Based on dict. found in inventory_item.gd, pickup_items
-		if inventory[i] != null and inventory[i]["type"] == item["type"] and inventory[i]["effect"] == item["effect"]:
+		if inventory[i] != null and inventory[i]["name"] == item["name"] and inventory[i]["type"] == item["type"]:
 			inventory[i]["quantity"] += item["quantity"]
 			inventory_updated.emit()
 			print("Item aded", inventory)
@@ -30,7 +30,7 @@ func add_item(item):
 			inventory_updated.emit()
 			print("Item aded", inventory)
 			return true
-		return false
+	return false
 
 func remove_item():
 	inventory_updated.emit()
