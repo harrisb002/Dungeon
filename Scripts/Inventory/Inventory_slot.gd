@@ -63,8 +63,8 @@ func _on_use_button_pressed():
 	usage_panel.visible = false
 	## Check if it has an effect before removing it
 	if item != null and item["effect"] != "":
-		if Global.player_node:
-			Global.player_node.apply_item_effect(item)
+		if Global.Player_node:
+			Global.Player_node.apply_item_effect(item)
 			Global.remove_item(item["name"], item["type"])
 		else:
 			print("Player could not be found")

@@ -143,8 +143,8 @@ func _on_hit_box_body_exited(_body: Node2D) -> void:
 # Apply effect of the item (if it has one)
 func apply_item_effect(item):
 	match item["effect"]:
-		"Flash":
-			speed += 50
+		"Speed Boost":
+			speed += 200
 			print("Speed increased to ", speed)
 		"Slot Increase":
 			Global.increase_inventory_size(5)
