@@ -19,27 +19,27 @@ This game offers players a dungeon to explore, where they can encounter various 
 
 ### Player
 - **Player Movement**: The player can move in all directions, bound within the map’s edges.
-  - [ ] Implement player movement
-  - [ ] Set player boundaries within the map
-  - [ ] Allow the player to fall through trap holes
+  - [✅] Implement player movement
+  - [✅] Set player boundaries within the map
+  - [✅] Allow the player to fall through trap holes
   
 - **Player Stats**: Tracks player's health, stamina, and experience points.
   - [ ] Design and display the player stats UI
   - [ ] Integrate health, stamina, and experience mechanics
 
 - **Player Attack**: Allows the player to engage enemies with a basic attack.
-  - [ ] Develop basic attack animations
+  - [✅] Develop basic attack animations
   - [ ] Add damage mechanics for player attacks
 
 ### Dungeon Map
 - **Map Design**: The layout and design of the dungeon map.
-  - [ ] Create initial dungeon map layout
-  - [ ] Implement various rooms and corridors
-  - [ ] Add interactive objects (e.g., chests, doors, keys)
+  - [✅] Create initial dungeon map layout
+  - [✅] Implement various rooms and corridors
+  - [⚙️] Add interactive objects (e.g., chests, doors, keys)
 
 - **Trap Elements**: Include traps such as holes that cause the player to fall.
-  - [ ] Design trap holes and other obstacles
-  - [ ] Integrate player interaction with traps
+  - [✅] Design trap holes and other obstacles
+  - [✅] Integrate player interaction with traps
   
 ### Enemies & Bosses
 - **Basic Enemies**: Skeletons and other non-boss enemies, including AI for movement and attacks.
@@ -66,32 +66,4 @@ This game offers players a dungeon to explore, where they can encounter various 
 - **Health & Power-ups**: Items that aid the player on their journey.
   - [ ] Design health and stamina power-ups
   - [ ] Integrate power-ups into the game with item collection mechanics
-
-## Progress
-This section tracks the completion status of each game feature.
-
-### Player
-- [ ] Movement
-- [ ] Map Boundaries
-- [ ] Trap Interaction
-
-### Dungeon Map
-- [ ] Layout Design
-- [ ] Room Setup
-- [ ] Traps & Interactables
-
-### Enemies & Bosses
-- [ ] Skeletons AI
-- [ ] Boss AI and Attacks
-- [ ] Damage & Defeat Logic
-
-### Storyboarding
-- [ ] Initial Plot Text
-- [ ] Doorway Plot Triggers
-- [ ] Boss Defeat Plot
-
-### General Game Logic
-- [ ] Game Menus
-- [ ] Power-ups & Items
-
 ---
