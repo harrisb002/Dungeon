@@ -1,13 +1,11 @@
 extends CharacterBody2D
 
-enum ChestType {COMMON, GOLDEN, BOSS}
-
 @export var speed = 700  
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var interact_ui = $InteractUI
 @onready var inventory_ui = $InventoryUI
-@onready var interact_ui_label = $InteractUI/ColorRect/Label
+@onready var inventory_ui_label = $InteractUI/ColorRect/Label
 
 var screen_size  # Size of the game window.
 var start_position = Vector2.ZERO  # Variable to store the player's starting position
@@ -16,10 +14,13 @@ var inside_hole = false # Flag for falling in holes
 
 var curr_direction = "move_right" # Check what side we are currenlty moving 
 var is_attacking = false  # Check if attack frames are on
-var chess_type = ChestType.COMMON # Default to common for what chess is being opened
 
-# Store specific chest the player is near
-var nearby_chest = null  
+# Reset the player when starting a new game.
+func start():
+	animated_sprite.animation = "right"  # Set default animation
+	animated_sprite.play()  # Start playing the animation
+	position = start_position  # Reset position
+	show()
 
 # Run as soon as the object/scene is ready in the game, done before everything else
 func _ready():
@@ -30,7 +31,7 @@ func _ready():
 	original_scale = scale  # Store the player's original scale
 	start_position = position  # Store the player's start position
 	hide() # Hide the player at the start of the game
-	
+
 # Detect whether a key is pressed using Input.is_action_pressed(),
 #   which returns true if it is pressed or false if it isn’t.
 func _physics_process(delta):
@@ -53,11 +54,6 @@ func _input(event):
 func _process(delta):
 	if inside_hole:
 		fall()
-		
-	if nearby_chest and Input.is_action_just_pressed("open"):
-		print("nearby chest and opening")
-		# Pass the reference to the chest
-		open_chest(nearby_chest, chess_type)
 
 func update_animations():
 	if is_attacking:
@@ -105,12 +101,12 @@ func _on_attack_time_out_timeout():
 	is_attacking = false
 	update_animations()
 
-# Reset the player when starting a new game.
-func start():
-	animated_sprite.animation = "right"  # Set default animation
-	animated_sprite.play()  # Start playing the animation
-	position = start_position  # Reset position
-	show()
+func fall():
+	speed = 0
+	var tween = create_tween()
+	tween.tween_property(self, "scale", Vector2.ZERO, 0.3)
+	tween.finished.connect(self.reset_player)  # Connect the finished signal to reset_player
+	tween.play()
 
 func reset_player():
 	position = start_position  # Reset the position to the start
@@ -119,26 +115,6 @@ func reset_player():
 	hide()
 	await get_tree().create_timer(0.5).timeout  # Small delay before showing
 	show()
-
-func fall():
-	speed = 0
-	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2.ZERO, 0.3)
-	tween.finished.connect(self.reset_player)  # Connect the finished signal to reset_player
-	tween.play()
-
-# Once chest zone is entered, once can open it
-func _on_chest_zone_entered(chest: Node2D, curr_chest_type):
-	print("Chest zone entered")
-	nearby_chest = chest  
-	chess_type = curr_chest_type
-	interact_ui_label.text = "Press 'O' to pickup"
-  
-# When player exits the chest zone
-func _on_chest_zone_exited():
-	print("Chest zone excited")
-	nearby_chest = null  
-	interact_ui_label.text = "Press Enter to pickup"  
 
 func _on_hit_box_body_entered(_body: Node2D):
 	inside_hole = true
@@ -157,29 +133,3 @@ func apply_item_effect(item):
 			print("Slots increased to ", Global.inventory.size())
 		_:
 			print("No effect exists for this item")
-
-# Handles opening all chest types based on keys present in inventory
-func open_chest(chest: StaticBody2D, chest_type) -> void:
-	print("Player trying to open chest")
-	var key
-	match chest_type:
-		ChestType.COMMON:
-			key = "Common"
-		ChestType.GOLDEN:
-			key = "Golden"
-		ChestType.BOSS:
-			key = "Boss"
-		_:
-			print("No Chest of this type exists")
-
-	## Check if player has key in inventory
-	if key != null and Global.has_key_in_inventory(key):
-		# Remove the key from the player's inventory
-		Global.remove_item(key, "key")
-		## Make the chest Open
-		$open.visible = true
-		$closed.visible = false
-	else:
-		print("You need a ", chest_type, "key to open this chest.")
-	
-	

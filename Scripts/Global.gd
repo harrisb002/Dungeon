@@ -46,7 +46,7 @@ func remove_item(item_name, item_type):
 # Check the position to test it is valid
 func adjust_drop_position(pos):
 	## Create a drop radius to prevent overlapping
-	var radius = 25
+	var radius = 300
 	var nearby_items = get_tree().get_nodes_in_group("Items")
 	## Make sure its in the spawn area of the radius
 	for item in nearby_items:
@@ -55,6 +55,7 @@ func adjust_drop_position(pos):
 			pos += random_offset
 			break
 	return pos
+
 
 # Drops an item at a specified position, adjusting for nearby items
 func drop_item(item_data, drop_position):
@@ -76,9 +77,9 @@ func increase_inventory_size(added_slots):
 func set_player_ref(player):
 	Player_node = player
 	
-# Check if player has the needed key in the inventory
-func has_key_in_inventory(key_name: String) -> bool:
+# Check if player has key needed to open chest 
+func has_key_in_inventory(item_name: String, item_type: String) -> bool:
 	for item in inventory:
-		if item != null and item["name"] == key_name and item["type"] == "key":
+		if item != null and item["name"] == item_name and item["type"] == item_type:
 			return true
 	return false

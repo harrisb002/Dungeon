@@ -19,12 +19,12 @@ position = Vector2(872.5, -1125.5)
 shape = SubResource("RectangleShape2D_n8f4y")
 
 [node name="closed" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(870, -1124)
 scale = Vector2(3, 3)
 texture = ExtResource("2_yjv71")
 
 [node name="open" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(870, -1120)
 scale = Vector2(3, 3)
 texture = ExtResource("3_m2xce")
@@ -37,6 +37,28 @@ collision_layer = 32
 position = Vector2(869.851, -1124.5)
 shape = SubResource("RectangleShape2D_t3834")
 metadata/_edit_lock_ = true
+
+[node name="InteractUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="InteractUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -310.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0.396037, 0.696313, 0.532248, 1)
+
+[node name="Label" type="Label" parent="InteractUI/ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 30
+text = "Press \"O\" to open"
 
 [connection signal="body_entered" from="chest zone" to="." method="_on_chest_zone_body_entered"]
 [connection signal="body_exited" from="chest zone" to="." method="_on_chest_zone_body_exited"]
