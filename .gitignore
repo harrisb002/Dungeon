@@ -3,7 +3,6 @@
 export.cfg
 *.tres
 *.res
-*.godot
 *.pck
 
 # Compiled files
