@@ -6,6 +6,8 @@ extends Node
 # Will be used update the inventory UI
 signal inventory_updated
 
+@onready var inventory_slot = preload("res://Scenes/Inventory/Inventory_slot.tscn")
+
 var inventory = []
 
 var Player: Node = null
@@ -21,9 +23,14 @@ func add_item(item):
 		if inventory[i] != null and inventory[i]["type"] == item["type"] and inventory[i]["effect"] == item["effect"]:
 			inventory[i]["quantity"] += item["quantity"]
 			inventory_updated.emit()
+			print("Item aded", inventory)
 			return true
-			
-	inventory_updated.emit()
+		elif inventory[i] == null:
+			inventory[i] = item
+			inventory_updated.emit()
+			print("Item aded", inventory)
+			return true
+		return false
 
 func remove_item():
 	inventory_updated.emit()

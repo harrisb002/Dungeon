@@ -6,7 +6,7 @@ extends Node2D
 @export var item_type = ""
 @export var item_texture = Texture
 @export var item_effect = ""
-var scene_path: String =  "res://Scenes/inventory_item.tscn"
+var scene_path: String =  "res://Scenes/Inventory/Inventory_Item.tscn"
 
 # Allow for dynamically changed sprites
 @onready var icon_sprite = $Sprite2D
@@ -30,10 +30,10 @@ func _process(delta: float):
 func pickup_item():
 	var item = {
 		"quantity": 1,
-		"item_type": item_type,
-		"item_name": item_name,
-		"item_texture": item_texture,
-		"item_effect": item_effect,
+		"type": item_type,
+		"name": item_name,
+		"texture": item_texture,
+		"effect": item_effect,
 		"scene_path": scene_path,
 	}
 	if Global.Player:
