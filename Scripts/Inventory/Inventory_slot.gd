@@ -14,8 +14,10 @@ var item = null
 func _on_item_button_pressed():
 	# Only show if an item is present
 	if item != null:
+		# Switch
 		usage_panel.visible = !usage_panel.visible
 
+# Used for mouse hovering effect
 func _on_item_button_mouse_entered():
 	if item != null:
 		usage_panel.visible = false
@@ -24,12 +26,12 @@ func _on_item_button_mouse_entered():
 func _on_item_button_mouse_exited():
 	details_panel.visible = false
 
-# Create the empty slots
+# Create empty slots
 func set_empty():
 	icon.texture = null
 	quantity_label.text = ""
 
-# Set slot item with the values frmo dict
+# Set slot item with values from dict
 func set_item(new_item):
 	item = new_item
 	icon.texture = item["texture"]
@@ -41,4 +43,3 @@ func set_item(new_item):
 		item_effect.text = str("+ ", item["effect"])
 	else:
 		item_effect.text = ""
-	

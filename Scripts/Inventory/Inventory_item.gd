@@ -26,7 +26,7 @@ func _process(delta: float):
 	if player_in_range and Input.is_action_just_pressed("pickup"):
 		pickup_item()
 
-# Creating the dictionary for item information to be passed when adding it
+# Creatthe dict for item info to be passed when adding it
 func pickup_item():
 	var item = {
 		"quantity": 1,
@@ -37,11 +37,10 @@ func pickup_item():
 		"scene_path": scene_path,
 	}
 	if Global.Player:
-		# Adding the item to the players inventory
+		# Adding item to players inventory
 		Global.add_item(item)
-		# Remove the item from the scene
+		# Remove item from scene
 		self.queue_free()
-
 
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):

@@ -12,9 +12,9 @@ func _on_inventory_updated():
 	# Clear the current slots
 	clear_grid_container()
 	
-	# Add slots for each inventory 
+	# Add slots for each inventory item
 	for item in Global.inventory:
-		# Create a new slot and add it to container
+		# Create new slot and add it to container
 		var slot = Global.inventory_slot.instantiate()
 		grid_container.add_child(slot)
 		if item != null:
@@ -22,6 +22,7 @@ func _on_inventory_updated():
 		else:
 			slot.set_empty()
 
+# Clear grid upon each update to ensure correct quantity
 func clear_grid_container():
 	while grid_container.get_child_count() > 0:
 		var child = grid_container.get_child(0)

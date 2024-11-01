@@ -6,7 +6,7 @@ extends Node
 # Will be used update the inventory UI
 signal inventory_updated
 
-@onready var inventory_slot = preload("res://Scenes/Inventory/Inventory_slot.tscn")
+@onready var inventory_slot = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
 
 var inventory = []
 
@@ -19,7 +19,7 @@ func _ready():
 func add_item(item):
 	for i in range(inventory.size()):
 		# Stack the item if it already exists in inventory
-		# Based on dict. defined in inventory_item.gd, pickup_items
+		# Based on dict. found in inventory_item.gd, pickup_items
 		if inventory[i] != null and inventory[i]["type"] == item["type"] and inventory[i]["effect"] == item["effect"]:
 			inventory[i]["quantity"] += item["quantity"]
 			inventory_updated.emit()
