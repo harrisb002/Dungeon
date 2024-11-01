@@ -33,7 +33,7 @@ func _ready():
 	
 # Detect whether a key is pressed using Input.is_action_pressed(),
 #   which returns true if it is pressed or false if it isn’t.
-func _physics_process(delta: float) -> void:
+func _physics_process(delta):
 	get_input()
 	move_and_slide()
 	update_animations()
@@ -42,7 +42,6 @@ func _physics_process(delta: float) -> void:
 func get_input():
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = input_direction * speed
-	
 
 func _input(event):
 	if event.is_action_pressed("inventory"):
@@ -50,6 +49,14 @@ func _input(event):
 		inventory_ui.visible = !inventory_ui.visible
 		# Pause the game, on/off
 		get_tree().paused = !get_tree().paused
+
+func _process(delta):
+	if inside_hole:
+		fall()
+		
+	if nearby_chest and Input.is_action_just_pressed("open"):
+		# Pass the reference to the chest
+		emit_signal("openingChest", nearby_chest)
 
 func update_animations():
 	if is_attacking:
@@ -75,7 +82,7 @@ func update_animations():
 			else:
 				animated_sprite.play("backward")
 				curr_direction = "move_up"
-	
+
 func attack():
 	if Input.is_action_just_pressed("attack") and not is_attacking:
 		is_attacking = true  # Set the flag to true
@@ -91,7 +98,12 @@ func attack():
 		if(curr_direction == "move_up"):
 			animated_sprite.play("back_attack")
 			$attack_time_out.start()
-			
+
+func _on_attack_time_out_timeout() -> void:
+	$attack_time_out.stop()
+	is_attacking = false
+	update_animations()
+
 # Reset the player when starting a new game.
 func start():
 	animated_sprite.animation = "right"  # Set default animation
@@ -107,23 +119,12 @@ func reset_player():
 	await get_tree().create_timer(0.5).timeout  # Small delay before showing
 	show()
 
-func _on_hit_box_body_entered(_body: Node2D) -> void:
-	inside_hole = true
-
-func _on_hit_box_body_exited(_body: Node2D) -> void:
-	inside_hole = false
-
 func fall():
 	speed = 0
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2.ZERO, 0.3)
 	tween.finished.connect(self.reset_player)  # Connect the finished signal to reset_player
 	tween.play()
-
-func _on_attack_time_out_timeout() -> void:
-	$attack_time_out.stop()
-	is_attacking = false
-	update_animations()
 
 # Once chest zone is entered, once can open it
 func _on_chest_zone_entered(chest: Node2D) -> void:
@@ -133,10 +134,22 @@ func _on_chest_zone_entered(chest: Node2D) -> void:
 func _on_chest_zone_exited(s) -> void:
 	nearby_chest = null    
 
-func _process(delta):
-	if inside_hole:
-		fall()
-		
-	if nearby_chest and Input.is_action_just_pressed("open"):
-		# Pass the reference to the chest
-		emit_signal("openingChest", nearby_chest)
+func _on_hit_box_body_entered(_body: Node2D) -> void:
+	inside_hole = true
+
+func _on_hit_box_body_exited(_body: Node2D) -> void:
+	inside_hole = false
+
+# Apply effect of the item (if it has one)
+func apply_item_effect(item):
+	match item["effect"]:
+		"Flash":
+			speed += 50
+			print("Speed increased to ", speed)
+		"Slot Increase":
+			Global.increase_inventory_size(5)
+			print("Slots increased to ", Global.inventory.size())
+		"Open Chest":
+			pass
+		_:
+			print("No effect exists for this item")

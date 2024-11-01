@@ -56,3 +56,15 @@ func _on_drop_button_pressed():
 		Global.drop_item(item, drop_position + drop_offset)
 		Global.remove_item(item["name"], item["type"])
 		usage_panel.visible = false
+
+
+# Remove item from inventory, use it and apply effect (if it has one)		
+func _on_use_button_pressed():
+	usage_panel.visible = false
+	## Check if it has an effect before removing it
+	if item != null and item["effect"] != "":
+		if Global.player_node:
+			Global.player_node.apply_item_effect(item)
+			Global.remove_item(item["name"], item["type"])
+		else:
+			print("Player could not be found")

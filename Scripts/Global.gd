@@ -13,7 +13,7 @@ var inventory = []
 var Player_node: Node = null
 
 func _ready():
-	inventory.resize(30)
+	inventory.resize(9)
 
 # Adds item and returns true if successfull
 func add_item(item):
@@ -67,7 +67,9 @@ func drop_item(item_data, drop_position):
 	item_instance.global_position = drop_position
 	get_tree().current_scene.add_child(item_instance)
 
-func increase_inventory_size():
+# Add slots to inventory
+func increase_inventory_size(added_slots):
+	inventory.resize(inventory.size() + added_slots)
 	inventory_updated.emit()
 
 # Sets the player reference for inventory interactions
