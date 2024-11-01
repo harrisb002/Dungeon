@@ -75,3 +75,10 @@ func increase_inventory_size(added_slots):
 # Sets the player reference for inventory interactions
 func set_player_ref(player):
 	Player_node = player
+	
+# Check if player has the needed key in the inventory
+func has_key_in_inventory(key_name: String) -> bool:
+	for item in inventory:
+		if item != null and item["name"] == key_name and item["type"] == "key":
+			return true
+	return false

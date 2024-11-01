@@ -61,8 +61,8 @@ func _on_drop_button_pressed():
 # Remove item from inventory, use it and apply effect (if it has one)		
 func _on_use_button_pressed():
 	usage_panel.visible = false
-	## Check if it has an effect before removing it
-	if item != null and item["effect"] != "":
+	## Check if it has an effect before removing it (Dont allow keys to be used in this manner)
+	if item != null and item["effect"] != "" and item["effect"] != "Open Chest":
 		if Global.Player_node:
 			Global.Player_node.apply_item_effect(item)
 			Global.remove_item(item["name"], item["type"])

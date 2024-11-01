@@ -1,12 +1,13 @@
 extends CharacterBody2D
 
-signal openingChest
+enum ChestType {COMMON, GOLDEN, BOSS}
 
 @export var speed = 700  
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var interact_ui = $InteractUI
 @onready var inventory_ui = $InventoryUI
+@onready var interact_ui_label = $InteractUI/ColorRect/Label
 
 var screen_size  # Size of the game window.
 var start_position = Vector2.ZERO  # Variable to store the player's starting position
@@ -15,8 +16,7 @@ var inside_hole = false # Flag for falling in holes
 
 var curr_direction = "move_right" # Check what side we are currenlty moving 
 var is_attacking = false  # Check if attack frames are on
-
-var Keys = [] # Contains all collected keys
+var chess_type = ChestType.COMMON # Default to common for what chess is being opened
 
 # Store specific chest the player is near
 var nearby_chest = null  
@@ -55,8 +55,9 @@ func _process(delta):
 		fall()
 		
 	if nearby_chest and Input.is_action_just_pressed("open"):
+		print("nearby chest and opening")
 		# Pass the reference to the chest
-		emit_signal("openingChest", nearby_chest)
+		open_chest(nearby_chest, chess_type)
 
 func update_animations():
 	if is_attacking:
@@ -99,7 +100,7 @@ func attack():
 			animated_sprite.play("back_attack")
 			$attack_time_out.start()
 
-func _on_attack_time_out_timeout() -> void:
+func _on_attack_time_out_timeout():
 	$attack_time_out.stop()
 	is_attacking = false
 	update_animations()
@@ -127,17 +128,22 @@ func fall():
 	tween.play()
 
 # Once chest zone is entered, once can open it
-func _on_chest_zone_entered(chest: Node2D) -> void:
+func _on_chest_zone_entered(chest: Node2D, curr_chest_type):
+	print("Chest zone entered")
 	nearby_chest = chest  
+	chess_type = curr_chest_type
+	interact_ui_label.text = "Press 'O' to pickup"
   
 # When player exits the chest zone
-func _on_chest_zone_exited(s) -> void:
-	nearby_chest = null    
+func _on_chest_zone_exited():
+	print("Chest zone excited")
+	nearby_chest = null  
+	interact_ui_label.text = "Press Enter to pickup"  
 
-func _on_hit_box_body_entered(_body: Node2D) -> void:
+func _on_hit_box_body_entered(_body: Node2D):
 	inside_hole = true
 
-func _on_hit_box_body_exited(_body: Node2D) -> void:
+func _on_hit_box_body_exited(_body: Node2D):
 	inside_hole = false
 
 # Apply effect of the item (if it has one)
@@ -149,7 +155,31 @@ func apply_item_effect(item):
 		"Slot Increase":
 			Global.increase_inventory_size(5)
 			print("Slots increased to ", Global.inventory.size())
-		"Open Chest":
-			pass
 		_:
 			print("No effect exists for this item")
+
+# Handles opening all chest types based on keys present in inventory
+func open_chest(chest: StaticBody2D, chest_type) -> void:
+	print("Player trying to open chest")
+	var key
+	match chest_type:
+		ChestType.COMMON:
+			key = "Common"
+		ChestType.GOLDEN:
+			key = "Golden"
+		ChestType.BOSS:
+			key = "Boss"
+		_:
+			print("No Chest of this type exists")
+
+	## Check if player has key in inventory
+	if key != null and Global.has_key_in_inventory(key):
+		# Remove the key from the player's inventory
+		Global.remove_item(key, "key")
+		## Make the chest Open
+		$open.visible = true
+		$closed.visible = false
+	else:
+		print("You need a ", chest_type, "key to open this chest.")
+	
+	
