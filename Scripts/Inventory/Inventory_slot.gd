@@ -11,21 +11,6 @@ extends Control
 # Slot item
 var item = null
 
-func _on_item_button_pressed():
-	# Only show if an item is present
-	if item != null:
-		# Switch
-		usage_panel.visible = !usage_panel.visible
-
-# Used for mouse hovering effect
-func _on_item_button_mouse_entered():
-	if item != null:
-		usage_panel.visible = false
-		details_panel.visible = true
-
-func _on_item_button_mouse_exited():
-	details_panel.visible = false
-
 # Create empty slots
 func set_empty():
 	icon.texture = null
@@ -43,3 +28,31 @@ func set_item(new_item):
 		item_effect.text = str(item["effect"])
 	else:
 		item_effect.text = ""
+
+func _on_item_button_pressed():
+	# Only show if an item is present
+	if item != null:
+		# Switch
+		usage_panel.visible = !usage_panel.visible
+
+# Used for mouse hovering effect
+func _on_item_button_mouse_entered():
+	if item != null:
+		usage_panel.visible = false
+		details_panel.visible = true
+
+func _on_item_button_mouse_exited():
+	details_panel.visible = false
+
+# Remove item from inventory and drop it back into the world        		
+func _on_drop_button_pressed():
+	# Make sure item exists
+	if item != null:
+		var drop_position = Global.Player_node.global_position
+		## Drop offset from player
+		var drop_offset = Vector2(0, 50)
+		## Drop in the direction that player is facing
+		drop_offset = drop_offset.rotated(Global.Player_node.rotation)
+		Global.drop_item(item, drop_position + drop_offset)
+		Global.remove_item(item["name"], item["type"])
+		usage_panel.visible = false
