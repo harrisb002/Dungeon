@@ -1,10 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://tp42ctnbye3c"]
+[gd_scene load_steps=36 format=3 uid="uid://tp42ctnbye3c"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss.gd" id="1_ouu1t"]
 [ext_resource type="Texture2D" uid="uid://csvhxisu8u3qp" path="res://allart/Knightattacks/forwardattack.png" id="1_wfhir"]
 [ext_resource type="PackedScene" uid="uid://foxbh42w4vyu" path="res://Scenes/Boss/boss_minion.tscn" id="2_e7we8"]
 [ext_resource type="Texture2D" uid="uid://dr5du1mno3ihv" path="res://allart/Knightwalkcycle/forward.png" id="2_r4abk"]
 [ext_resource type="Texture2D" uid="uid://chtwsjyfql011" path="res://allart/Knightattacks/rightattack.png" id="3_s2mvg"]
+[ext_resource type="Texture2D" uid="uid://cmpi85bpkk8o1" path="res://allart/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Character_2.png" id="5_w7ukw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_be2xa"]
 atlas = ExtResource("1_wfhir")
@@ -65,6 +66,18 @@ region = Rect2(384, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_khad5"]
 atlas = ExtResource("3_s2mvg")
 region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2gnv"]
+atlas = ExtResource("5_w7ukw")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r6ibr"]
+atlas = ExtResource("5_w7ukw")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jabv"]
+atlas = ExtResource("5_w7ukw")
+region = Rect2(96, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r2f7a"]
 atlas = ExtResource("2_r4abk")
@@ -153,6 +166,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_l2gnv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r6ibr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7jabv")
+}],
+"loop": true,
+"name": &"melee",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_r2f7a")
 }, {
 "duration": 1.0,
@@ -179,24 +206,26 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mekdr"]
-radius = 124.004
+radius = 266.068
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6ex6k"]
 radius = 13.4536
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wuw6h"]
-radius = 38.0132
+radius = 51.0392
 
 [node name="boss" type="CharacterBody2D"]
 script = ExtResource("1_ouu1t")
 minion_scene = ExtResource("2_e7we8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -12)
+position = Vector2(0, -15)
+scale = Vector2(1.875, 1.875)
 sprite_frames = SubResource("SpriteFrames_3kuft")
-animation = &"idle"
+animation = &"melee"
 
 [node name="Detection_area" type="Area2D" parent="."]
+collision_layer = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection_area"]
 shape = SubResource("CircleShape2D_mekdr")
@@ -205,9 +234,10 @@ shape = SubResource("CircleShape2D_mekdr")
 position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_6ex6k")
 
-[node name="boss_hitbox" type="Area2D" parent="."]
+[node name="Ranged_Hitbox" type="Area2D" parent="."]
+collision_layer = 128
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="boss_hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ranged_Hitbox"]
 position = Vector2(-1, -6)
 shape = SubResource("CircleShape2D_wuw6h")
 
@@ -216,7 +246,11 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Ranged_Attack" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
 
 [connection signal="body_entered" from="Detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="Detection_area" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="Ranged_Hitbox" to="." method="_on_boss_hitbox_body_entered"]
+[connection signal="body_exited" from="Ranged_Hitbox" to="." method="_on_boss_hitbox_body_exited"]
 [connection signal="timeout" from="Minion_Timer" to="." method="_on_timer_timeout"]
