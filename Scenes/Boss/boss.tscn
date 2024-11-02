@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://tp42ctnbye3c"]
+[gd_scene load_steps=32 format=3 uid="uid://tp42ctnbye3c"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss.gd" id="1_ouu1t"]
 [ext_resource type="Texture2D" uid="uid://csvhxisu8u3qp" path="res://allart/Knightattacks/forwardattack.png" id="1_wfhir"]
+[ext_resource type="PackedScene" uid="uid://foxbh42w4vyu" path="res://Scenes/Boss/boss_minion.tscn" id="2_e7we8"]
 [ext_resource type="Texture2D" uid="uid://dr5du1mno3ihv" path="res://allart/Knightwalkcycle/forward.png" id="2_r4abk"]
 [ext_resource type="Texture2D" uid="uid://chtwsjyfql011" path="res://allart/Knightattacks/rightattack.png" id="3_s2mvg"]
 
@@ -183,8 +184,12 @@ radius = 124.004
 [sub_resource type="CircleShape2D" id="CircleShape2D_6ex6k"]
 radius = 13.4536
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wuw6h"]
+radius = 38.0132
+
 [node name="boss" type="CharacterBody2D"]
 script = ExtResource("1_ouu1t")
+minion_scene = ExtResource("2_e7we8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
@@ -200,5 +205,16 @@ shape = SubResource("CircleShape2D_mekdr")
 position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_6ex6k")
 
+[node name="boss_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boss_hitbox"]
+position = Vector2(-1, -6)
+shape = SubResource("CircleShape2D_wuw6h")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="body_entered" from="Detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="Detection_area" to="." method="_on_detection_area_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
