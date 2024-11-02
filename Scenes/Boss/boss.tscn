@@ -211,10 +211,12 @@ shape = SubResource("CircleShape2D_6ex6k")
 position = Vector2(-1, -6)
 shape = SubResource("CircleShape2D_wuw6h")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Minion_Timer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 
+[node name="Ranged_Attack" type="Timer" parent="."]
+
 [connection signal="body_entered" from="Detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="Detection_area" to="." method="_on_detection_area_body_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Minion_Timer" to="." method="_on_timer_timeout"]
