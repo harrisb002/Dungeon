@@ -6,6 +6,7 @@ extends CharacterBody2D
 var player_detected = false
 var player = null
 var minion_timer: Timer
+var ranged_attack_timer: Timer
 var minions: Array = [] #keep track of spawned minions
 var is_attacking: bool = false
 @export var attack_range: float = 100.0
@@ -14,6 +15,9 @@ func _ready() -> void:
 	minion_timer = $Minion_Timer
 	minion_timer.connect("timeout", Callable(self, "_on_timer_timeout"))
 	minion_timer.stop()
+	ranged_attack_timer = $Ranged_Attack
+	ranged_attack_timer.connect("timeout", Callable(self, "_on_ranged_attack_timeout"))
+	ranged_attack_timer.stop()
 	$AnimatedSprite2D.play("idle")
 
 #need to add sprites. Probably attack death walk and idle
@@ -30,8 +34,8 @@ func _physics_process(delta: float) -> void:
 			position += (player.position - position).normalized() * speed * delta
 			move_and_collide(Vector2(0,0))
 			
-			if not is_attacking:
-				$AnimatedSprite2D.play("walk")
+			
+			$AnimatedSprite2D.play("walk")
 			
 			if(player.position.x - position.x) < 0:
 				$AnimatedSprite2D.flip_h = true
@@ -44,17 +48,18 @@ func _physics_process(delta: float) -> void:
 
 #Detection
 func _on_detection_area_body_entered(body: Node2D) -> void:
+	print("Detected body: ", body.name)
 	player = body
 	player_detected = true
+
 	minion_timer.start()
-	if not minion_timer.is_stopped():
-		minion_timer.stop()  # Stop the timer if it's already running
-	minion_timer.start()  # Start or restart the timer
+	ranged_attack_timer.start()
 
 func _on_detection_area_body_exited(body: Node2D) -> void:
 	player = null
 	player_detected = false
 	minion_timer.stop()
+	ranged_attack_timer.stop()
 	
 
 #minion stuff
@@ -89,16 +94,6 @@ func are_minions_alive(max_count: int) -> bool:
 #ranged attack
 #make boss stop and play animation
 #shoot attack at player
-
-
-func _on_ranged_hitbox_body_entered(body: Node2D) -> void:
-	pass
-	#is_attacking = false
-	#attack(2)
-
-func _on_ranged_hitbox_body_exited(body: Node2D) -> void:
-	pass
-	#is_attacking = false
 	
 	
 func attack(attack_type: int):
@@ -114,3 +109,6 @@ func attack(attack_type: int):
 		pass
 		
 		
+
+func _on_ranged_attack_timeout() -> void:
+	pass # Replace with function body.
