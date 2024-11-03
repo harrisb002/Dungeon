@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed = 200
-var CONST_SPEED = 200
+var CONST_SPEED = speed
 @export var minion_scene: PackedScene
 @export var minion_count = 3
 @export var projectile: PackedScene
