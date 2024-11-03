@@ -66,7 +66,6 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 	is_attacking = false
 	is_shooting = false
 	speed = CONST_SPEED
-	
 
 #minion stuff
 func _on_timer_timeout() -> void:
@@ -107,10 +106,6 @@ func attack(attack_type: int):
 		is_attacking = false
 	elif(attack_type == 2):
 		ranged_attack()
-		
-		
-		
-		
 
 func shoot_arrows(degree_increment: int) -> Node2D:
 	var base_angle = (player.position - position).angle()
@@ -120,10 +115,28 @@ func shoot_arrows(degree_increment: int) -> Node2D:
 	projectile_instance.position = position
 	projectile_instance.look_at(player.position)
 	projectile_instance.rotation += angle_increment
-
-
+	
 	return projectile_instance
 
+func display_arrow_path(degree_increment: int) -> void:
+	#made line2d here instead of new scene.
+	#can easaly be changed into a new scene if needed for other scenes
+	var line = Line2D.new()
+	line.default_color = Color.RED
+	line.width = 2.0
+	
+	var line_length = 6000
+
+	var base_angle = (player.position - position).angle()
+	var angle_increment = deg_to_rad(degree_increment)
+	
+	var end_position = position + Vector2.RIGHT.rotated(base_angle + angle_increment) * line_length
+	line.points = [position, end_position]
+
+	get_parent().add_child(line)
+
+	await get_tree().create_timer(0.5).timeout
+	line.queue_free()
 
 func ranged_attack() -> void:
 	is_shooting = true
@@ -137,6 +150,9 @@ func ranged_attack() -> void:
 	var arrow_left = shoot_arrows(-20)
 	var arrow_center = shoot_arrows(0)
 	var arrow_right = shoot_arrows(20)
+	display_arrow_path(-20)
+	display_arrow_path(0)
+	display_arrow_path(20)
 	
 	while $AnimatedSprite2D.frame < 11:
 		await get_tree().process_frame
@@ -156,3 +172,4 @@ func _on_ranged_attack_timeout() -> void:
 	ranged_attack_timer.start()
 	if not is_attacking and not is_shooting:
 		attack(2)
+		

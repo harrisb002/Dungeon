@@ -10,7 +10,7 @@ height = 54.0
 [node name="Projectile" type="Area2D"]
 scale = Vector2(3, 3)
 script = ExtResource("1_tuqi8")
-speed = 1000.0
+speed = 700.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.6, 0.6)
