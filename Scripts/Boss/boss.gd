@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var speed = 200
+var CONST_SPEED = 200
 @export var minion_scene: PackedScene
 @export var minion_count = 3
 @export var projectile: PackedScene
@@ -62,6 +63,9 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 	player_detected = false
 	minion_timer.stop()
 	ranged_attack_timer.stop()
+	is_attacking = false
+	is_shooting = false
+	speed = CONST_SPEED
 	
 
 #minion stuff
@@ -145,7 +149,7 @@ func ranged_attack() -> void:
 		await get_tree().process_frame
 		
 	is_shooting = false
-	speed *= 4
+	speed = CONST_SPEED
 	
 	
 func _on_ranged_attack_timeout() -> void:
