@@ -13,6 +13,7 @@ var minions: Array = [] #keep track of spawned minions
 var is_attacking: bool = false
 var is_shooting: bool = false
 @export var attack_range: float = 100.0
+var alive_count = 0
 
 func _ready() -> void:
 	minion_timer = $Minion_Timer
@@ -45,7 +46,6 @@ func _physics_process(delta: float) -> void:
 			else:
 				$AnimatedSprite2D.flip_h = false
 	else:
-		#need an idle animation currently set to one of knights attacks
 		$AnimatedSprite2D.play("idle")
 
 
@@ -82,7 +82,6 @@ func spawn_minions() -> void:
 		minion_timer.start()
 		
 func are_minions_alive(max_count: int) -> bool:
-	var alive_count = 0
 	for minion in minions:
 		if minion.is_inside_tree():
 			alive_count += 1
