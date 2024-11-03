@@ -163,6 +163,8 @@ func ranged_attack() -> void:
 	while $AnimatedSprite2D.frame < 13:
 		await get_tree().process_frame
 		
+	ranged_attack_timer.stop()
+	ranged_attack_timer.start()
 	is_shooting = false
 	speed = CONST_SPEED
 	
