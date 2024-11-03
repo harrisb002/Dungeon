@@ -9,6 +9,7 @@ signal inventory_updated
 var Player_node: Node = null
 
 @onready var inventory_slot = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
+@onready var inventory_item = preload("res://Scenes/Inventory/Inventory_Item.tscn")
 
 var inventory = []
 

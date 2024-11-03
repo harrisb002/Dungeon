@@ -7,7 +7,6 @@
 radius = 24.0208
 
 [node name="Inventory_Item" type="Node2D" groups=["Items"]]
-scale = Vector2(2, 2)
 script = ExtResource("1_ckp2a")
 item_name = "Coin"
 item_type = "Money"

@@ -1,15 +1,17 @@
 extends Node2D
 
-@export var item_mapping: ItemMapping
 @export var items_layer_name = "Spawn_Items"
 @export var target_tile_id: int = 2  # ID of the tiles to filter for items
 @export var tile_map: TileMapLayer:
 	set(new_tile_map):
 		tile_map = new_tile_map
-		create_items()
 
 # Define numb of items (columns) in the atlas row
 @export var items_per_row: int = 12 
+
+func _ready():
+	create_items()
+
 
 func create_items():
 	print("Creating Items in TileMapLayer")
@@ -33,4 +35,22 @@ func create_items():
 
 func add_item_by_data(cell: Vector2i, item_data: Dictionary, atlas_coords: Vector2i):
 	print("Creating item:", item_data["name"], "with effect:", item_data["effect"], "at position:", cell)
-	# item creation logic, using item_data and atlas_coords
+	var item_instance
+	
+	# Load and instantiate the Inventory_Item scene
+	if Global.inventory_item == null:
+		print("Error: inventory_item is null in Global script")
+	else:
+		item_instance = Global.inventory_item.instantiate()
+	
+	# Set the item data using the dict values
+	item_instance.set_item_data(item_data)
+
+	# Convert the tile map coordinates to local position
+	var item_position = tile_map.map_to_local(cell)
+	item_instance.position = item_position
+	
+	# Add the item instance to the current scene or a specified layer
+	add_child(item_instance)
+
+	print("Item instance created and added to scene at position:", item_position)
