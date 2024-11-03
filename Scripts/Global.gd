@@ -6,11 +6,29 @@ extends Node
 # Will be used update the inventory UI
 signal inventory_updated
 
+var Player_node: Node = null
+
 @onready var inventory_slot = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
 
 var inventory = []
 
-var Player_node: Node = null
+# Items used to spawn within the area defined (Will update to use tile map later)
+var spawnable_items = [
+	{"type": "Money", "name": "Coin", "effect": "", "texture": preload("res://allart/InventoryItems/coin.png")},
+	{"type": "Key", 	"name": "Common", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
+	{"type": "Potion", "name": "FireSuit", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
+	{"type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png")},
+	{"type": "Potion", "name": "FlashRing", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
+	{"type": "Potion", "name": "AddedSlots", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png")},
+	{"type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png")},
+	{"type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png")},
+	{"type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png")},
+	{"type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png")},
+	{"type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png")},
+	{"type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
+]
+
+
 
 func _ready():
 	inventory.resize(9)

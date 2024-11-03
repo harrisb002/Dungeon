@@ -1,8 +1,8 @@
 [gd_scene load_steps=35 format=3 uid="uid://tp42ctnbye3c"]
 
-[ext_resource type="Script" path="res://Scripts/Boss/boss.gd" id="1_ouu1t"]
+[ext_resource type="Script" path="res://Scripts/Boss/Boss.gd" id="1_ouu1t"]
 [ext_resource type="Texture2D" uid="uid://csvhxisu8u3qp" path="res://allart/Knightattacks/forwardattack.png" id="1_wfhir"]
-[ext_resource type="PackedScene" uid="uid://foxbh42w4vyu" path="res://Scenes/Boss/boss_minion.tscn" id="2_e7we8"]
+[ext_resource type="PackedScene" uid="uid://foxbh42w4vyu" path="res://Scenes/Boss/Boss_Minion.tscn" id="2_e7we8"]
 [ext_resource type="Texture2D" uid="uid://dr5du1mno3ihv" path="res://allart/Knightwalkcycle/forward.png" id="2_r4abk"]
 [ext_resource type="Texture2D" uid="uid://chtwsjyfql011" path="res://allart/Knightattacks/rightattack.png" id="3_s2mvg"]
 [ext_resource type="Texture2D" uid="uid://cmpi85bpkk8o1" path="res://allart/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Character_2.png" id="5_w7ukw"]
