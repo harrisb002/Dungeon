@@ -3,12 +3,14 @@ extends CharacterBody2D
 @export var speed = 200
 @export var minion_scene: PackedScene
 @export var minion_count = 3
+@export var projectile: PackedScene
 var player_detected = false
 var player = null
 var minion_timer: Timer
 var ranged_attack_timer: Timer
 var minions: Array = [] #keep track of spawned minions
 var is_attacking: bool = false
+var is_shooting: bool = false
 @export var attack_range: float = 100.0
 
 func _ready() -> void:
@@ -25,7 +27,7 @@ func _ready() -> void:
 #used for moving to player.
 func _physics_process(delta: float) -> void:
 	if player_detected:
-		if position.distance_to(player.position) < attack_range and not is_attacking:
+		if position.distance_to(player.position) < attack_range and not is_attacking and not is_shooting:
 			attack(1)
 		elif not is_attacking:
 			
@@ -34,8 +36,8 @@ func _physics_process(delta: float) -> void:
 			position += (player.position - position).normalized() * speed * delta
 			move_and_collide(Vector2(0,0))
 			
-			
-			$AnimatedSprite2D.play("walk")
+			if not is_shooting:
+				$AnimatedSprite2D.play("walk")
 			
 			if(player.position.x - position.x) < 0:
 				$AnimatedSprite2D.flip_h = true
@@ -86,14 +88,6 @@ func are_minions_alive(max_count: int) -> bool:
 	return false
 
 #need to add a way to remove minion from array on death
-
-#melee attack
-#make boss stop and play animation when in specific range of player
-#continue following player after untill in range again
-
-#ranged attack
-#make boss stop and play animation
-#shoot attack at player
 	
 	
 func attack(attack_type: int):
@@ -106,9 +100,27 @@ func attack(attack_type: int):
 		await timer.timeout
 		is_attacking = false
 	elif(attack_type == 2):
-		pass
+		ranged_attack()
 		
 		
-
+		
+func ranged_attack() -> void:
+	is_shooting = true
+	speed /= 2
+	$AnimatedSprite2D.play("shoot")
+	await get_tree().create_timer(0.5).timeout
+	
+	var projectile_instance = projectile.instantiate()
+	projectile_instance.position = position
+	projectile_instance.look_at(player.position)
+	get_parent().add_child(projectile_instance)
+	
+	await get_tree().create_timer(0.5).timeout
+	is_shooting = false
+	speed *= 2
+	
+	
 func _on_ranged_attack_timeout() -> void:
-	pass # Replace with function body.
+	ranged_attack_timer.start()
+	if not is_attacking and not is_shooting:
+		attack(2)

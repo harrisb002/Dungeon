@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6nuas2kmhy4f"]
+
+[ext_resource type="Script" path="res://projectile.gd" id="1_tuqi8"]
+[ext_resource type="Texture2D" uid="uid://pauge3r34dvi" path="res://allart/2D Pixel Dungeon Asset Pack/items and trap_animation/arrow/Just_arrow.png" id="2_qm08t"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cq8u0"]
+radius = 4.0
+height = 14.0
+
+[node name="Projectile" type="Area2D"]
+script = ExtResource("1_tuqi8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qm08t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_cq8u0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

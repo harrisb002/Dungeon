@@ -1,9 +1,10 @@
-[gd_scene load_steps=35 format=3 uid="uid://tp42ctnbye3c"]
+[gd_scene load_steps=40 format=3 uid="uid://tp42ctnbye3c"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss.gd" id="1_ouu1t"]
 [ext_resource type="Texture2D" uid="uid://csvhxisu8u3qp" path="res://allart/Knightattacks/forwardattack.png" id="1_wfhir"]
 [ext_resource type="PackedScene" uid="uid://foxbh42w4vyu" path="res://Scenes/Boss/boss_minion.tscn" id="2_e7we8"]
 [ext_resource type="Texture2D" uid="uid://dr5du1mno3ihv" path="res://allart/Knightwalkcycle/forward.png" id="2_r4abk"]
+[ext_resource type="PackedScene" uid="uid://b6nuas2kmhy4f" path="res://Scenes/Boss/projectile.tscn" id="3_r137f"]
 [ext_resource type="Texture2D" uid="uid://chtwsjyfql011" path="res://allart/Knightattacks/rightattack.png" id="3_s2mvg"]
 [ext_resource type="Texture2D" uid="uid://cmpi85bpkk8o1" path="res://allart/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Character_2.png" id="5_w7ukw"]
 
@@ -78,6 +79,22 @@ region = Rect2(80, 16, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_7jabv"]
 atlas = ExtResource("5_w7ukw")
 region = Rect2(96, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyi55"]
+atlas = ExtResource("5_w7ukw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dd53f"]
+atlas = ExtResource("5_w7ukw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0e78"]
+atlas = ExtResource("5_w7ukw")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_by7pe"]
+atlas = ExtResource("5_w7ukw")
+region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r2f7a"]
 atlas = ExtResource("2_r4abk")
@@ -180,6 +197,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_oyi55")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dd53f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0e78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_by7pe")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_r2f7a")
 }, {
 "duration": 1.0,
@@ -215,12 +249,13 @@ radius = 13.4536
 collision_layer = 128
 script = ExtResource("1_ouu1t")
 minion_scene = ExtResource("2_e7we8")
+projectile = ExtResource("3_r137f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -15)
 scale = Vector2(1.875, 1.875)
 sprite_frames = SubResource("SpriteFrames_3kuft")
-animation = &"melee"
+animation = &"shoot"
 
 [node name="Detection_area" type="Area2D" parent="."]
 collision_layer = 128
@@ -237,7 +272,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Ranged_Attack" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 3.0
 one_shot = true
 
 [connection signal="body_entered" from="Detection_area" to="." method="_on_detection_area_body_entered"]
