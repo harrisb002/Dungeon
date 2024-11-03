@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://foxbh42w4vyu"]
+
+[ext_resource type="Texture2D" uid="uid://d2qv5ifs7n0gl" path="res://allart/Knightattacks/leftattack.png" id="1_1ifl3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdrbc"]
+atlas = ExtResource("1_1ifl3")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmubj"]
+atlas = ExtResource("1_1ifl3")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlx3t"]
+atlas = ExtResource("1_1ifl3")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ciu1"]
+atlas = ExtResource("1_1ifl3")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjtjr"]
+atlas = ExtResource("1_1ifl3")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fowah"]
+atlas = ExtResource("1_1ifl3")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apj2s"]
+atlas = ExtResource("1_1ifl3")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mii46"]
+atlas = ExtResource("1_1ifl3")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kr7ia"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdrbc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmubj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlx3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ciu1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjtjr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fowah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apj2s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mii46")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="boss_minion" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kr7ia")
