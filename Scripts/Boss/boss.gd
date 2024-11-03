@@ -95,29 +95,57 @@ func attack(attack_type: int):
 	if(attack_type == 1):
 		is_attacking = true
 		$AnimatedSprite2D.play("melee")
+		
 		var attack_duration = 1.0
 		var timer = get_tree().create_timer(attack_duration)
 		await timer.timeout
+		
 		is_attacking = false
 	elif(attack_type == 2):
 		ranged_attack()
 		
 		
 		
-func ranged_attack() -> void:
-	is_shooting = true
-	speed /= 2
-	$AnimatedSprite2D.play("shoot")
-	await get_tree().create_timer(0.5).timeout
-	
+		
+
+func shoot_arrows(degree_increment: int) -> Node2D:
+	var base_angle = (player.position - position).angle()
+	var angle_increment = deg_to_rad(degree_increment)
+
 	var projectile_instance = projectile.instantiate()
 	projectile_instance.position = position
 	projectile_instance.look_at(player.position)
-	get_parent().add_child(projectile_instance)
+	projectile_instance.rotation += angle_increment
+
+
+	return projectile_instance
+
+
+func ranged_attack() -> void:
+	is_shooting = true
+	speed /= 4
+	$AnimatedSprite2D.play("shoot")
 	
-	await get_tree().create_timer(0.5).timeout
+	while $AnimatedSprite2D.frame < 9:
+		await get_tree().process_frame
+		
+	#makes it stop tracking player on frame 9
+	var arrow_left = shoot_arrows(-20)
+	var arrow_center = shoot_arrows(0)
+	var arrow_right = shoot_arrows(20)
+	
+	while $AnimatedSprite2D.frame < 11:
+		await get_tree().process_frame
+	
+	get_parent().add_child(arrow_left)
+	get_parent().add_child(arrow_center)
+	get_parent().add_child(arrow_right)
+	
+	while $AnimatedSprite2D.frame < 13:
+		await get_tree().process_frame
+		
 	is_shooting = false
-	speed *= 2
+	speed *= 4
 	
 	
 func _on_ranged_attack_timeout() -> void:
