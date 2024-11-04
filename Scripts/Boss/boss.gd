@@ -26,6 +26,7 @@ var melee_count = 0
 #TODO: add wall when using shockwave attack so player cant just walk behind
 #TODO: maybe add big arrow attack down the middle after the second dodge and replace the idle animation with this attack animation
 #TODO: stuff on death
+#TODO: fix boss being pushed by player
 
 func _ready() -> void:
 	CONST_SPEED = speed
