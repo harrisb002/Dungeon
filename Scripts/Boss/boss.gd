@@ -1,15 +1,19 @@
 extends CharacterBody2D
 
 @export var speed = 200
+var CONST_SPEED = speed
 @export var minion_scene: PackedScene
 @export var minion_count = 3
+@export var projectile: PackedScene
 var player_detected = false
 var player = null
 var minion_timer: Timer
 var ranged_attack_timer: Timer
 var minions: Array = [] #keep track of spawned minions
 var is_attacking: bool = false
+var is_shooting: bool = false
 @export var attack_range: float = 100.0
+var alive_count = 0
 
 func _ready() -> void:
 	minion_timer = $Minion_Timer
@@ -25,7 +29,7 @@ func _ready() -> void:
 #used for moving to player.
 func _physics_process(delta: float) -> void:
 	if player_detected:
-		if position.distance_to(player.position) < attack_range and not is_attacking:
+		if position.distance_to(player.position) < attack_range and not is_attacking and not is_shooting:
 			attack(1)
 		elif not is_attacking:
 			
@@ -34,15 +38,14 @@ func _physics_process(delta: float) -> void:
 			position += (player.position - position).normalized() * speed * delta
 			move_and_collide(Vector2(0,0))
 			
-			
-			$AnimatedSprite2D.play("walk")
+			if not is_shooting:
+				$AnimatedSprite2D.play("walk")
 			
 			if(player.position.x - position.x) < 0:
 				$AnimatedSprite2D.flip_h = true
 			else:
 				$AnimatedSprite2D.flip_h = false
 	else:
-		#need an idle animation currently set to one of knights attacks
 		$AnimatedSprite2D.play("idle")
 
 
@@ -60,7 +63,9 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 	player_detected = false
 	minion_timer.stop()
 	ranged_attack_timer.stop()
-	
+	is_attacking = false
+	is_shooting = false
+	speed = CONST_SPEED
 
 #minion stuff
 func _on_timer_timeout() -> void:
@@ -77,7 +82,6 @@ func spawn_minions() -> void:
 		minion_timer.start()
 		
 func are_minions_alive(max_count: int) -> bool:
-	var alive_count = 0
 	for minion in minions:
 		if minion.is_inside_tree():
 			alive_count += 1
@@ -86,14 +90,6 @@ func are_minions_alive(max_count: int) -> bool:
 	return false
 
 #need to add a way to remove minion from array on death
-
-#melee attack
-#make boss stop and play animation when in specific range of player
-#continue following player after untill in range again
-
-#ranged attack
-#make boss stop and play animation
-#shoot attack at player
 	
 	
 func attack(attack_type: int):
@@ -101,14 +97,80 @@ func attack(attack_type: int):
 	if(attack_type == 1):
 		is_attacking = true
 		$AnimatedSprite2D.play("melee")
+		
 		var attack_duration = 1.0
 		var timer = get_tree().create_timer(attack_duration)
 		await timer.timeout
+		
 		is_attacking = false
 	elif(attack_type == 2):
-		pass
-		
-		
+		ranged_attack()
 
+func shoot_arrows(degree_increment: int) -> Node2D:
+	var base_angle = (player.position - position).angle()
+	var angle_increment = deg_to_rad(degree_increment)
+
+	var projectile_instance = projectile.instantiate()
+	projectile_instance.position = position
+	projectile_instance.look_at(player.position)
+	projectile_instance.rotation += angle_increment
+	
+	return projectile_instance
+
+func display_arrow_path(degree_increment: int) -> void:
+	#made line2d here instead of new scene.
+	#can easaly be changed into a new scene if needed for other scenes
+	var line = Line2D.new()
+	line.default_color = Color.RED
+	line.width = 2.0
+	
+	var line_length = 6000
+
+	var base_angle = (player.position - position).angle()
+	var angle_increment = deg_to_rad(degree_increment)
+	
+	var end_position = position + Vector2.RIGHT.rotated(base_angle + angle_increment) * line_length
+	line.points = [position, end_position]
+
+	get_parent().add_child(line)
+
+	await get_tree().create_timer(0.5).timeout
+	line.queue_free()
+
+func ranged_attack() -> void:
+	is_shooting = true
+	speed /= 4
+	$AnimatedSprite2D.play("shoot")
+	
+	while $AnimatedSprite2D.frame < 9:
+		await get_tree().process_frame
+		
+	#makes it stop tracking player on frame 9
+	var arrow_left = shoot_arrows(-20)
+	var arrow_center = shoot_arrows(0)
+	var arrow_right = shoot_arrows(20)
+	display_arrow_path(-20)
+	display_arrow_path(0)
+	display_arrow_path(20)
+	
+	while $AnimatedSprite2D.frame < 11:
+		await get_tree().process_frame
+	
+	get_parent().add_child(arrow_left)
+	get_parent().add_child(arrow_center)
+	get_parent().add_child(arrow_right)
+	
+	while $AnimatedSprite2D.frame < 13:
+		await get_tree().process_frame
+		
+	ranged_attack_timer.stop()
+	ranged_attack_timer.start()
+	is_shooting = false
+	speed = CONST_SPEED
+	
+	
 func _on_ranged_attack_timeout() -> void:
-	pass # Replace with function body.
+	ranged_attack_timer.start()
+	if not is_attacking and not is_shooting:
+		attack(2)
+		
