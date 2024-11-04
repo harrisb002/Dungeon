@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgpr7k7uxpyyb"
-path="res://.godot/imported/coin.png-f1f58c28533e91fa98d489250d893763.ctex"
+uid="uid://b3vcr88gkafgo"
+path="res://.godot/imported/invisibility.png-e8caa2aaea39cd5fa594a3c539e99c38.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://allart/InventoryItems/coin.png"
-dest_files=["res://.godot/imported/coin.png-f1f58c28533e91fa98d489250d893763.ctex"]
+source_file="res://allart/InventoryItems/invisibility.png"
+dest_files=["res://.godot/imported/invisibility.png-e8caa2aaea39cd5fa594a3c539e99c38.ctex"]
 
 [params]
 

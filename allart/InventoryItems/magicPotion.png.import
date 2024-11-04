@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgpr7k7uxpyyb"
-path="res://.godot/imported/coin.png-f1f58c28533e91fa98d489250d893763.ctex"
+uid="uid://xd67i5881m8r"
+path="res://.godot/imported/magicPotion.png-cc17ad8a8e61ee0cc410223b89c76fad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://allart/InventoryItems/coin.png"
-dest_files=["res://.godot/imported/coin.png-f1f58c28533e91fa98d489250d893763.ctex"]
+source_file="res://allart/InventoryItems/magicPotion.png"
+dest_files=["res://.godot/imported/magicPotion.png-cc17ad8a8e61ee0cc410223b89c76fad.ctex"]
 
 [params]
 

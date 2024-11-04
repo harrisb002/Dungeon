@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dejeyibf4qjqd"]
 
 [ext_resource type="Texture2D" uid="uid://debi5ha00t4b" path="res://allart/portal.png" id="1_j3hce"]
-[ext_resource type="Script" path="res://Scripts/portal.gd" id="1_tbkt5"]
+[ext_resource type="Script" path="res://Scripts/Portal.gd" id="1_tbkt5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xjygx"]
 radius = 9.98889

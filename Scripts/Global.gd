@@ -6,11 +6,29 @@ extends Node
 # Will be used update the inventory UI
 signal inventory_updated
 
+var Player_node: Node = null
+var tile_map: TileMapLayer = null
+
 @onready var inventory_slot = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
+@onready var inventory_item = preload("res://Scenes/Inventory/Inventory_Item.tscn")
 
 var inventory = []
 
-var Player_node: Node = null
+# Items used to spawn within the area defined (Will update to use tile map later)
+var spawnable_items = [
+	{"type": "Money", "name": "Coin", "effect": "", "texture": preload("res://allart/InventoryItems/coin.png")},
+	{"type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
+	{"type": "Potion", "name": "FireSuit", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
+	{"type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png")},
+	{"type": "Potion", "name": "FlashRing", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
+	{"type": "Potion", "name": "AddedSlots", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png")},
+	{"type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png")},
+	{"type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png")},
+	{"type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png")},
+	{"type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png")},
+	{"type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png")},
+	{"type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
+]
 
 func _ready():
 	inventory.resize(9)
@@ -23,12 +41,10 @@ func add_item(item):
 		if inventory[i] != null and inventory[i]["name"] == item["name"] and inventory[i]["type"] == item["type"]:
 			inventory[i]["quantity"] += item["quantity"]
 			inventory_updated.emit()
-			print("Item aded", inventory)
 			return true
 		elif inventory[i] == null:
 			inventory[i] = item
 			inventory_updated.emit()
-			print("Item aded", inventory)
 			return true
 	return false
 
@@ -45,15 +61,34 @@ func remove_item(item_name, item_type):
 	
 # Check the position to test it is valid
 func adjust_drop_position(pos):
-	## Create a drop radius to prevent overlapping
-	var radius = 300
+	var radius = 500
 	var nearby_items = get_tree().get_nodes_in_group("Items")
-	## Make sure its in the spawn area of the radius
-	for item in nearby_items:
-		if item.global_position.distance_to(pos) < radius:
-			var random_offset = Vector2(randf_range(-radius, radius),randf_range(-radius, radius))
-			pos += random_offset
-			break
+	var attempts = 10  # Limit the number of adjustment attempts to avoid infinite loops
+
+	# Try to find a valid position within the radius
+	while attempts > 0:
+		var valid_position = true
+		
+		# Check if any nearby item is too close
+		for item in nearby_items:
+			if item.global_position.distance_to(pos) < radius:
+				var random_offset = Vector2(randf_range(-radius, radius), randf_range(-radius, radius))
+				pos += random_offset
+				valid_position = false
+				break
+		
+		# Convert the adjusted position back to tile coordinates
+		var tile_pos = tile_map.local_to_map(pos)
+		var tile_data = tile_map.get_cell_tile_data(tile_pos)
+
+		# Check if the tile is a spawn tile
+		if tile_data and tile_data.get_custom_data("SpawnTiles") == true and valid_position:
+			return pos  # Return the adjusted position if it's valid
+		
+		# Decrement attempts if the position was not valid
+		attempts -= 1
+
+	# If no valid position was found after attempts, return the original position
 	return pos
 
 
@@ -61,11 +96,16 @@ func adjust_drop_position(pos):
 func drop_item(item_data, drop_position):
 	var item_scene = load(item_data["scene_path"])
 	var item_instance = item_scene.instantiate()
+	
 	## Set the data to be used after being dropped
 	item_instance.set_item_data(item_data)
+	
 	## Make sure the drop pos. is valid
 	drop_position = adjust_drop_position(drop_position)
 	item_instance.global_position = drop_position
+	
+	# Set the scale to match the inventory size
+	item_instance.scale = Vector2(3, 3) 
 	get_tree().current_scene.add_child(item_instance)
 
 # Add slots to inventory

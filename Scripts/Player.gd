@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed = 700  
+@export var speed = 1000  
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var interact_ui = $InteractUI
@@ -111,7 +111,7 @@ func fall():
 func reset_player():
 	position = start_position  # Reset the position to the start
 	scale = original_scale # Reset the scale
-	speed = 700  # Restore the speed
+	speed = 1000  # Restore the speed
 	hide()
 	await get_tree().create_timer(0.5).timeout  # Small delay before showing
 	show()

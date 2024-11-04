@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgpr7k7uxpyyb"
-path="res://.godot/imported/coin.png-f1f58c28533e91fa98d489250d893763.ctex"
+uid="uid://jbp2dm1c7pli"
+path="res://.godot/imported/fireResistance.png-a740e7a030accbfda41e94ef2f3638f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://allart/InventoryItems/coin.png"
-dest_files=["res://.godot/imported/coin.png-f1f58c28533e91fa98d489250d893763.ctex"]
+source_file="res://allart/InventoryItems/fireResistance.png"
+dest_files=["res://.godot/imported/fireResistance.png-a740e7a030accbfda41e94ef2f3638f2.ctex"]
 
 [params]
 
