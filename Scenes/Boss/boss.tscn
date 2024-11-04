@@ -250,7 +250,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_7j6jb")
 }],
 "loop": true,
-"name": &"attack",
+"name": &"aoe_attack",
 "speed": 5.0
 }, {
 "frames": [{
@@ -453,8 +453,7 @@ projectile = ExtResource("3_r137f")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.875, 1.875)
 sprite_frames = SubResource("SpriteFrames_3kuft")
-animation = &"dash"
-frame_progress = 0.372074
+animation = &"aoe_attack"
 offset = Vector2(0, -20)
 
 [node name="Detection_area" type="Area2D" parent="."]

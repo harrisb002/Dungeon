@@ -17,7 +17,11 @@ var dash_range: float = 400
 var alive_count = 0
 var dash_direction
 
+var melee_count = 0
+
 var is_dashing: bool = false
+
+#add stagger mech
 
 func _ready() -> void:
 	CONST_SPEED = speed
@@ -38,21 +42,26 @@ func dash_attack() -> void:
 
 #used for moving to player.
 func _physics_process(delta: float) -> void:
+	move_and_collide(Vector2(0,0))
 	if is_dashing:
 		position += dash_direction * speed * 5 * delta
-		move_and_collide(Vector2(0,0))
+		
 		if $AnimatedSprite2D.frame == 5:
 			is_dashing = false
 			
 	elif player_detected:
 		if position.distance_to(player.position) < attack_range and not is_attacking and not is_shooting:
-			attack(1)
+			if melee_count == 3:
+				attack(3)
+			else:
+				attack(1)
+			
 		elif not is_attacking:
 			
 			#Top line will make enemy faster depending on distance
 			#position += (player.position - position)/speed
 			position += (player.position - position).normalized() * speed * delta
-			move_and_collide(Vector2(0,0))
+			
 			
 			if not is_shooting:
 				$AnimatedSprite2D.play("walk")
@@ -113,17 +122,27 @@ func attack(attack_type: int):
 	if(attack_type == 1):
 		is_attacking = true
 		$AnimatedSprite2D.play("melee")
+		while $AnimatedSprite2D.frame < 4:
+			await get_tree().process_frame
 		
-		var attack_duration = 1.0
+		var attack_duration = .3
 		var timer = get_tree().create_timer(attack_duration)
 		await timer.timeout
 		
 		is_attacking = false
+		melee_count += 1
+		print (melee_count)
 	elif(attack_type == 2):
 		ranged_attack()
-			
-
-	
+		
+	elif(attack_type == 3):
+		melee_count = 0
+		is_attacking = true
+		$AnimatedSprite2D.play("aoe_attack")
+		while $AnimatedSprite2D.frame < 4:
+			await get_tree().process_frame
+		#code for dmg and stuff
+		is_attacking = false
 
 func shoot_arrows(degree_increment: int) -> Node2D:
 	var base_angle = (player.position - position).angle()
