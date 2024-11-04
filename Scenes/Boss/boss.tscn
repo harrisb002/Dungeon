@@ -1,12 +1,14 @@
-[gd_scene load_steps=53 format=3 uid="uid://tp42ctnbye3c"]
+[gd_scene load_steps=69 format=3 uid="uid://tp42ctnbye3c"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss.gd" id="1_ouu1t"]
 [ext_resource type="PackedScene" uid="uid://foxbh42w4vyu" path="res://Scenes/Boss/boss_minion.tscn" id="2_e7we8"]
 [ext_resource type="PackedScene" uid="uid://b6nuas2kmhy4f" path="res://Scenes/Boss/projectile.tscn" id="3_r137f"]
 [ext_resource type="Texture2D" uid="uid://b20nx1mjurivb" path="res://allart/BossArt/Samurai_Archer/Attack_2.png" id="4_65y6r"]
+[ext_resource type="Texture2D" uid="uid://m478fiib2hgm" path="res://allart/BossArt/Samurai_Archer/Attack_3.png" id="5_1me8y"]
 [ext_resource type="Texture2D" uid="uid://dydcl07arp0xp" path="res://allart/BossArt/Samurai_Archer/Idle.png" id="5_g53i8"]
 [ext_resource type="Texture2D" uid="uid://rted68ncrigc" path="res://allart/BossArt/Samurai_Archer/Attack_1.png" id="6_subhq"]
 [ext_resource type="Texture2D" uid="uid://cyuxbove3pqgg" path="res://allart/BossArt/Samurai_Archer/Shot.png" id="7_eakln"]
+[ext_resource type="Texture2D" uid="uid://brmodgbtr0wh6" path="res://allart/BossArt/Samurai_Archer/Run.png" id="7_peyew"]
 [ext_resource type="Texture2D" uid="uid://bcsvoja2ocpmd" path="res://allart/BossArt/Samurai_Archer/Walk.png" id="8_0rr67"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_te184"]
@@ -28,6 +30,30 @@ region = Rect2(384, 0, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_7j6jb"]
 atlas = ExtResource("4_65y6r")
 region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbmvt"]
+atlas = ExtResource("5_1me8y")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_loncu"]
+atlas = ExtResource("5_1me8y")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nq65j"]
+atlas = ExtResource("5_1me8y")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mh6u4"]
+atlas = ExtResource("5_1me8y")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqklw"]
+atlas = ExtResource("5_1me8y")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4laax"]
+atlas = ExtResource("5_1me8y")
+region = Rect2(640, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ni8f"]
 atlas = ExtResource("5_g53i8")
@@ -84,6 +110,38 @@ region = Rect2(384, 0, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bdm6a"]
 atlas = ExtResource("6_subhq")
 region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46rwl"]
+atlas = ExtResource("7_peyew")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rf34"]
+atlas = ExtResource("7_peyew")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4p1b1"]
+atlas = ExtResource("7_peyew")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrj7x"]
+atlas = ExtResource("7_peyew")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1j4ll"]
+atlas = ExtResource("7_peyew")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbn1k"]
+atlas = ExtResource("7_peyew")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7051"]
+atlas = ExtResource("7_peyew")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqace"]
+atlas = ExtResource("7_peyew")
+region = Rect2(896, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skjbo"]
 atlas = ExtResource("7_eakln")
@@ -192,7 +250,30 @@ animations = [{
 "texture": SubResource("AtlasTexture_7j6jb")
 }],
 "loop": true,
-"name": &"attack",
+"name": &"aoe_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbmvt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_loncu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nq65j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mh6u4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqklw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4laax")
+}],
+"loop": true,
+"name": &"dash",
 "speed": 5.0
 }, {
 "frames": [{
@@ -245,6 +326,35 @@ animations = [{
 }],
 "loop": true,
 "name": &"melee",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46rwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rf34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4p1b1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrj7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1j4ll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbn1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7051")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqace")
+}],
+"loop": true,
+"name": &"run",
 "speed": 5.0
 }, {
 "frames": [{
@@ -325,7 +435,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mekdr"]
-radius = 689.355
+radius = 1330.56
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l0p1m"]
 radius = 30.0
@@ -343,9 +453,7 @@ projectile = ExtResource("3_r137f")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.875, 1.875)
 sprite_frames = SubResource("SpriteFrames_3kuft")
-animation = &"shoot"
-frame = 10
-frame_progress = 0.363253
+animation = &"aoe_attack"
 offset = Vector2(0, -20)
 
 [node name="Detection_area" type="Area2D" parent="."]
