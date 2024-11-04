@@ -54,7 +54,7 @@ func _input(event):
 		get_tree().paused = !get_tree().paused
 		
 		# Hide the hotbar when the inventory is open
-		inventory_hotbar.visible != inventory_hotbar.visible
+		inventory_hotbar.visible = !inventory_hotbar.visible
 
 func _process(delta):
 	if inside_hole:
@@ -134,7 +134,7 @@ func apply_item_effect(item):
 			speed += 200
 			print("Speed increased to ", speed)
 		"Increase Slots":
-			Global.increase_inventory_size(5)
+			Global.increase_inventory_size(6)
 			print("Slots increased to ", Global.inventory.size())
 		_:
 			print("No effect exists for this item")
