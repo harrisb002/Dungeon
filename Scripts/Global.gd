@@ -61,7 +61,7 @@ func remove_item(item_name, item_type):
 	
 # Check the position to test it is valid
 func adjust_drop_position(pos):
-	var radius = 300
+	var radius = 500
 	var nearby_items = get_tree().get_nodes_in_group("Items")
 	var attempts = 10  # Limit the number of adjustment attempts to avoid infinite loops
 
