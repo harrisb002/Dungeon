@@ -28,5 +28,3 @@ func clear_hotbar_container():
 		var child = hotbar_container.get_child(0)
 		hotbar_container.remove_child(child)
 		child.queue_free()
-
-	

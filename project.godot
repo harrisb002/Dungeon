@@ -21,7 +21,7 @@ Global="*res://Scripts/Global.gd"
 [display]
 
 window/size/viewport_width=2500
-window/size/viewport_height=2000
+window/size/viewport_height=1700
 
 [dotnet]
 

@@ -42,10 +42,10 @@ func add_item_by_data(cell: Vector2i, item_data: Dictionary, atlas_coords: Vecto
 	var item_instance
 	
 	# Load and instantiate the Inventory_Item scene
-	if Global.inventory_item == null:
+	if Global.inventory_item_scene == null:
 		print("Error: inventory_item is null in Global script")
 	else:
-		item_instance = Global.inventory_item.instantiate()
+		item_instance = Global.inventory_item_scene.instantiate()
 	
 	item_instance.set_item_data(item_data)
 

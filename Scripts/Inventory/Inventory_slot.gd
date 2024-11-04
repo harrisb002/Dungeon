@@ -7,10 +7,14 @@ extends Control
 @onready var quantity_label = $InnerBorder/ItemQuantity
 @onready var details_panel = $DetailsPanel
 @onready var usage_panel = $UsagePanel
+@onready var assign_button = $UsagePanel/AssignButton
 
 # Slot item
 var item = null
 var slot_index = -1 # Doesnt exist if still -1
+
+# Keep track of items in hotbar
+var is_assigned = false
 
 # Set the slot index for the hotbar
 func set_slot_index(new_index):
@@ -33,6 +37,9 @@ func set_item(new_item):
 		item_effect.text = str(item["effect"])
 	else:
 		item_effect.text = ""
+	
+	# Update the assignment text after setting an item
+	update_assignment_status()
 
 func _on_item_button_pressed():
 	# Only show if an item is present
@@ -63,7 +70,6 @@ func _on_drop_button_pressed():
 		Global.remove_hotbar_item(item["name"], item["type"])
 		usage_panel.visible = false
 
-
 # Remove item from inventory, use it and apply effect (if it has one)		
 func _on_use_button_pressed():
 	usage_panel.visible = false
@@ -76,6 +82,24 @@ func _on_use_button_pressed():
 		else:
 			print("Player could not be found")
 
+# Update text for items assigned or not
+func update_assignment_status():
+	is_assigned = Global.is_item_assigned_to_hotbar(item)
+	if is_assigned:
+		assign_button.text = "Unassign"
+	else:
+		assign_button.text = "Assign"
 
-func _on_assign_button_pressed() -> void:
-	pass # Replace with function body.
+# Assign or unassign hotbar items
+func _on_assign_button_pressed():
+	if item != null:
+		## If item is already assigned then must be removing
+		if is_assigned:
+			Global.unassign_hotbar_item(item["name"], item["type"])
+			is_assigned = false
+		## Intenting to assign the item to the hotbar
+		else:
+			Global.add_item(item, true)
+			is_assigned = true
+		## Now update the UI with the changes
+		update_assignment_status()
