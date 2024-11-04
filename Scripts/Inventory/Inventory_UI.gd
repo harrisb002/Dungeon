@@ -21,6 +21,7 @@ func _on_inventory_updated():
 			slot.set_item(item)
 		else:
 			slot.set_empty()
+		slot.update_assignment_status()
 
 # Clear grid upon each update to ensure correct quantity
 func clear_grid_container():
