@@ -7,6 +7,7 @@ extends Node
 signal inventory_updated
 
 var Player_node: Node = null
+var tile_map: TileMapLayer = null
 
 @onready var inventory_slot = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
 @onready var inventory_item = preload("res://Scenes/Inventory/Inventory_Item.tscn")
@@ -60,15 +61,34 @@ func remove_item(item_name, item_type):
 	
 # Check the position to test it is valid
 func adjust_drop_position(pos):
-	## Create a drop radius to prevent overlapping
 	var radius = 300
 	var nearby_items = get_tree().get_nodes_in_group("Items")
-	## Make sure its in the spawn area of the radius
-	for item in nearby_items:
-		if item.global_position.distance_to(pos) < radius:
-			var random_offset = Vector2(randf_range(-radius, radius),randf_range(-radius, radius))
-			pos += random_offset
-			break
+	var attempts = 10  # Limit the number of adjustment attempts to avoid infinite loops
+
+	# Try to find a valid position within the radius
+	while attempts > 0:
+		var valid_position = true
+		
+		# Check if any nearby item is too close
+		for item in nearby_items:
+			if item.global_position.distance_to(pos) < radius:
+				var random_offset = Vector2(randf_range(-radius, radius), randf_range(-radius, radius))
+				pos += random_offset
+				valid_position = false
+				break
+		
+		# Convert the adjusted position back to tile coordinates
+		var tile_pos = tile_map.local_to_map(pos)
+		var tile_data = tile_map.get_cell_tile_data(tile_pos)
+
+		# Check if the tile is a spawn tile
+		if tile_data and tile_data.get_custom_data("SpawnTiles") == true and valid_position:
+			return pos  # Return the adjusted position if it's valid
+		
+		# Decrement attempts if the position was not valid
+		attempts -= 1
+
+	# If no valid position was found after attempts, return the original position
 	return pos
 
 
@@ -76,11 +96,16 @@ func adjust_drop_position(pos):
 func drop_item(item_data, drop_position):
 	var item_scene = load(item_data["scene_path"])
 	var item_instance = item_scene.instantiate()
+	
 	## Set the data to be used after being dropped
 	item_instance.set_item_data(item_data)
+	
 	## Make sure the drop pos. is valid
 	drop_position = adjust_drop_position(drop_position)
 	item_instance.global_position = drop_position
+	
+	# Set the scale to match the inventory size
+	item_instance.scale = Vector2(3, 3) 
 	get_tree().current_scene.add_child(item_instance)
 
 # Add slots to inventory

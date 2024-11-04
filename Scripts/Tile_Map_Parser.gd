@@ -5,10 +5,12 @@ extends Node2D
 	set(new_tile_map):
 		tile_map = new_tile_map
 
+@export var num_items_to_spawn = 500  # Number of items to spawn randomly
 @export var items_per_row: int = 12 
-@export var num_items_to_spawn: int = 500  # Number of items to spawn randomly
 
 func _ready():
+	## Init the tile map Globally
+	Global.tile_map = tile_map
 	create_items()
 
 func create_items():
@@ -49,7 +51,12 @@ func add_item_by_data(cell: Vector2i, item_data: Dictionary, atlas_coords: Vecto
 
 	# Adjust the item position by using the tile map's local position with a slight offset
 	var item_position = tile_map.map_to_local(cell) + Vector2(8, 8)  # Adjust for center
-	item_instance.position = item_position  # Remove to_global and test directly with local position
+
+	# Ensure no overlap by adjusting the drop position
+	item_position = Global.adjust_drop_position(item_position)
 	
+	item_instance.position = item_position
+	item_instance.scale = Vector2(1, 1)  # Set scale as needed
+
 	add_child(item_instance)
 	print("Item placed at position:", item_position)
