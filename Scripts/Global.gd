@@ -13,6 +13,8 @@ var tile_map: TileMapLayer = null
 @onready var inventory_item = preload("res://Scenes/Inventory/Inventory_Item.tscn")
 
 var inventory = []
+var hotbar_size = 5
+var hotbar_inventory = []
 
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
@@ -32,6 +34,7 @@ var spawnable_items = [
 
 func _ready():
 	inventory.resize(9)
+	hotbar_inventory.resize(hotbar_size)
 
 # Adds item and returns true if successfull
 func add_item(item):
@@ -61,9 +64,9 @@ func remove_item(item_name, item_type):
 	
 # Check the position to test it is valid
 func adjust_drop_position(pos):
-	var radius = 500
+	var radius = 150
 	var nearby_items = get_tree().get_nodes_in_group("Items")
-	var attempts = 10  # Limit the number of adjustment attempts to avoid infinite loops
+	var attempts = 20  # Limit the number of adjustment attempts to avoid infinite loops
 
 	# Try to find a valid position within the radius
 	while attempts > 0:

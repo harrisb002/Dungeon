@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://chxd6ijec3lqs"]
+[gd_scene load_steps=68 format=3 uid="uid://chxd6ijec3lqs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_3s2n2"]
 [ext_resource type="Texture2D" uid="uid://cdfnu26fcrtlj" path="res://allart/Knightattacks/backattack.png" id="2_btk8a"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://blv4i26r0svx5" path="res://allart/Knightwalkcycle/rightwalk.png" id="5_ltp2s"]
 [ext_resource type="PackedScene" uid="uid://onmcrrbo426g" path="res://Scenes/Inventory/Inventory_UI.tscn" id="8_2xf0b"]
 [ext_resource type="FontFile" uid="uid://bi04iecmbt37l" path="res://allart/Fonts/ARCADECLASSIC.TTF" id="8_vxe05"]
+[ext_resource type="PackedScene" uid="uid://c3fw07a62gonv" path="res://Scenes/Inventory/Inventory_Hotbar.tscn" id="10_yub7k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acllo"]
 radius = 13.0
@@ -510,6 +511,10 @@ offset_right = 40.0
 offset_bottom = 23.0
 theme_override_font_sizes/font_size = 30
 text = "Press Enter to pickup"
+
+[node name="InventoryHotbar" type="CanvasLayer" parent="."]
+
+[node name="Inventory_Hotbar" parent="InventoryHotbar" instance=ExtResource("10_yub7k")]
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
