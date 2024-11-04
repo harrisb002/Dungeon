@@ -1,40 +1,42 @@
 extends Node2D
 
-@export var items_layer_name = "Spawn_Items"
 @export var target_tile_id: int = 2  # ID of the tiles to filter for items
 @export var tile_map: TileMapLayer:
 	set(new_tile_map):
 		tile_map = new_tile_map
 
-# Define numb of items (columns) in the atlas row
 @export var items_per_row: int = 12 
+@export var num_items_to_spawn: int = 500  # Number of items to spawn randomly
 
 func _ready():
 	create_items()
 
-
 func create_items():
 	print("Creating Items in TileMapLayer")
-	# Iterate through all cells with tiles in this layer
+	
+	var spawnable_cells = []
 	for cell in tile_map.get_used_cells():
-		var source_id = tile_map.get_cell_source_id(cell)
-		if source_id == target_tile_id:
-			# Get atlas coordinates based on cell's index
-			var atlas_coords = Vector2i(cell.x % items_per_row, 0)  # Column index, row is 0
-			print("SourceID:", source_id, "Atlas Coords:", atlas_coords)
-			
-			# Map atlas_coords.x to an item in the spawnable_items array
-			var item_data = Global.spawnable_items[atlas_coords.x] if atlas_coords.x < Global.spawnable_items.size() else null
-			if item_data:
-				print("Creating item:", item_data["name"], "at Cell:", cell, "with Atlas Coords:", atlas_coords)
-				add_item_by_data(cell, item_data, atlas_coords)
-			else:
-				print("Invalid item ID at Atlas Coords:", atlas_coords.x)
-		else:
-			print("No matching tile ID at Cell:", cell)
+		var tile_data = tile_map.get_cell_tile_data(cell)
+		if tile_data:
+			var spawn_tile = tile_data.get_custom_data("SpawnTiles")
+			if spawn_tile == true:
+				spawnable_cells.append(cell)
+	
+	spawnable_cells.shuffle()
+	var selected_cells = spawnable_cells.slice(0, num_items_to_spawn)
+	
+	for cell in selected_cells:
+		var atlas_coords = Vector2i(cell.x % items_per_row, 0)
+		var item_data = Global.spawnable_items[randi() % Global.spawnable_items.size()]
+		
+		# Print selected cell and its local position
+		print("Selected cell:", cell, "Local Position:", tile_map.map_to_local(cell))
+
+		# Spawn item and place debug marker
+		add_item_by_data(cell, item_data, atlas_coords)
 
 func add_item_by_data(cell: Vector2i, item_data: Dictionary, atlas_coords: Vector2i):
-	print("Creating item:", item_data["name"], "with effect:", item_data["effect"], "at position:", cell)
+	print("Creating item:", item_data["name"], "at Cell:", cell)
 	var item_instance
 	
 	# Load and instantiate the Inventory_Item scene
@@ -43,14 +45,11 @@ func add_item_by_data(cell: Vector2i, item_data: Dictionary, atlas_coords: Vecto
 	else:
 		item_instance = Global.inventory_item.instantiate()
 	
-	# Set the item data using the dict values
 	item_instance.set_item_data(item_data)
 
-	# Convert the tile map coordinates to local position
-	var item_position = tile_map.map_to_local(cell)
-	item_instance.position = item_position
+	# Adjust the item position by using the tile map's local position with a slight offset
+	var item_position = tile_map.map_to_local(cell) + Vector2(8, 8)  # Adjust for center
+	item_instance.position = item_position  # Remove to_global and test directly with local position
 	
-	# Add the item instance to the current scene or a specified layer
 	add_child(item_instance)
-
-	print("Item instance created and added to scene at position:", item_position)
+	print("Item placed at position:", item_position)

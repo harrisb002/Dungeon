@@ -16,7 +16,7 @@ var inventory = []
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
 	{"type": "Money", "name": "Coin", "effect": "", "texture": preload("res://allart/InventoryItems/coin.png")},
-	{"type": "Key", 	"name": "Common", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
+	{"type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
 	{"type": "Potion", "name": "FireSuit", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
 	{"type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png")},
 	{"type": "Potion", "name": "FlashRing", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
@@ -29,8 +29,6 @@ var spawnable_items = [
 	{"type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
 ]
 
-
-
 func _ready():
 	inventory.resize(9)
 
@@ -42,12 +40,10 @@ func add_item(item):
 		if inventory[i] != null and inventory[i]["name"] == item["name"] and inventory[i]["type"] == item["type"]:
 			inventory[i]["quantity"] += item["quantity"]
 			inventory_updated.emit()
-			print("Item aded", inventory)
 			return true
 		elif inventory[i] == null:
 			inventory[i] = item
 			inventory_updated.emit()
-			print("Item aded", inventory)
 			return true
 	return false
 
