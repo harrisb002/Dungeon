@@ -5,7 +5,7 @@ extends Control
 func _ready():
 	# Connect the signal to update and load with correct num of columns
 	Global.inventory_updated.connect(_on_inventory_updated)
-	_on_inventory_updated
+	_on_inventory_updated()
 
 # Update the inventory UI
 func _on_inventory_updated():

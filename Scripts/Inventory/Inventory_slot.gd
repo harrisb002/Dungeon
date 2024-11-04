@@ -6,7 +6,7 @@ extends Control
 @onready var item_effect = $DetailsPanel/ItemEffect
 @onready var quantity_label = $InnerBorder/ItemQuantity
 @onready var details_panel = $DetailsPanel
-@onready var usage_panel = $UsagePanel/AssignButton
+@onready var usage_panel = $UsagePanel
 
 # Slot item
 var item = null
