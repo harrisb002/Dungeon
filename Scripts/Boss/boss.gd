@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed = 200
-var CONST_SPEED = speed
+var CONST_SPEED: int = speed
 @export var minion_scene: PackedScene
 @export var minion_count = 3
 @export var projectile: PackedScene
@@ -13,9 +13,14 @@ var minions: Array = [] #keep track of spawned minions
 var is_attacking: bool = false
 var is_shooting: bool = false
 @export var attack_range: float = 100.0
+var dash_range: float = 400
 var alive_count = 0
+var dash_direction
+
+var is_dashing: bool = false
 
 func _ready() -> void:
+	CONST_SPEED = speed
 	minion_timer = $Minion_Timer
 	minion_timer.connect("timeout", Callable(self, "_on_timer_timeout"))
 	minion_timer.stop()
@@ -26,9 +31,20 @@ func _ready() -> void:
 
 #need to add sprites. Probably attack death walk and idle
 
+func dash_attack() -> void:
+	is_dashing = true
+	$AnimatedSprite2D.play("dash")
+	dash_direction = (player.position - position).normalized()
+
 #used for moving to player.
 func _physics_process(delta: float) -> void:
-	if player_detected:
+	if is_dashing:
+		position += dash_direction * speed * 5 * delta
+		move_and_collide(Vector2(0,0))
+		if $AnimatedSprite2D.frame == 5:
+			is_dashing = false
+			
+	elif player_detected:
 		if position.distance_to(player.position) < attack_range and not is_attacking and not is_shooting:
 			attack(1)
 		elif not is_attacking:
@@ -105,6 +121,9 @@ func attack(attack_type: int):
 		is_attacking = false
 	elif(attack_type == 2):
 		ranged_attack()
+			
+
+	
 
 func shoot_arrows(degree_increment: int) -> Node2D:
 	var base_angle = (player.position - position).angle()
@@ -139,34 +158,48 @@ func display_arrow_path(degree_increment: int) -> void:
 
 func ranged_attack() -> void:
 	is_shooting = true
-	speed /= 4
-	$AnimatedSprite2D.play("shoot")
 	
-	while $AnimatedSprite2D.frame < 9:
-		await get_tree().process_frame
-		
-	#makes it stop tracking player on frame 9
-	var arrow_left = shoot_arrows(-20)
-	var arrow_center = shoot_arrows(0)
-	var arrow_right = shoot_arrows(20)
-	display_arrow_path(-20)
-	display_arrow_path(0)
-	display_arrow_path(20)
+	$AnimatedSprite2D.play("run")
+	speed *= -1.5
 	
-	while $AnimatedSprite2D.frame < 11:
-		await get_tree().process_frame
+	var run_duration = 2
+	var retreat_timer = get_tree().create_timer(run_duration)
+	await retreat_timer.timeout
 	
-	get_parent().add_child(arrow_left)
-	get_parent().add_child(arrow_center)
-	get_parent().add_child(arrow_right)
-	
-	while $AnimatedSprite2D.frame < 13:
-		await get_tree().process_frame
-		
-	ranged_attack_timer.stop()
-	ranged_attack_timer.start()
-	is_shooting = false
 	speed = CONST_SPEED
+	if is_shooting:
+		speed /= 4
+		$AnimatedSprite2D.play("shoot")
+		
+		while $AnimatedSprite2D.frame < 9:
+			await get_tree().process_frame
+			
+		#makes it stop tracking player on frame 9
+		var arrow_left = shoot_arrows(-20)
+		var arrow_center = shoot_arrows(0)
+		var arrow_right = shoot_arrows(20)
+		display_arrow_path(-20)
+		display_arrow_path(0)
+		display_arrow_path(20)
+		
+		while $AnimatedSprite2D.frame < 11:
+			await get_tree().process_frame
+		
+		get_parent().add_child(arrow_left)
+		get_parent().add_child(arrow_center)
+		get_parent().add_child(arrow_right)
+		
+		while $AnimatedSprite2D.frame < 13:
+			await get_tree().process_frame
+			
+		if position.distance_to(player.position) > dash_range:
+			dash_attack()
+			
+		ranged_attack_timer.stop()
+		ranged_attack_timer.start()
+		
+		is_shooting = false
+		speed = CONST_SPEED
 	
 	
 func _on_ranged_attack_timeout() -> void:
