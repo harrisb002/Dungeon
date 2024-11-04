@@ -14,7 +14,7 @@ func _ready():
 	create_items()
 
 func create_items():
-	print("Creating Items in TileMapLayer")
+	#print("Creating Items in TileMapLayer")
 	
 	var spawnable_cells = []
 	for cell in tile_map.get_used_cells():
@@ -32,13 +32,13 @@ func create_items():
 		var item_data = Global.spawnable_items[randi() % Global.spawnable_items.size()]
 		
 		# Print selected cell and its local position
-		print("Selected cell:", cell, "Local Position:", tile_map.map_to_local(cell))
+		#print("Selected cell:", cell, "Local Position:", tile_map.map_to_local(cell))
 
 		# Spawn item and place debug marker
 		add_item_by_data(cell, item_data, atlas_coords)
 
 func add_item_by_data(cell: Vector2i, item_data: Dictionary, atlas_coords: Vector2i):
-	print("Creating item:", item_data["name"], "at Cell:", cell)
+	#print("Creating item:", item_data["name"], "at Cell:", cell)
 	var item_instance
 	
 	# Load and instantiate the Inventory_Item scene
@@ -59,4 +59,4 @@ func add_item_by_data(cell: Vector2i, item_data: Dictionary, atlas_coords: Vecto
 	item_instance.scale = Vector2(1, 1)  # Set scale as needed
 
 	add_child(item_instance)
-	print("Item placed at position:", item_position)
+	#print("Item placed at position:", item_position)

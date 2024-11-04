@@ -9,44 +9,55 @@ signal inventory_updated
 var Player_node: Node = null
 var tile_map: TileMapLayer = null
 
-@onready var inventory_slot = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
+@onready var inventory_slot_scene = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
 @onready var inventory_item = preload("res://Scenes/Inventory/Inventory_Item.tscn")
 
 var inventory = []
+var hotbar_size = 5
+var hotbar_inventory = []
 
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
 	{"type": "Money", "name": "Coin", "effect": "", "texture": preload("res://allart/InventoryItems/coin.png")},
 	{"type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
-	{"type": "Potion", "name": "FireSuit", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
+	{"type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png")},
+	{"type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
+	{"type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
+	{"type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
 	{"type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png")},
-	{"type": "Potion", "name": "FlashRing", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
-	{"type": "Potion", "name": "AddedSlots", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png")},
 	{"type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png")},
 	{"type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png")},
 	{"type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png")},
 	{"type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png")},
 	{"type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png")},
-	{"type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
 ]
 
 func _ready():
 	inventory.resize(9)
+	hotbar_inventory.resize(hotbar_size)
 
 # Adds item and returns true if successfull
-func add_item(item):
-	for i in range(inventory.size()):
-		# Stack the item if it already exists in inventory
-		# Based on dict. found in inventory_item.gd, pickup_items
-		if inventory[i] != null and inventory[i]["name"] == item["name"] and inventory[i]["type"] == item["type"]:
-			inventory[i]["quantity"] += item["quantity"]
-			inventory_updated.emit()
-			return true
-		elif inventory[i] == null:
-			inventory[i] = item
-			inventory_updated.emit()
-			return true
-	return false
+func add_item(item, to_hotbar = false):
+	var added_to_hotbar = false
+	# Add the item to hotbar
+	if to_hotbar:
+		added_to_hotbar = add_hotbar_item(item)
+		inventory_updated.emit()
+
+	# Add to inventory if not hotbar
+	if not added_to_hotbar:
+		for i in range(inventory.size()):
+			# Stack the item if it already exists in inventory
+			# Based on dict. found in inventory_item.gd, pickup_items
+			if inventory[i] != null and inventory[i]["name"] == item["name"] and inventory[i]["type"] == item["type"]:
+				inventory[i]["quantity"] += item["quantity"]
+				inventory_updated.emit()
+				return true
+			elif inventory[i] == null:
+				inventory[i] = item
+				inventory_updated.emit()
+				return true
+		return false
 
 # Decrement/Remove item based on name and type
 func remove_item(item_name, item_type):
@@ -58,12 +69,39 @@ func remove_item(item_name, item_type):
 			inventory_updated.emit()
 			return true
 	return false
-	
+
+# Adds item to hotbar inventory and returns true if successfull
+func add_hotbar_item(item):
+	for i in range(hotbar_size):
+		if hotbar_inventory[i] == null:
+			hotbar_inventory[i] = item
+			return true
+	return false
+
+# Decrement/Remove item based on name and type from hotbar
+func remove_hotbar_item(item_name, item_type):
+	for i in range(hotbar_inventory.size()):
+		if hotbar_inventory[i] != null and hotbar_inventory[i]["name"] == item_name and hotbar_inventory[i]["type"] == item_type:
+			if hotbar_inventory[i]["quantity"] <= 0:
+				hotbar_inventory[i] = null
+			inventory_updated.emit()
+			return true
+	return false
+
+# Unassign hotbar item
+func unassign_hotbar_item(item_name, item_type):
+	for i in range(hotbar_inventory.size()):
+		if hotbar_inventory[i] != null and hotbar_inventory[i]["name"] == item_name and hotbar_inventory[i]["type"] == item_type:
+			hotbar_inventory[i] = null  
+			inventory_updated.emit()
+			return true
+	return false
+
 # Check the position to test it is valid
 func adjust_drop_position(pos):
-	var radius = 500
+	var radius = 150
 	var nearby_items = get_tree().get_nodes_in_group("Items")
-	var attempts = 10  # Limit the number of adjustment attempts to avoid infinite loops
+	var attempts = 20  # Limit the number of adjustment attempts to avoid infinite loops
 
 	# Try to find a valid position within the radius
 	while attempts > 0:

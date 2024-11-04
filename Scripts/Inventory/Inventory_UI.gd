@@ -5,7 +5,7 @@ extends Control
 func _ready():
 	# Connect the signal to update and load with correct num of columns
 	Global.inventory_updated.connect(_on_inventory_updated)
-	_on_inventory_updated()
+	_on_inventory_updated
 
 # Update the inventory UI
 func _on_inventory_updated():
@@ -15,7 +15,7 @@ func _on_inventory_updated():
 	# Add slots for each inventory item
 	for item in Global.inventory:
 		# Create new slot and add it to container
-		var slot = Global.inventory_slot.instantiate()
+		var slot = Global.inventory_slot_scene.instantiate()
 		grid_container.add_child(slot)
 		if item != null:
 			slot.set_item(item)

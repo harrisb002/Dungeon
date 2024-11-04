@@ -6,10 +6,15 @@ extends Control
 @onready var item_effect = $DetailsPanel/ItemEffect
 @onready var quantity_label = $InnerBorder/ItemQuantity
 @onready var details_panel = $DetailsPanel
-@onready var usage_panel = $UsagePanel
+@onready var usage_panel = $UsagePanel/AssignButton
 
 # Slot item
 var item = null
+var slot_index = -1 # Doesnt exist if still -1
+
+# Set the slot index for the hotbar
+func set_slot_index(new_index):
+	slot_index = new_index
 
 # Create empty slots
 func set_empty():
@@ -55,6 +60,7 @@ func _on_drop_button_pressed():
 		drop_offset = drop_offset.rotated(Global.Player_node.rotation)
 		Global.drop_item(item, drop_position + drop_offset)
 		Global.remove_item(item["name"], item["type"])
+		Global.remove_hotbar_item(item["name"], item["type"])
 		usage_panel.visible = false
 
 
@@ -66,5 +72,10 @@ func _on_use_button_pressed():
 		if Global.Player_node:
 			Global.Player_node.apply_item_effect(item)
 			Global.remove_item(item["name"], item["type"])
+			Global.remove_hotbar_item(item["name"], item["type"])
 		else:
 			print("Player could not be found")
+
+
+func _on_assign_button_pressed() -> void:
+	pass # Replace with function body.
