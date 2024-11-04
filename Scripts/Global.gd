@@ -37,19 +37,27 @@ func _ready():
 	hotbar_inventory.resize(hotbar_size)
 
 # Adds item and returns true if successfull
-func add_item(item):
-	for i in range(inventory.size()):
-		# Stack the item if it already exists in inventory
-		# Based on dict. found in inventory_item.gd, pickup_items
-		if inventory[i] != null and inventory[i]["name"] == item["name"] and inventory[i]["type"] == item["type"]:
-			inventory[i]["quantity"] += item["quantity"]
-			inventory_updated.emit()
-			return true
-		elif inventory[i] == null:
-			inventory[i] = item
-			inventory_updated.emit()
-			return true
-	return false
+func add_item(item, to_hotbar = false):
+	var added_to_hotbar = false
+	# Add the item to hotbar
+	if to_hotbar:
+		added_to_hotbar = add_hotbar_item(item)
+		inventory_updated.emit()
+
+	# Add to inventory if not hotbar
+	if not added_to_hotbar:
+		for i in range(inventory.size()):
+			# Stack the item if it already exists in inventory
+			# Based on dict. found in inventory_item.gd, pickup_items
+			if inventory[i] != null and inventory[i]["name"] == item["name"] and inventory[i]["type"] == item["type"]:
+				inventory[i]["quantity"] += item["quantity"]
+				inventory_updated.emit()
+				return true
+			elif inventory[i] == null:
+				inventory[i] = item
+				inventory_updated.emit()
+				return true
+		return false
 
 # Decrement/Remove item based on name and type
 func remove_item(item_name, item_type):
@@ -61,7 +69,35 @@ func remove_item(item_name, item_type):
 			inventory_updated.emit()
 			return true
 	return false
-	
+
+# Adds item to hotbar inventory and returns true if successfull
+func add_hotbar_item(item):
+	for i in range(hotbar_size):
+		if hotbar_inventory[i] == null:
+			hotbar_inventory[i] = item
+			return true
+	return false
+
+# Decrement/Remove item based on name and type from hotbar
+func remove_hotbar_item(item_name, item_type):
+	for i in range(hotbar_inventory.size()):
+		if hotbar_inventory[i] != null and hotbar_inventory[i]["name"] == item_name and hotbar_inventory[i]["type"] == item_type:
+			hotbar_inventory[i]["quantity"] -= 1
+			if hotbar_inventory[i]["quantity"] <= 0:
+				hotbar_inventory[i] = null
+			inventory_updated.emit()
+			return true
+	return false
+
+# Unassign hotbar item
+func unassign_hotbar_item(item_name, item_type):
+	for i in range(hotbar_inventory.size()):
+		if hotbar_inventory[i] != null and hotbar_inventory[i]["name"] == item_name and hotbar_inventory[i]["type"] == item_type:
+			hotbar_inventory[i] = null  
+			inventory_updated.emit()
+			return true
+	return false
+
 # Check the position to test it is valid
 func adjust_drop_position(pos):
 	var radius = 150

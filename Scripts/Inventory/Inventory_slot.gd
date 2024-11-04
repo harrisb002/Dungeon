@@ -55,6 +55,7 @@ func _on_drop_button_pressed():
 		drop_offset = drop_offset.rotated(Global.Player_node.rotation)
 		Global.drop_item(item, drop_position + drop_offset)
 		Global.remove_item(item["name"], item["type"])
+		Global.remove_hotbar_item(item["name"], item["type"])
 		usage_panel.visible = false
 
 
