@@ -150,6 +150,20 @@ func drop_item(item_data, drop_position):
 	item_instance.scale = Vector2(3, 3) 
 	get_tree().current_scene.add_child(item_instance)
 
+# Swap the inventory items based on their resp. indicies
+func swap_inventory_items(idx1, idx2):
+	if idx1 < 0 or idx1 > inventory.size() or idx2 < 0 or idx2 > inventory.size():
+		## out of bounds 
+		return false
+	## Swap the items
+	var temp = inventory[idx1]
+	inventory[idx1]= inventory[idx2]
+	inventory[idx2] = temp
+	
+	## Emit event
+	inventory_updated.emit()
+	return true
+
 # Add slots to inventory
 func increase_inventory_size(added_slots):
 	inventory.resize(inventory.size() + added_slots)
