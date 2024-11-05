@@ -20,12 +20,16 @@ Global="*res://Scripts/Global.gd"
 
 [display]
 
-window/size/viewport_width=2500
+window/size/viewport_width=700
 window/size/viewport_height=1700
 
 [dotnet]
 
 project/assembly_name="351_project_game"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
 [global_group]
 
