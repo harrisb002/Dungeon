@@ -24,10 +24,19 @@ func set_slot_index(new_index):
 func set_empty():
 	icon.texture = null
 	quantity_label.text = ""
+	item_name.text = ""
+	item_type.text = ""
+	item_effect.text = ""
+	item = null
 
 # Set slot item with values from dict
 func set_item(new_item):
 	item = new_item
+	## If null set to empty
+	if item == null:
+		set_empty()
+		return
+
 	icon.texture = item["texture"]
 	quantity_label.text = str(item["quantity"])
 	item_name.text = str(item["name"])
