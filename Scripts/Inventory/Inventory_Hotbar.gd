@@ -44,12 +44,18 @@ func _on_drag_start(slot_control: Control):
 	print("Draggin started from slot: ", dragged_slot)
 
 # Dropping the item 
+# Drops slot at new location
 func _on_drag_end():
-	## Get the pos. of the drop target
 	var target_slot = get_slot_under_mouse()
 	if target_slot and dragged_slot != target_slot:
-		# drop the drop slot at target slot
 		drop_slot(dragged_slot, target_slot)
+	elif dragged_slot != target_slot:
+		var drop_position = Global.Player_node.global_position
+		var drop_offset = Vector2(50, 0)
+		drop_offset = drop_offset.rotated(Global.Player_node.rotation)
+		Global.drop_item(dragged_slot.item, drop_position + drop_offset)
+		Global.unassign_hotbar_item(dragged_slot.item["name"], dragged_slot.item["type"])
+		Global.remove_item(dragged_slot.item["name"], dragged_slot.item["type"])
 	dragged_slot = null
 
 # Get curr mouse position in the grid container to check if valid (Drop pos.)
