@@ -9,7 +9,6 @@ func _ready():
 	
 # Create the hotbar slots
 func _update_hotbar_ui():
-	print("Hotbar UI updated")
 	clear_hotbar_container()
 	for i in range(Global.hotbar_size):
 		var slot = Global.inventory_slot_scene.instantiate()

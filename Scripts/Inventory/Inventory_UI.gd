@@ -12,7 +12,6 @@ func _ready():
 	
 # Update the inventory UI
 func _on_inventory_updated():
-	print("Inventory UI updated")
 	# Clear the current slots
 	clear_grid_container()
 	

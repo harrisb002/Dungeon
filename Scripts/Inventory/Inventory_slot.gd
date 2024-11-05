@@ -8,6 +8,11 @@ extends Control
 @onready var details_panel = $DetailsPanel
 @onready var usage_panel = $UsagePanel
 @onready var assign_button = $UsagePanel/AssignButton
+@onready var outer_border = $OuterBorder
+
+
+signal drag_start(slot)
+signal drag_end()
 
 # Slot item
 var item = null
@@ -112,3 +117,21 @@ func _on_assign_button_pressed():
 			is_assigned = true
 		## Now update the UI with the changes
 		update_assignment_status()
+
+# Used for mouse events for inventory slots (Drag and drop)
+func _on_item_button_gui_input(event: InputEvent):
+	if event is InputEventMouseButton:
+		## Usage panel
+		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+			if item != null:
+				usage_panel.visible = !usage_panel.visible
+		## Dragging the item
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.is_pressed():
+				## Change color to show the item is being dragged
+				outer_border.modulate = Color(1, 1, 0)
+				drag_start.emit(self)
+			else:
+				## If no longer dragging the item then reset the color
+				outer_border.modulate = Color(1, 1, 1)
+				
