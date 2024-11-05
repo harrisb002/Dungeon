@@ -27,7 +27,6 @@ func start():
 func _ready():
 	# Set the Player reference instance to access the player globally
 	Global.set_player_ref(self)
-	
 	screen_size = get_viewport_rect().size
 	original_scale = scale  # Store the player's original scale
 	start_position = position  # Store the player's start position
@@ -101,6 +100,44 @@ func attack():
 			animated_sprite.play("back_attack")
 			$attack_time_out.start()
 
+# Hotbar Shorcut usage
+func _unhandled_input(event: InputEvent):
+	if event is InputEventKey and event.pressed:
+		## Loop through the hotbar slots
+		for i in range(Global.hotbar_size):
+			## Check if a specific key is pressed
+			if Input.is_action_just_pressed("hotbar_" + str(i + 1)):
+				use_hotbar_item(i)
+				break
+
+# Hotbar Shortcuts
+func use_hotbar_item(slot_idx):
+	if slot_idx < Global.hotbar_inventory.size():
+		var item = Global.hotbar_inventory[slot_idx]
+		if item != null:
+			## Use the item in this slot
+			apply_item_effect(item)
+			## Remove the item
+			item["quantity"] -= 1
+			if item["quantity"] <= 0:
+				Global.hotbar_inventory[slot_idx] = null
+				## Decrease the quantity in the main inventory
+				Global.remove_item(item["name"], item["type"])
+			## Emit signal to update the inventory as well
+			Global.inventory_updated.emit()
+
+# Apply effect of the item (if it has one)
+func apply_item_effect(item):
+	match item["effect"]:
+		"Increase Speed":
+			speed += 200
+			print("Speed increased to ", speed)
+		"Increase Slots":
+			Global.increase_inventory_size(6)
+			print("Slots increased to ", Global.inventory.size())
+		_:
+			print("No effect exists for this item")
+
 func _on_attack_time_out_timeout():
 	$attack_time_out.stop()
 	is_attacking = false
@@ -126,15 +163,3 @@ func _on_hit_box_body_entered(_body: Node2D):
 
 func _on_hit_box_body_exited(_body: Node2D):
 	inside_hole = false
-
-# Apply effect of the item (if it has one)
-func apply_item_effect(item):
-	match item["effect"]:
-		"Increase Speed":
-			speed += 200
-			print("Speed increased to ", speed)
-		"Increase Slots":
-			Global.increase_inventory_size(6)
-			print("Slots increased to ", Global.inventory.size())
-		_:
-			print("No effect exists for this item")

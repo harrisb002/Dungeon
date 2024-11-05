@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dar62p1o73bc1" path="res://allart/InventoryItems/Spawnable_Items.png" id="6_pk3e0"]
 [ext_resource type="PackedScene" uid="uid://chxd6ijec3lqs" path="res://Scenes/Player.tscn" id="7_460cg"]
 [ext_resource type="Script" path="res://Scripts/Tile_Map_Parser.gd" id="7_u6lfh"]
-[ext_resource type="PackedScene" uid="uid://dejeyibf4qjqd" path="res://Scenes/portal.tscn" id="8_2mpry"]
+[ext_resource type="PackedScene" uid="uid://dejeyibf4qjqd" path="res://Scenes/Portal.tscn" id="8_2mpry"]
 [ext_resource type="PackedScene" uid="uid://c6rpn5eochphp" path="res://Scenes/Chests/Chest_Common.tscn" id="9_87rob"]
 [ext_resource type="PackedScene" uid="uid://b88bdcshrb5ng" path="res://Scenes/Chests/Chest_Boss.tscn" id="11_0pjkg"]
 [ext_resource type="PackedScene" uid="uid://beyb6gfsi63nm" path="res://Scenes/Chests/Chest_Golden.tscn" id="11_dcnqv"]
@@ -21759,9 +21759,6 @@ shape = SubResource("CapsuleShape2D_1kust")
 [node name="AnimatedSprite2D" parent="Player" index="1"]
 position = Vector2(-0.500005, -1.99999)
 animation = &"forward_attack"
-
-[node name="Camera2D" parent="Player" index="2"]
-zoom = Vector2(2, 2)
 
 [node name="HitBox" parent="Player" index="3"]
 position = Vector2(-0.5, 0)

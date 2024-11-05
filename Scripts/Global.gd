@@ -10,7 +10,7 @@ var Player_node: Node = null
 var tile_map: TileMapLayer = null
 
 @onready var inventory_slot_scene = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
-@onready var inventory_item = preload("res://Scenes/Inventory/Inventory_Item.tscn")
+@onready var inventory_item_scene = preload("res://Scenes/Inventory/Inventory_Item.tscn")
 
 var inventory = []
 var hotbar_size = 5
@@ -96,6 +96,10 @@ func unassign_hotbar_item(item_name, item_type):
 			inventory_updated.emit()
 			return true
 	return false
+	
+# Prevents duplicate assignments of ites in the hotbar
+func is_item_assigned_to_hotbar(item_to_check):
+	return item_to_check in hotbar_inventory
 
 # Check the position to test it is valid
 func adjust_drop_position(pos):

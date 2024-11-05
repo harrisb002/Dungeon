@@ -4,11 +4,15 @@ extends Control
 
 func _ready():
 	# Connect the signal to update and load with correct num of columns
+	# Ensure the signal is not connected multiple times
+	if Global.inventory_updated.is_connected(_on_inventory_updated):
+		Global.inventory_updated.disconnect(_on_inventory_updated)
 	Global.inventory_updated.connect(_on_inventory_updated)
 	_on_inventory_updated()
-
+	
 # Update the inventory UI
 func _on_inventory_updated():
+	print("Inventory UI updated")
 	# Clear the current slots
 	clear_grid_container()
 	
@@ -21,6 +25,7 @@ func _on_inventory_updated():
 			slot.set_item(item)
 		else:
 			slot.set_empty()
+		slot.update_assignment_status()
 
 # Clear grid upon each update to ensure correct quantity
 func clear_grid_container():
