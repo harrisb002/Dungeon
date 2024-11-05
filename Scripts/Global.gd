@@ -152,7 +152,7 @@ func drop_item(item_data, drop_position):
 
 # Swap the inventory items based on their resp. indicies
 func swap_inventory_items(idx1, idx2):
-	if idx1 < 0 or idx1 > inventory.size() or idx2 < 0 or idx2 > inventory.size():
+	if idx1 < 0 or idx1 >= inventory.size() or idx2 < 0 or idx2 >= inventory.size():
 		## out of bounds 
 		return false
 	## Swap the items

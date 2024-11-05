@@ -134,4 +134,5 @@ func _on_item_button_gui_input(event: InputEvent):
 			else:
 				## If no longer dragging the item then reset the color
 				outer_border.modulate = Color(1, 1, 1)
+				drag_end.emit()
 				

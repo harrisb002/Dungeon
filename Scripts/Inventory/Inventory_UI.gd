@@ -64,8 +64,9 @@ func get_slot_under_mouse() -> Control:
 # Gets the index of a slot to determine if it is valid 
 func get_slot_index(slot: Control) -> int:
 	for i in range(grid_container.get_child_count()):
-		## Valid slot is found
-		return i
+		if grid_container.get_child(i) == slot:
+			## Valid slot is found
+			return i
 	## Invalid slot 
 	return -1
 
