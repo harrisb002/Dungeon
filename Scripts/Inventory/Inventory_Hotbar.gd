@@ -41,21 +41,29 @@ func clear_hotbar_container():
 # Store the dragged slot ref from start
 func _on_drag_start(slot_control: Control):
 	dragged_slot = slot_control
-	print("Draggin started from slot: ", dragged_slot)
 
-# Dropping the item 
-# Drops slot at new location
+# Dropping the item (onto world as well)
 func _on_drag_end():
 	var target_slot = get_slot_under_mouse()
+	## Drop into hotbar
 	if target_slot and dragged_slot != target_slot:
 		drop_slot(dragged_slot, target_slot)
+	## Drop onto map
 	elif dragged_slot != target_slot:
 		var drop_position = Global.Player_node.global_position
 		var drop_offset = Vector2(50, 0)
+		
+		## Drop the Item
 		drop_offset = drop_offset.rotated(Global.Player_node.rotation)
 		Global.drop_item(dragged_slot.item, drop_position + drop_offset)
-		Global.unassign_hotbar_item(dragged_slot.item["name"], dragged_slot.item["type"])
+		
+		## Update both the InventoryUI and the hotbar by removing Item
 		Global.remove_item(dragged_slot.item["name"], dragged_slot.item["type"])
+		## If the quantity <= 0, unassign and remove the item from the hotbar and inventory
+		if dragged_slot.item["quantity"] <= 0:
+			Global.unassign_hotbar_item(dragged_slot.item["name"], dragged_slot.item["type"])
+			Global.remove_item(dragged_slot.item["name"], dragged_slot.item["type"])
+			dragged_slot.set_empty()  # Clear the slot visually
 	dragged_slot = null
 
 # Get curr mouse position in the grid container to check if valid (Drop pos.)
