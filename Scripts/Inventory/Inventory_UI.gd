@@ -4,7 +4,6 @@ extends Control
 
 ## Stores the current item being dragged/droped
 var dragged_slot = null
-var drop_target = null
 
 func _ready():
 	# Connect the signal to update and load with correct num of columns

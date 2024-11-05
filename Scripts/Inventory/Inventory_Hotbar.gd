@@ -2,6 +2,10 @@ extends Control
 
 @onready var hotbar_container = $HBoxContainer
 
+## Stores the current item being dragged/droped
+var dragged_slot = null
+var drop_target = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.inventory_updated.connect(_update_hotbar_ui)
@@ -14,8 +18,12 @@ func _update_hotbar_ui():
 		var slot = Global.inventory_slot_scene.instantiate()
 		# For each slot, set slot index to be able to identify and manage it
 		slot.set_slot_index(i)
-		hotbar_container.add_child(slot)
 		
+		## Connect each slot to the drag and drop events
+		slot.drag_start.connect(_on_drag_start)
+		slot.drag_end.connect(_on_drag_end)
+		
+		hotbar_container.add_child(slot)
 		# Check if present and if so, stack it. Else just add it
 		if Global.hotbar_inventory[i] != null:
 			slot.set_item(Global.hotbar_inventory[i])
@@ -29,3 +37,48 @@ func clear_hotbar_container():
 		var child = hotbar_container.get_child(0)
 		hotbar_container.remove_child(child)
 		child.queue_free()
+
+# Store the dragged slot ref from start
+func _on_drag_start(slot_control: Control):
+	dragged_slot = slot_control
+	print("Draggin started from slot: ", dragged_slot)
+
+# Dropping the item 
+func _on_drag_end():
+	## Get the pos. of the drop target
+	var target_slot = get_slot_under_mouse()
+	if target_slot and dragged_slot != target_slot:
+		# drop the drop slot at target slot
+		drop_slot(dragged_slot, target_slot)
+	dragged_slot = null
+
+# Get curr mouse position in the grid container to check if valid (Drop pos.)
+func get_slot_under_mouse() -> Control:
+	var mouse_position = get_global_mouse_position()
+	for slot in hotbar_container.get_children():
+		var slot_rect = Rect2(slot.global_position, slot.size)
+		if slot_rect.has_point(mouse_position):
+			return slot
+	return null
+
+# Gets the index of a slot to determine if it is valid 
+func get_slot_index(slot: Control) -> int:
+	for i in range(hotbar_container.get_child_count()):
+		if hotbar_container.get_child(i) == slot:
+			## Valid slot is found
+			return i
+	## Invalid slot 
+	return -1
+
+# Drop the selected slot in new slot
+func drop_slot(slot1: Control, slot2: Control): 
+	## Get the index of the two slots in the gri
+	var slot1_idx = get_slot_index(slot1)
+	var slot2_idx = get_slot_index(slot2)
+	
+	if slot1_idx == -1 or slot2_idx == -1:
+		print("Invalid slot found")
+		return
+	else: ## Now attempt to swap the inventory items based on index
+		if Global.swap_hotbar_items(slot1_idx, slot2_idx):
+			_update_hotbar_ui()

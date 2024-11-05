@@ -164,6 +164,20 @@ func swap_inventory_items(idx1, idx2):
 	inventory_updated.emit()
 	return true
 
+# Swap the hotbar_inventory items based on their resp. indicies
+func swap_hotbar_items(idx1, idx2):
+	if idx1 < 0 or idx1 >= hotbar_inventory.size() or idx2 < 0 or idx2 >= hotbar_inventory.size():
+		## out of bounds 
+		return false
+	## Swap the items
+	var temp = hotbar_inventory[idx1]
+	hotbar_inventory[idx1]= hotbar_inventory[idx2]
+	hotbar_inventory[idx2] = temp
+	
+	## Emit event
+	inventory_updated.emit()
+	return true
+
 # Add slots to inventory
 func increase_inventory_size(added_slots):
 	inventory.resize(inventory.size() + added_slots)
