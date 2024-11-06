@@ -131,10 +131,8 @@ func apply_item_effect(item):
 	match item["effect"]:
 		"Increase Speed":
 			speed += 200
-			print("Speed increased to ", speed)
 		"Increase Slots":
 			Global.increase_inventory_size(6)
-			print("Slots increased to ", Global.inventory.size())
 		_:
 			print("No effect exists for this item")
 
@@ -155,7 +153,9 @@ func reset_player():
 	scale = original_scale # Reset the scale
 	speed = 1000  # Restore the speed
 	hide()
-	await get_tree().create_timer(0.5).timeout  # Small delay before showing
+		# Only create the timer if get_tree() is valid
+	if get_tree():
+		await get_tree().create_timer(0.5).timeout  # Small delay before showing
 	show()
 
 func _on_hit_box_body_entered(_body: Node2D):

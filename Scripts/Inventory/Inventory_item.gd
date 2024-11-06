@@ -26,7 +26,7 @@ func _process(delta: float):
 	if player_in_range and Input.is_action_just_pressed("pickup"):
 		pickup_item()
 
-# Creatthe dict for item info to be passed when adding it
+# Create the dict for item info to be passed when adding it
 func pickup_item():
 	var item = {
 		"quantity": 1,
