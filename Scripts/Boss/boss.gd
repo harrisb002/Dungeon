@@ -47,7 +47,6 @@ func _ready() -> void:
 	#ranged_attack_timer.connect("timeout", Callable(self, "_on_ranged_attack_timeout"))
 	ranged_attack_timer.stop()
 	$AnimatedSprite2D.play("idle")
-	add_to_group("enemy")
 	
 func take_damage(dmg: int) -> void:
 	if not is_dead:

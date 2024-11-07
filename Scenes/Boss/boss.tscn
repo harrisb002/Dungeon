@@ -482,7 +482,7 @@ radius = 1330.56
 radius = 30.0
 height = 125.714
 
-[node name="boss" type="CharacterBody2D"]
+[node name="boss" type="CharacterBody2D" groups=["enemy"]]
 scale = Vector2(0.7, 0.7)
 collision_layer = 256
 collision_mask = 3
