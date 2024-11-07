@@ -1,12 +1,11 @@
 extends CharacterBody2D
 
-@export var speed = 1000  
+@export var speed = 350 
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var interact_ui = $InteractUI
 @onready var inventory_ui = $InventoryUI
 @onready var inventory_ui_label = $InteractUI/ColorRect/Label
-@onready var inventory_hotbar = $InventoryHotbar/Inventory_Hotbar
 
 var screen_size  # Size of the game window.
 var start_position = Vector2.ZERO  # Variable to store the player's starting position
@@ -50,12 +49,8 @@ func _input(event):
 	if event.is_action_pressed("inventory"):
 		# Create a toggle switch
 		inventory_ui.visible = !inventory_ui.visible
-		
 		# Pause the game, on/off
 		get_tree().paused = !get_tree().paused
-		
-		# Hide the hotbar when the inventory is open
-		inventory_hotbar.visible = !inventory_hotbar.visible
 
 func _process(delta):
 	if inside_hole:

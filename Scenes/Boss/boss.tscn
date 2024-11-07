@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://tp42ctnbye3c"]
+[gd_scene load_steps=75 format=3 uid="uid://tp42ctnbye3c"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss.gd" id="1_ouu1t"]
 [ext_resource type="PackedScene" uid="uid://foxbh42w4vyu" path="res://Scenes/Boss/boss_minion.tscn" id="2_e7we8"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b20nx1mjurivb" path="res://allart/BossArt/Samurai_Archer/Attack_2.png" id="4_65y6r"]
 [ext_resource type="Texture2D" uid="uid://m478fiib2hgm" path="res://allart/BossArt/Samurai_Archer/Attack_3.png" id="5_1me8y"]
 [ext_resource type="Texture2D" uid="uid://dydcl07arp0xp" path="res://allart/BossArt/Samurai_Archer/Idle.png" id="5_g53i8"]
+[ext_resource type="Texture2D" uid="uid://d3nq1p0l7mvg6" path="res://allart/BossArt/Samurai_Archer/Dead.png" id="6_ssylh"]
 [ext_resource type="Texture2D" uid="uid://rted68ncrigc" path="res://allart/BossArt/Samurai_Archer/Attack_1.png" id="6_subhq"]
 [ext_resource type="Texture2D" uid="uid://cyuxbove3pqgg" path="res://allart/BossArt/Samurai_Archer/Shot.png" id="7_eakln"]
 [ext_resource type="Texture2D" uid="uid://brmodgbtr0wh6" path="res://allart/BossArt/Samurai_Archer/Run.png" id="7_peyew"]
@@ -54,6 +55,26 @@ region = Rect2(512, 0, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_4laax"]
 atlas = ExtResource("5_1me8y")
 region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnwyj"]
+atlas = ExtResource("6_ssylh")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66fdr"]
+atlas = ExtResource("6_ssylh")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5rxx"]
+atlas = ExtResource("6_ssylh")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ik8p5"]
+atlas = ExtResource("6_ssylh")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8thou"]
+atlas = ExtResource("6_ssylh")
+region = Rect2(512, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ni8f"]
 atlas = ExtResource("5_g53i8")
@@ -278,6 +299,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_hnwyj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66fdr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5rxx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ik8p5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8thou")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_4ni8f")
 }, {
 "duration": 1.0,
@@ -441,7 +482,7 @@ radius = 1330.56
 radius = 30.0
 height = 125.714
 
-[node name="boss" type="CharacterBody2D"]
+[node name="boss" type="CharacterBody2D" groups=["enemy"]]
 scale = Vector2(0.7, 0.7)
 collision_layer = 256
 collision_mask = 3
@@ -453,11 +494,11 @@ projectile = ExtResource("3_r137f")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.875, 1.875)
 sprite_frames = SubResource("SpriteFrames_3kuft")
-animation = &"aoe_attack"
+animation = &"death"
 offset = Vector2(0, -20)
 
 [node name="Detection_area" type="Area2D" parent="."]
-collision_layer = 256
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection_area"]
 shape = SubResource("CircleShape2D_mekdr")
@@ -473,6 +514,12 @@ one_shot = true
 [node name="Ranged_Attack" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="hp_bar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="body_entered" from="Detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="Detection_area" to="." method="_on_detection_area_body_exited"]

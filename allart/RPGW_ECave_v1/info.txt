@@ -1,0 +1,6 @@
+animated objects sprite sheet block size:
+
+treeA - 96x128
+treeB - 64x96
+treeC - 64x96
+
