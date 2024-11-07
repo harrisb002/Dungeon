@@ -16,9 +16,11 @@ var inside_hole = false # Flag for falling in holes
 var curr_direction = "move_right" # Check what side we are currenlty moving 
 var is_attacking = false  # Check if attack frames are on
 
+var animation_prefix = Global.character + "_"
+
 # Reset the player when starting a new game.
 func start():
-	animated_sprite.animation = "right"  # Set default animation
+	animated_sprite.animation = animation_prefix + "right"  # Set default animation
 	animated_sprite.play()  # Start playing the animation
 	position = start_position  # Reset position
 	show()
@@ -60,6 +62,9 @@ func _process(delta):
 		fall()
 
 func update_animations():
+	var animation = ""
+	var animation_prefix = Global.character + "_"
+	#var animation_prefix = "knight_"
 	if is_attacking:
 		return  
 	if inside_hole:
@@ -71,34 +76,35 @@ func update_animations():
 	else:
 		if abs(velocity.x) > abs(velocity.y):
 			if velocity.x > 0:
-				animated_sprite.play("right")
+				animation = "right"
 				curr_direction = "move_right"
 			else:
-				animated_sprite.play("left")
+				animation = "left"
 				curr_direction = "move_left"
 		else:
 			if velocity.y > 0:
-				animated_sprite.play("forward")
+				animation = "backward"
 				curr_direction = "move_down"
 			else:
-				animated_sprite.play("backward")
+				animation = "forward"
 				curr_direction = "move_up"
+	animated_sprite.play(animation_prefix + animation)
 
 func attack():
 	if Input.is_action_just_pressed("attack") and not is_attacking:
+		var animation = ""
+		var animation_prefix = Global.character + "_"
 		is_attacking = true  # Set the flag to true
 		if(curr_direction == "move_right") :
-			animated_sprite.play("right_attack")
-			$attack_time_out.start()
-		if(curr_direction == "move_left") :
-			animated_sprite.play("left_attack")
-			$attack_time_out.start()
-		if(curr_direction == "move_down"):
-			animated_sprite.play("forward_attack")
-			$attack_time_out.start()
-		if(curr_direction == "move_up"):
-			animated_sprite.play("back_attack")
-			$attack_time_out.start()
+			animation = "right_attack"		
+		elif(curr_direction == "move_left") :
+			animation = "left_attack"
+		elif(curr_direction == "move_down"):
+			animation = "forward_attack"
+		elif(curr_direction == "move_up"):
+			animation = "back_attack"
+		$attack_time_out.start()
+		animated_sprite.play(animation_prefix + animation)
 
 # Hotbar Shorcut usage
 func _unhandled_input(event: InputEvent):

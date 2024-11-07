@@ -16,6 +16,8 @@ var inventory = []
 var hotbar_size = 5
 var hotbar_inventory = []
 
+var character = "knight"
+
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
 	{"quantity": 0, "type": "Money", "name": "Coin", "effect": "", "texture": preload("res://allart/InventoryItems/coin.png")},
