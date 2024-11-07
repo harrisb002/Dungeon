@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6nuas2kmhy4f"]
 
-[ext_resource type="Script" path="res://projectile.gd" id="1_tuqi8"]
+[ext_resource type="Script" path="res://Scripts/Boss/projectile.gd" id="1_tuqi8"]
 [ext_resource type="Texture2D" uid="uid://cw5mhygja2w62" path="res://allart/BossArt/Samurai_Archer/Arrow.png" id="2_ea14i"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cq8u0"]
