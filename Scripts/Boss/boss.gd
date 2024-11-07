@@ -47,7 +47,7 @@ func take_damage(dmg: int) -> void:
 	boss_hp -= dmg
 	print(boss_hp)
 	if boss_hp <= 0:
-			speed = 0
+			#speed = 0
 			die()
 
 func die():
@@ -59,7 +59,7 @@ func die():
 	while $AnimatedSprite2D.frame < 4:
 			await get_tree().process_frame
 	$AnimatedSprite2D.pause()
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(4).timeout
 	
 	queue_free()
 	
@@ -72,36 +72,37 @@ func dash_attack() -> void:
 
 #used for moving to player.
 func _physics_process(delta: float) -> void:
-	move_and_collide(Vector2(0,0))
-	if is_dashing:
-		position += dash_direction * speed * 5 * delta
-		
-		if $AnimatedSprite2D.frame == 5:
-			is_dashing = false
+	if not is_dead:
+		move_and_collide(Vector2(0,0))
+		if is_dashing:
+			position += dash_direction * speed * 5 * delta
 			
-	elif player_detected:
-		if position.distance_to(player.position) < attack_range and not is_attacking and not is_shooting:
-			if melee_count == 3:
-				attack(3)
-			else:
-				attack(1)
-			
-		elif not is_attacking:
-			
-			#Top line will make enemy faster depending on distance
-			#position += (player.position - position)/speed
-			position += (player.position - position).normalized() * speed * delta
-			
-			
-			if not is_shooting:
-				$AnimatedSprite2D.play("walk")
-			
-			if(player.position.x - position.x) < 0:
-				$AnimatedSprite2D.flip_h = true
-			else:
-				$AnimatedSprite2D.flip_h = false
-	else:
-		$AnimatedSprite2D.play("idle")
+			if $AnimatedSprite2D.frame == 5:
+				is_dashing = false
+				
+		elif player_detected:
+			if position.distance_to(player.position) < attack_range and not is_attacking and not is_shooting:
+				if melee_count == 3:
+					attack(3)
+				else:
+					attack(1)
+				
+			elif not is_attacking:
+				
+				#Top line will make enemy faster depending on distance
+				#position += (player.position - position)/speed
+				position += (player.position - position).normalized() * speed * delta
+				
+				
+				if not is_shooting:
+					$AnimatedSprite2D.play("walk")
+				
+				if(player.position.x - position.x) < 0:
+					$AnimatedSprite2D.flip_h = true
+				else:
+					$AnimatedSprite2D.flip_h = false
+		else:
+			$AnimatedSprite2D.play("idle")
 
 
 #Detection
