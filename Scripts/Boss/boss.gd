@@ -26,7 +26,7 @@ var melee_count = 0
 var stagger = 0
 @export var max_stagger = 50
 
-@onready var hp_bar = $hp_bar
+#@onready var hp_bar = $hp_bar
 #TODO: add stagger mech
 #TODO: change minions to tornados which stop player movement when hit
 #TODO: add wall when using shockwave attack so player cant just walk behind
