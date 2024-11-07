@@ -17,18 +17,28 @@ var is_dashing: bool = false
 var dash_range: float = 400
 var alive_count = 0
 var dash_direction
+var boss_hp = 0
+@export var max_hp = 100
+var is_dead = false
 
 var melee_count = 0
 
+var stagger = 0
+@export var max_stagger = 50
 
+#@onready var hp_bar = $CanvasLayer/hp_bar
 #TODO: add stagger mech
 #TODO: change minions to tornados which stop player movement when hit
 #TODO: add wall when using shockwave attack so player cant just walk behind
 #TODO: maybe add big arrow attack down the middle after the second dodge and replace the idle animation with this attack animation
 #TODO: stuff on death
 #TODO: fix boss being pushed by player
+#TODO: Add / fix hp bar
+
+
 
 func _ready() -> void:
+	boss_hp = max_hp
 	CONST_SPEED = speed
 	minion_timer = $Minion_Timer
 	#minion_timer.connect("timeout", Callable(self, "_on_timer_timeout"))
@@ -37,6 +47,37 @@ func _ready() -> void:
 	#ranged_attack_timer.connect("timeout", Callable(self, "_on_ranged_attack_timeout"))
 	ranged_attack_timer.stop()
 	$AnimatedSprite2D.play("idle")
+	
+func take_damage(dmg: int) -> void:
+	if not is_dead:
+		boss_hp -= dmg
+		print(boss_hp)
+		increase_stagger(dmg)
+		if boss_hp <= 0:
+				#speed = 0
+				die()
+
+func increase_stagger(stag: int) -> void:
+	stagger += stag
+	if stagger >= max_stagger:
+		pass
+		#do stuff to stagger boss here
+	print("stag: ", stagger)
+
+func die():
+	if is_dead:
+		return
+	ranged_attack_timer.stop()
+	is_dead = true
+	$AnimatedSprite2D.play("death")
+	while $AnimatedSprite2D.frame < 4:
+			await get_tree().process_frame
+	$AnimatedSprite2D.pause()
+	await get_tree().create_timer(4).timeout
+	
+	queue_free()
+	
+	
 
 func dash_attack() -> void:
 	is_dashing = true
@@ -45,55 +86,58 @@ func dash_attack() -> void:
 
 #used for moving to player.
 func _physics_process(delta: float) -> void:
-	move_and_collide(Vector2(0,0))
-	if is_dashing:
-		position += dash_direction * speed * 5 * delta
-		
-		if $AnimatedSprite2D.frame == 5:
-			is_dashing = false
+	if not is_dead:
+		move_and_collide(Vector2(0,0))
+		if is_dashing:
+			position += dash_direction * speed * 5 * delta
 			
-	elif player_detected:
-		if position.distance_to(player.position) < attack_range and not is_attacking and not is_shooting:
-			if melee_count == 3:
-				attack(3)
-			else:
-				attack(1)
-			
-		elif not is_attacking:
-			
-			#Top line will make enemy faster depending on distance
-			#position += (player.position - position)/speed
-			position += (player.position - position).normalized() * speed * delta
-			
-			
-			if not is_shooting:
-				$AnimatedSprite2D.play("walk")
-			
-			if(player.position.x - position.x) < 0:
-				$AnimatedSprite2D.flip_h = true
-			else:
-				$AnimatedSprite2D.flip_h = false
-	else:
-		$AnimatedSprite2D.play("idle")
+			if $AnimatedSprite2D.frame == 5:
+				is_dashing = false
+				
+		elif player_detected:
+			if position.distance_to(player.position) < attack_range and not is_attacking and not is_shooting:
+				if melee_count == 3:
+					attack(3)
+				else:
+					attack(1)
+				
+			elif not is_attacking:
+				
+				#Top line will make enemy faster depending on distance
+				#position += (player.position - position)/speed
+				position += (player.position - position).normalized() * speed * delta
+				
+				
+				if not is_shooting:
+					$AnimatedSprite2D.play("walk")
+				
+				if(player.position.x - position.x) < 0:
+					$AnimatedSprite2D.flip_h = true
+				else:
+					$AnimatedSprite2D.flip_h = false
+		else:
+			$AnimatedSprite2D.play("idle")
 
 
 #Detection
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	#print("Detected body: ", body.name)
-	player = body
-	player_detected = true
+	if body.is_in_group("player"):
+		#print("Detected body: ", body.name)
+		player = body
+		player_detected = true
 
-	minion_timer.start()
-	ranged_attack_timer.start()
+		minion_timer.start()
+		ranged_attack_timer.start()
 
 func _on_detection_area_body_exited(body: Node2D) -> void:
-	player = null
-	player_detected = false
-	minion_timer.stop()
-	ranged_attack_timer.stop()
-	is_attacking = false
-	is_shooting = false
-	speed = CONST_SPEED
+	if body.is_in_group("player"):
+		player = null
+		player_detected = false
+		minion_timer.stop()
+		ranged_attack_timer.stop()
+		is_attacking = false
+		is_shooting = false
+		speed = CONST_SPEED
 
 #minion stuff
 func _on_timer_timeout() -> void:

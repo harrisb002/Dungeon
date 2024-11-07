@@ -20,5 +20,7 @@ func _on_timer_timeout() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	#TODO: do damage here make sure that the body is an 
+	#TODO: do damage here make sure that the body is an
+	if body.is_in_group("enemy"): 
+		body.take_damage(5)
 	queue_free()
