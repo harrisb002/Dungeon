@@ -17,6 +17,8 @@ var is_dashing: bool = false
 var dash_range: float = 400
 var alive_count = 0
 var dash_direction
+var boss_hp = 0
+var is_dead = false
 
 var melee_count = 0
 
@@ -29,6 +31,8 @@ var melee_count = 0
 #TODO: fix boss being pushed by player
 
 func _ready() -> void:
+	
+	boss_hp = 10
 	CONST_SPEED = speed
 	minion_timer = $Minion_Timer
 	#minion_timer.connect("timeout", Callable(self, "_on_timer_timeout"))
@@ -37,6 +41,27 @@ func _ready() -> void:
 	#ranged_attack_timer.connect("timeout", Callable(self, "_on_ranged_attack_timeout"))
 	ranged_attack_timer.stop()
 	$AnimatedSprite2D.play("idle")
+	
+func take_damage(dmg: int) -> void:
+	boss_hp -= dmg
+	print(boss_hp)
+	if boss_hp <= 0:
+			die()
+
+func die():
+	if is_dead:
+		return
+	ranged_attack_timer.stop()
+	is_dead = true
+	$AnimatedSprite2D.play("death")
+	while $AnimatedSprite2D.frame < 4:
+			await get_tree().process_frame
+	$AnimatedSprite2D.pause()
+	await get_tree().create_timer(2).timeout
+	
+	queue_free()
+	
+	
 
 func dash_attack() -> void:
 	is_dashing = true

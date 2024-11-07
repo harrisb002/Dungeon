@@ -21,4 +21,5 @@ func _on_timer_timeout() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	#TODO: do damage here make sure that the body is an 
+	body.take_damage(5)
 	queue_free()
