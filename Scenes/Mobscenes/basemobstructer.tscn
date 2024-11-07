@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqpcj3r4s3qts"]
+
+[ext_resource type="Script" path="res://Scripts/mobmovement.gd" id="1_dbe50"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ixn3b"]
+radius = 198.018
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_123ma"]
+radius = 20.3443
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8j6mb"]
+radius = 445.92
+
+[node name="basemob" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent")]
+collision_layer = 0
+script = ExtResource("1_dbe50")
+nav_agent = NodePath("Navigation/NavigationAgent2D")
+
+[node name="bodyenterd" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="bodyentered" type="CollisionShape2D" parent="bodyenterd"]
+position = Vector2(2, 0.333333)
+shape = SubResource("CircleShape2D_ixn3b")
+
+[node name="mainbody" type="CollisionShape2D" parent="."]
+position = Vector2(3, 0)
+shape = SubResource("CircleShape2D_123ma")
+
+[node name="Navigation" type="Node2D" parent="."]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Navigation"]
+debug_enabled = true
+
+[node name="Timer" type="Timer" parent="Navigation"]
+wait_time = 0.1
+autostart = true
+
+[node name="bodyexited" type="Area2D" parent="."]
+
+[node name="bodyexited" type="CollisionShape2D" parent="bodyexited"]
+shape = SubResource("CircleShape2D_8j6mb")
+
+[connection signal="area_entered" from="bodyenterd" to="." method="_on_detectionarea_area_entered"]
+[connection signal="timeout" from="Navigation/Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_exited" from="bodyexited" to="." method="_on_bodyexited_area_exited"]

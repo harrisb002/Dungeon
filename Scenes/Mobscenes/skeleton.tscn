@@ -1,0 +1,83 @@
+[gd_scene load_steps=14 format=3 uid="uid://ca43y0gknt7sc"]
+
+[ext_resource type="PackedScene" uid="uid://bqpcj3r4s3qts" path="res://Scenes/Mobscenes/basemobstructer.tscn" id="1_s05q3"]
+[ext_resource type="Script" path="res://skeleton.gd" id="2_yf52q"]
+[ext_resource type="Texture2D" uid="uid://enr3cg8x45p4" path="res://allart/MOBSS/Monsters_Creatures_Fantasy/Skeleton/Idle.png" id="3_74le5"]
+[ext_resource type="Texture2D" uid="uid://cpi50rei580h4" path="res://allart/MOBSS/Monsters_Creatures_Fantasy/Skeleton/Walk.png" id="4_mxrq5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxeoe"]
+atlas = ExtResource("3_74le5")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vl7n"]
+atlas = ExtResource("3_74le5")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2bfa"]
+atlas = ExtResource("3_74le5")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o01qh"]
+atlas = ExtResource("3_74le5")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rqh1"]
+atlas = ExtResource("4_mxrq5")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tocts"]
+atlas = ExtResource("4_mxrq5")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5it60"]
+atlas = ExtResource("4_mxrq5")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v787u"]
+atlas = ExtResource("4_mxrq5")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ysvcf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxeoe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7vl7n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2bfa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o01qh")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rqh1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tocts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5it60")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v787u")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 10.0
+}]
+
+[node name="skeleton" instance=ExtResource("1_s05q3")]
+script = ExtResource("2_yf52q")
+
+[node name="Animation" type="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_ysvcf")
+animation = &"Idle"
+frame_progress = 0.762298

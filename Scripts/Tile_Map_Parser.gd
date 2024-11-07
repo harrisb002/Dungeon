@@ -5,7 +5,7 @@ extends Node2D
 	set(new_tile_map):
 		tile_map = new_tile_map
 
-@export var num_items_to_spawn = 500  # Number of items to spawn randomly
+@export var num_items_to_spawn = 10  # Number of items to spawn randomly
 @export var items_per_row: int = 12 
 
 func _ready():
