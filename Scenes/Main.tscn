@@ -1,11 +1,10 @@
-[gd_scene load_steps=30 format=4 uid="uid://cu40ek40bcb8x"]
+[gd_scene load_steps=29 format=4 uid="uid://cu40ek40bcb8x"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_7ilkh"]
 [ext_resource type="Texture2D" uid="uid://byw5035hmahfh" path="res://allart/RPGW_Caves_v2/MainLev2.0.png" id="1_wacfu"]
 [ext_resource type="Texture2D" uid="uid://ptu3jh3nq6uq" path="res://allart/RPGW_Caves_v2/decorative.png" id="2_p6512"]
 [ext_resource type="Texture2D" uid="uid://x3plc2u7mdjg" path="res://allart/RF_Catacombs_v1/decorative.png" id="3_300jk"]
 [ext_resource type="Texture2D" uid="uid://cckasxojxt6r4" path="res://allart/RF_Catacombs_v1/mainlevbuild.png" id="4_1d3ru"]
-[ext_resource type="PackedScene" uid="uid://vlacgqrvfnmw" path="res://Scenes/Hud.tscn" id="5_mifar"]
 [ext_resource type="Texture2D" uid="uid://dar62p1o73bc1" path="res://allart/InventoryItems/Spawnable_Items.png" id="6_pk3e0"]
 [ext_resource type="PackedScene" uid="uid://chxd6ijec3lqs" path="res://Scenes/Player.tscn" id="7_460cg"]
 [ext_resource type="Script" path="res://Scripts/Tile_Map_Parser.gd" id="7_u6lfh"]
@@ -21743,10 +21742,6 @@ scale = Vector2(3, 3)
 script = ExtResource("7_u6lfh")
 tile_map = NodePath("../TileMap/bottom")
 
-[node name="Hud" parent="." instance=ExtResource("5_mifar")]
-offset = Vector2(120, 0)
-transform = Transform2D(1, 0, 0, 1, 120, 0)
-
 [node name="Player" parent="." instance=ExtResource("7_460cg")]
 position = Vector2(427, -955)
 scale = Vector2(2, 2)
@@ -21829,8 +21824,6 @@ item_effect = "Open Chest"
 
 [node name="boss" parent="." instance=ExtResource("17_s412h")]
 position = Vector2(1028, -934)
-
-[connection signal="start_game" from="Hud" to="." method="new_game"]
 
 [editable path="Player"]
 [editable path="Portal"]

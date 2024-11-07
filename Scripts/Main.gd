@@ -9,13 +9,15 @@ extends Node
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#spawn_random_items(5)  
+	$Player.start() 
 	pass
 
 # This function starts a new game.
 func new_game() -> void:
-	$Player.start() 
-	$Hud.show_message("Get Ready")
-	$Hud.show_message("")
+	
+	pass
+	#$Hud.show_message("Get Ready")
+	#$Hud.show_message("")
 #
 ## Get a random pos. for the item within the collision shape
 #func get_random_position():

@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://6sk3ync1txa7"]
+[gd_scene load_steps=4 format=3 uid="uid://6sk3ync1txa7"]
 
 [ext_resource type="Texture2D" uid="uid://cfcwvotmkcdfi" path="res://allart/Background/Gemini_Generated_Image_dyu2o1dyu2o1dyu2.jpeg" id="1_pb2ug"]
+[ext_resource type="Script" path="res://Scenes/Main Menu/main_menu.gd" id="1_s7xtd"]
+
+[sub_resource type="SystemFont" id="SystemFont_3y0ic"]
+font_names = PackedStringArray("Impact")
 
 [node name="Main_Menu" type="Control"]
 layout_mode = 3
@@ -9,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_s7xtd")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -39,11 +44,31 @@ theme_override_constants/margin_bottom = 12
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 60
+theme_override_constants/separation = 120
 
 [node name="Seperator" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-text = "Game title"
+theme_override_constants/separation = 200
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Start_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 80)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_3y0ic")
+theme_override_font_sizes/font_size = 50
+text = "Start Game"
+
+[node name="Exit_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 80)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_3y0ic")
+theme_override_font_sizes/font_size = 50
+text = "Exit Game"
