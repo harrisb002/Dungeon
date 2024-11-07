@@ -190,18 +190,3 @@ func _on_hit_box_body_entered(_body: Node2D):
 
 func _on_hit_box_body_exited(_body: Node2D):
 	inside_hole = false
-<<<<<<< HEAD
-=======
-
-# Apply effect of the item (if it has one)
-func apply_item_effect(item):
-	match item["effect"]:
-		"Speed Boost":
-			speed += 200
-			print("Speed increased to ", speed)
-		"Slot Increase":
-			Global.increase_inventory_size(5)
-			print("Slots increased to ", Global.inventory.size())
-		_:
-			print("No effect exists for this item")
->>>>>>> 0aafe903911cabbe825e6c8fb19e2a965092b6be

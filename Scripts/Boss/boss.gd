@@ -121,21 +121,23 @@ func _physics_process(delta: float) -> void:
 
 #Detection
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	#print("Detected body: ", body.name)
-	player = body
-	player_detected = true
+	if body.is_in_group("player"):
+		#print("Detected body: ", body.name)
+		player = body
+		player_detected = true
 
-	minion_timer.start()
-	ranged_attack_timer.start()
+		minion_timer.start()
+		ranged_attack_timer.start()
 
 func _on_detection_area_body_exited(body: Node2D) -> void:
-	player = null
-	player_detected = false
-	minion_timer.stop()
-	ranged_attack_timer.stop()
-	is_attacking = false
-	is_shooting = false
-	speed = CONST_SPEED
+	if body.is_in_group("player"):
+		player = null
+		player_detected = false
+		minion_timer.stop()
+		ranged_attack_timer.stop()
+		is_attacking = false
+		is_shooting = false
+		speed = CONST_SPEED
 
 #minion stuff
 func _on_timer_timeout() -> void:
