@@ -21,7 +21,11 @@ Global="*res://Scripts/Global.gd"
 [display]
 
 window/size/viewport_width=1700
+<<<<<<< Updated upstream
 window/size/viewport_height=1900
+=======
+window/size/viewport_height=1700
+>>>>>>> Stashed changes
 
 [dotnet]
 
