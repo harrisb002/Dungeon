@@ -457,7 +457,7 @@ animation = &"aoe_attack"
 offset = Vector2(0, -20)
 
 [node name="Detection_area" type="Area2D" parent="."]
-collision_layer = 128
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection_area"]
 shape = SubResource("CircleShape2D_mekdr")
