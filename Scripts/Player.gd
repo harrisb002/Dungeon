@@ -114,7 +114,7 @@ func mage_attack():
 	
 	projectile.position = position
 	var direction = Vector2.ZERO
-	
+	#direction of attack and rotation 
 	match curr_direction:
 		"move_right":
 			direction = Vector2.RIGHT
