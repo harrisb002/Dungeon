@@ -16,7 +16,7 @@ var inventory = []
 var hotbar_size = 5
 var hotbar_inventory = []
 
-var character = "knight"
+var character = ""
 
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [

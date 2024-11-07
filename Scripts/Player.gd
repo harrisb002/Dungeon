@@ -100,11 +100,36 @@ func attack():
 		elif(curr_direction == "move_left") :
 			animation = "left_attack"
 		elif(curr_direction == "move_down"):
-			animation = "forward_attack"
-		elif(curr_direction == "move_up"):
 			animation = "back_attack"
+		elif(curr_direction == "move_up"):
+			animation = "forward_attack"
 		$attack_time_out.start()
 		animated_sprite.play(animation_prefix + animation)
+		if animation_prefix == "mage_":
+			mage_attack()
+			
+func mage_attack():
+	var projectile_scene = preload("res://Scenes/Player/mage_projectile.tscn")
+	var projectile = projectile_scene.instantiate()
+	
+	projectile.position = position
+	var direction = Vector2.ZERO
+	#direction of attack and rotation 
+	match curr_direction:
+		"move_right":
+			direction = Vector2.RIGHT
+		"move_left":
+			direction = Vector2.LEFT
+			projectile.rotation_degrees = 180
+		"move_down":
+			direction = Vector2.DOWN
+			projectile.rotation_degrees = 90
+		"move_up":
+			direction = Vector2.UP
+			projectile.rotation_degrees = 270
+	
+	projectile.velocity = direction * 800
+	get_tree().current_scene.add_child(projectile)
 
 # Hotbar Shorcut usage
 func _unhandled_input(event: InputEvent):
