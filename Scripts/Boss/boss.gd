@@ -18,10 +18,13 @@ var dash_range: float = 400
 var alive_count = 0
 var dash_direction
 var boss_hp = 0
-var max_hp = 100
+@export var max_hp = 100
 var is_dead = false
 
 var melee_count = 0
+
+var stagger = 0
+@export var max_stagger = 50
 
 @onready var hp_bar = $hp_bar
 #TODO: add stagger mech
@@ -30,6 +33,7 @@ var melee_count = 0
 #TODO: maybe add big arrow attack down the middle after the second dodge and replace the idle animation with this attack animation
 #TODO: stuff on death
 #TODO: fix boss being pushed by player
+#TODO: Add / fix hp bar
 
 
 
@@ -46,11 +50,20 @@ func _ready() -> void:
 	add_to_group("enemy")
 	
 func take_damage(dmg: int) -> void:
-	boss_hp -= dmg
-	print(boss_hp)
-	if boss_hp <= 0:
-			#speed = 0
-			die()
+	if not is_dead:
+		boss_hp -= dmg
+		print(boss_hp)
+		increase_stagger(dmg)
+		if boss_hp <= 0:
+				#speed = 0
+				die()
+
+func increase_stagger(stag: int) -> void:
+	stagger += stag
+	if stagger >= max_stagger:
+		pass
+		#do stuff to stagger boss here
+	print("stag: ", stagger)
 
 func die():
 	if is_dead:
