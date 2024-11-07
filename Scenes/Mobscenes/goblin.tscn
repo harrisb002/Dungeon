@@ -1,0 +1,111 @@
+[gd_scene load_steps=17 format=3 uid="uid://ce1roglkpntya"]
+
+[ext_resource type="PackedScene" uid="uid://bqpcj3r4s3qts" path="res://Scenes/Mobscenes/basemobstructer.tscn" id="1_fl52i"]
+[ext_resource type="Texture2D" uid="uid://swnkgvfuefmy" path="res://allart/MOBSS/Monsters_Creatures_Fantasy/Goblin/Run.png" id="2_5wnex"]
+[ext_resource type="Texture2D" uid="uid://dvqy1crfip74r" path="res://allart/MOBSS/Monsters_Creatures_Fantasy/Goblin/Idle.png" id="2_ksq8v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vr8eu"]
+atlas = ExtResource("2_ksq8v")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqcqd"]
+atlas = ExtResource("2_ksq8v")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fegx"]
+atlas = ExtResource("2_ksq8v")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qk3pi"]
+atlas = ExtResource("2_ksq8v")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqtyp"]
+atlas = ExtResource("2_5wnex")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvmw3"]
+atlas = ExtResource("2_5wnex")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fjdo"]
+atlas = ExtResource("2_5wnex")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d76wg"]
+atlas = ExtResource("2_5wnex")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wwvi"]
+atlas = ExtResource("2_5wnex")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_345jl"]
+atlas = ExtResource("2_5wnex")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnl6v"]
+atlas = ExtResource("2_5wnex")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slk8j"]
+atlas = ExtResource("2_5wnex")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8paxk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vr8eu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqcqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fegx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qk3pi")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aqtyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvmw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fjdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d76wg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0wwvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_345jl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nnl6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slk8j")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 10.0
+}]
+
+[node name="Goblin" instance=ExtResource("1_fl52i")]
+
+[node name="Animation" type="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_8paxk")
+animation = &"Idle"
+
+[node name="mainbody" parent="." index="2"]
+position = Vector2(1, 9)
