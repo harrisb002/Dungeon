@@ -18,11 +18,12 @@ var dash_range: float = 400
 var alive_count = 0
 var dash_direction
 var boss_hp = 0
+var max_hp = 100
 var is_dead = false
 
 var melee_count = 0
 
-
+@onready var hp_bar = $hp_bar
 #TODO: add stagger mech
 #TODO: change minions to tornados which stop player movement when hit
 #TODO: add wall when using shockwave attack so player cant just walk behind
@@ -30,9 +31,10 @@ var melee_count = 0
 #TODO: stuff on death
 #TODO: fix boss being pushed by player
 
+
+
 func _ready() -> void:
-	
-	boss_hp = 10
+	boss_hp = max_hp
 	CONST_SPEED = speed
 	minion_timer = $Minion_Timer
 	#minion_timer.connect("timeout", Callable(self, "_on_timer_timeout"))
