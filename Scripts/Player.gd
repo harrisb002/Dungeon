@@ -20,7 +20,7 @@ var animation_prefix = Global.character + "_"
 
 # Reset the player when starting a new game.
 func start():
-	animated_sprite.animation = animation_prefix + "right"  # Set default animation
+	animated_sprite.animation = (animation_prefix + "right")  # Set default animation
 	animated_sprite.play()  # Start playing the animation
 	position = start_position  # Reset position
 	show()
@@ -63,7 +63,7 @@ func _process(delta):
 
 func update_animations():
 	var animation = ""
-	var animation_prefix = Global.character + "_"
+	#var animation_prefix = Global.character + "_"
 	#var animation_prefix = "knight_"
 	if is_attacking:
 		return  
@@ -72,6 +72,7 @@ func update_animations():
 		
 	if velocity == Vector2.ZERO:
 		# Default to the right
+		animation = "right"
 		animated_sprite.stop()
 	else:
 		if abs(velocity.x) > abs(velocity.y):
@@ -93,7 +94,7 @@ func update_animations():
 func attack():
 	if Input.is_action_just_pressed("attack") and not is_attacking:
 		var animation = ""
-		var animation_prefix = Global.character + "_"
+		#var animation_prefix = Global.character + "_"
 		is_attacking = true  # Set the flag to true
 		if(curr_direction == "move_right") :
 			animation = "right_attack"		

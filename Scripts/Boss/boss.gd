@@ -31,10 +31,10 @@ var melee_count = 0
 func _ready() -> void:
 	CONST_SPEED = speed
 	minion_timer = $Minion_Timer
-	minion_timer.connect("timeout", Callable(self, "_on_timer_timeout"))
+	#minion_timer.connect("timeout", Callable(self, "_on_timer_timeout"))
 	minion_timer.stop()
 	ranged_attack_timer = $Ranged_Attack
-	ranged_attack_timer.connect("timeout", Callable(self, "_on_ranged_attack_timeout"))
+	#ranged_attack_timer.connect("timeout", Callable(self, "_on_ranged_attack_timeout"))
 	ranged_attack_timer.stop()
 	$AnimatedSprite2D.play("idle")
 
