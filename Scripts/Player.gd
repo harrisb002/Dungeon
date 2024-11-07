@@ -130,7 +130,6 @@ func mage_attack():
 	
 	projectile.velocity = direction * 800
 	get_tree().current_scene.add_child(projectile)
-	print("Mage projectile launched in direction: ", direction)
 
 # Hotbar Shorcut usage
 func _unhandled_input(event: InputEvent):
