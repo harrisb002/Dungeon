@@ -54688,7 +54688,6 @@ shape = SubResource("CapsuleShape2D_1kust")
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
 position = Vector2(-0.500005, -1.99999)
-animation = &"back_attack"
 
 [node name="HitBox" parent="Player" index="3"]
 position = Vector2(-0.5, 0)
