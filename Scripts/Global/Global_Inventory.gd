@@ -6,7 +6,7 @@ extends Node
 # Will be used update the inventory UI
 signal inventory_updated
 
-var Player_node: Node = null
+
 var tile_map: TileMapLayer = null
 
 @onready var inventory_slot_scene = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
@@ -15,9 +15,6 @@ var tile_map: TileMapLayer = null
 var inventory = []
 var hotbar_size = 5
 var hotbar_inventory = []
-
-# Holds the animation_prefix for the current character selected
-var character = ""
 
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
@@ -38,10 +35,6 @@ var spawnable_items = [
 func _ready():
 	inventory.resize(9)
 	hotbar_inventory.resize(hotbar_size)
-
-	# Sets the player reference for inventory interactions
-func set_player_ref(player):
-	Player_node = player
 
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):

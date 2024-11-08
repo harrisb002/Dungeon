@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed = 350 
+@export var speed = 1000 
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var interact_ui = $InteractUI
@@ -16,7 +16,7 @@ var inside_hole = false # Flag for falling in holes
 var curr_direction = "move_right" # Check what side we are currenlty moving 
 var is_attacking = false  # Check if attack frames are on
 
-var animation_prefix = Global_Inventory.character + "_"
+var animation_prefix = Global_Player.character + "_"
 
 # Reset the player when starting a new game.
 func start():
@@ -28,7 +28,7 @@ func start():
 # Run as soon as the object/scene is ready in the game, done before everything else
 func _ready():
 	# Set the Player reference instance to access the player globally
-	Global_Inventory.set_player_ref(self)
+	Global_Player.set_player_ref(self)
 	screen_size = get_viewport_rect().size
 	original_scale = scale  # Store the player's original scale
 	start_position = position  # Store the player's start position

@@ -74,11 +74,11 @@ func _on_item_button_mouse_exited():
 func _on_drop_button_pressed():
 	# Make sure item exists
 	if item != null:
-		var drop_position = Global_Inventory.Player_node.global_position
+		var drop_position = Global_Player.Player_node.global_position
 		## Drop offset from player
 		var drop_offset = Vector2(0, 50)
 		## Drop in the direction that player is facing
-		drop_offset = drop_offset.rotated(Global_Inventory.Player_node.rotation)
+		drop_offset = drop_offset.rotated(Global_Player.Player_node.rotation)
 		Global_Inventory.drop_item(item, drop_position + drop_offset)
 		Global_Inventory.remove_item(item["name"], item["type"])
 		Global_Inventory.remove_hotbar_item(item["name"], item["type"])
@@ -89,8 +89,8 @@ func _on_use_button_pressed():
 	usage_panel.visible = false
 	## Check if it has an effect before removing it (Dont allow keys to be used in this manner)
 	if item != null and item["effect"] != "" and item["effect"] != "Open Chest":
-		if Global_Inventory.Player_node:
-			Global_Inventory.Player_node.apply_item_effect(item)
+		if Global_Player.Player_node:
+			Global_Player.Player_node.apply_item_effect(item)
 			Global_Inventory.remove_item(item["name"], item["type"])
 			Global_Inventory.remove_hotbar_item(item["name"], item["type"])
 		else:

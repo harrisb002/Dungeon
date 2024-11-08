@@ -18,16 +18,15 @@ func _process(delta: float) -> void:
 
 func _on_knight_pressed() -> void:
 	set_all_default()
-	Global_Inventory.character = "knight"
+	Global_Player.character = "knight"
 	chosen = true
 	$TextureRect/KnightSprite.play("selected")
 
 func _on_mage_pressed() -> void:
 	set_all_default()
-	Global_Inventory.character = "mage"
+	Global_Player.character = "mage"
 	chosen = true
 	$TextureRect/MageSprite.play("selected")
-
 
 func _on_button_pressed() -> void:
 	if chosen == true:

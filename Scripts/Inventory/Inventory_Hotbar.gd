@@ -50,11 +50,11 @@ func _on_drag_end():
 		drop_slot(dragged_slot, target_slot)
 	## Drop onto map
 	elif dragged_slot != target_slot:
-		var drop_position = Global_Inventory.Player_node.global_position
+		var drop_position = Global_Player.Player_node.global_position
 		var drop_offset = Vector2(50, 0)
 		
 		## Drop the Item
-		drop_offset = drop_offset.rotated(Global_Inventory.Player_node.rotation)
+		drop_offset = drop_offset.rotated(Global_Player.Player_node.rotation)
 		Global_Inventory.drop_item(dragged_slot.item, drop_position + drop_offset)
 		
 		## Update both the InventoryUI and the hotbar by removing Item
