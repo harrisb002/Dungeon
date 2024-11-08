@@ -51,7 +51,7 @@ func _ready() -> void:
 func take_damage(dmg: int) -> void:
 	if not is_dead:
 		boss_hp -= dmg
-		print(boss_hp)
+		#print(boss_hp)
 		increase_stagger(dmg)
 		if boss_hp <= 0:
 				#speed = 0
@@ -62,7 +62,7 @@ func increase_stagger(stag: int) -> void:
 	if stagger >= max_stagger:
 		pass
 		#do stuff to stagger boss here
-	print("stag: ", stagger)
+	#print("stag: ", stagger)
 
 func die():
 	if is_dead:

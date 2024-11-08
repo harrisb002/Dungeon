@@ -1,5 +1,6 @@
-[gd_scene load_steps=29 format=3 uid="uid://c4s5kv0phf7uu"]
+[gd_scene load_steps=30 format=3 uid="uid://c4s5kv0phf7uu"]
 
+[ext_resource type="Script" path="res://Scripts/NPC/NPC.gd" id="1_essw8"]
 [ext_resource type="Texture2D" uid="uid://0flrot5hrf4a" path="res://Assets/person.png" id="2_rjsjw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r5dg5"]
@@ -208,16 +209,19 @@ animations = [{
 }]
 
 [node name="NPC" type="CharacterBody2D" groups=["NPC"]]
+script = ExtResource("1_essw8")
+npc_id = "npc_1"
+npc_name = "Axel"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_r5dg5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_u40sr")
-animation = &"walk_up"
+animation = &"idle"
 
 [node name="Identifier" type="Label" parent="."]
-offset_left = -3.0
+offset_left = -4.0
 offset_top = -47.0
 offset_right = 4.0
 offset_bottom = -12.0
