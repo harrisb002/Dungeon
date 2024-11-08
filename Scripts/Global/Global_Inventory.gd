@@ -6,7 +6,6 @@ extends Node
 # Will be used update the inventory UI
 signal inventory_updated
 
-
 var tile_map: TileMapLayer = null
 
 @onready var inventory_slot_scene = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
