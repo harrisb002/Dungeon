@@ -1,4 +1,4 @@
-[gd_scene load_steps=126 format=3 uid="uid://chxd6ijec3lqs"]
+[gd_scene load_steps=127 format=3 uid="uid://chxd6ijec3lqs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_3s2n2"]
 [ext_resource type="Texture2D" uid="uid://cdfnu26fcrtlj" path="res://allart/Knightattacks/backattack.png" id="2_btk8a"]
@@ -12,6 +12,7 @@
 [ext_resource type="FontFile" uid="uid://bi04iecmbt37l" path="res://Assets/Fonts/ARCADECLASSIC.TTF" id="8_vxe05"]
 [ext_resource type="Texture2D" uid="uid://bguf87n17mm7" path="res://allart/MageArt/walk.png" id="9_ghf0c"]
 [ext_resource type="PackedScene" uid="uid://c3fw07a62gonv" path="res://Scenes/Inventory/Inventory_Hotbar.tscn" id="10_yub7k"]
+[ext_resource type="Texture2D" uid="uid://dtir5kmhydso1" path="res://Assets/Icons/icon20.png" id="13_uggde"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acllo"]
 radius = 13.0
@@ -949,6 +950,33 @@ text = "Press Enter to pickup"
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(1.2, -4.8)
 collide_with_areas = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Coins" type="ColorRect" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -177.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 85.0
+grow_horizontal = 0
+color = Color(0.141176, 0.141176, 0.141176, 0.788235)
+
+[node name="Icon" type="TextureRect" parent="HUD/Coins"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 32.0
+grow_vertical = 2
+texture = ExtResource("13_uggde")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="HUD/Coins"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
