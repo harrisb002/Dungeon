@@ -74,14 +74,14 @@ func _on_item_button_mouse_exited():
 func _on_drop_button_pressed():
 	# Make sure item exists
 	if item != null:
-		var drop_position = Global.Player_node.global_position
+		var drop_position = Global_Inventory.Player_node.global_position
 		## Drop offset from player
 		var drop_offset = Vector2(0, 50)
 		## Drop in the direction that player is facing
-		drop_offset = drop_offset.rotated(Global.Player_node.rotation)
-		Global.drop_item(item, drop_position + drop_offset)
-		Global.remove_item(item["name"], item["type"])
-		Global.remove_hotbar_item(item["name"], item["type"])
+		drop_offset = drop_offset.rotated(Global_Inventory.Player_node.rotation)
+		Global_Inventory.drop_item(item, drop_position + drop_offset)
+		Global_Inventory.remove_item(item["name"], item["type"])
+		Global_Inventory.remove_hotbar_item(item["name"], item["type"])
 		usage_panel.visible = false
 
 # Remove item from inventory, use it and apply effect (if it has one)		
@@ -89,16 +89,16 @@ func _on_use_button_pressed():
 	usage_panel.visible = false
 	## Check if it has an effect before removing it (Dont allow keys to be used in this manner)
 	if item != null and item["effect"] != "" and item["effect"] != "Open Chest":
-		if Global.Player_node:
-			Global.Player_node.apply_item_effect(item)
-			Global.remove_item(item["name"], item["type"])
-			Global.remove_hotbar_item(item["name"], item["type"])
+		if Global_Inventory.Player_node:
+			Global_Inventory.Player_node.apply_item_effect(item)
+			Global_Inventory.remove_item(item["name"], item["type"])
+			Global_Inventory.remove_hotbar_item(item["name"], item["type"])
 		else:
 			print("Player could not be found")
 
 # Update text for items assigned or not
 func update_assignment_status():
-	is_assigned = Global.is_item_assigned_to_hotbar(item)
+	is_assigned = Global_Inventory.is_item_assigned_to_hotbar(item)
 	if is_assigned:
 		assign_button.text = "Unassign"
 	else:
@@ -109,11 +109,11 @@ func _on_assign_button_pressed():
 	if item != null:
 		## If item is already assigned then must be removing
 		if is_assigned:
-			Global.unassign_hotbar_item(item["name"], item["type"])
+			Global_Inventory.unassign_hotbar_item(item["name"], item["type"])
 			is_assigned = false
 		## Intenting to assign the item to the hotbar
 		else:
-			Global.add_item(item, true)
+			Global_Inventory.add_item(item, true)
 			is_assigned = true
 		## Now update the UI with the changes
 		update_assignment_status()

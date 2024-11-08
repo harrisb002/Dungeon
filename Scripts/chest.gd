@@ -48,9 +48,9 @@ func open_chest(chest: StaticBody2D, chest_type):
 		return
 	
 	## Check if player has key in inventory
-	if key_type != null and Global.has_key_in_inventory("Key", key_type):
+	if key_type != null and Global_Inventory.has_key_in_inventory("Key", key_type):
 		# Remove the key from the player's inventory
-		Global.remove_item("Key", key_type)
+		Global_Inventory.remove_item("Key", key_type)
 		## Make the chest Open
 		$open.visible = true
 		$closed.visible = false

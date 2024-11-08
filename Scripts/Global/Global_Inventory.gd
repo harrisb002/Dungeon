@@ -16,6 +16,7 @@ var inventory = []
 var hotbar_size = 5
 var hotbar_inventory = []
 
+# Holds the animation_prefix for the current character selected
 var character = ""
 
 # Items used to spawn within the area defined (Will update to use tile map later)
@@ -37,6 +38,10 @@ var spawnable_items = [
 func _ready():
 	inventory.resize(9)
 	hotbar_inventory.resize(hotbar_size)
+
+	# Sets the player reference for inventory interactions
+func set_player_ref(player):
+	Player_node = player
 
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):
@@ -186,10 +191,6 @@ func increase_inventory_size(added_slots):
 	inventory.resize(inventory.size() + added_slots)
 	inventory_updated.emit()
 
-# Sets the player reference for inventory interactions
-func set_player_ref(player):
-	Player_node = player
-	
 # Check if player has key needed to open chest 
 func has_key_in_inventory(item_name: String, item_type: String) -> bool:
 	for item in inventory:

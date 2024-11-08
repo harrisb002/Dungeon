@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var interact_ui = $InteractUI
 @onready var inventory_ui = $InventoryUI
 @onready var inventory_ui_label = $InteractUI/ColorRect/Label
+@onready var ray_cast = $RayCast2D
 
 var screen_size  # Size of the game window.
 var start_position = Vector2.ZERO  # Variable to store the player's starting position
@@ -15,7 +16,7 @@ var inside_hole = false # Flag for falling in holes
 var curr_direction = "move_right" # Check what side we are currenlty moving 
 var is_attacking = false  # Check if attack frames are on
 
-var animation_prefix = Global.character + "_"
+var animation_prefix = Global_Inventory.character + "_"
 
 # Reset the player when starting a new game.
 func start():
@@ -27,7 +28,7 @@ func start():
 # Run as soon as the object/scene is ready in the game, done before everything else
 func _ready():
 	# Set the Player reference instance to access the player globally
-	Global.set_player_ref(self)
+	Global_Inventory.set_player_ref(self)
 	screen_size = get_viewport_rect().size
 	original_scale = scale  # Store the player's original scale
 	start_position = position  # Store the player's start position
@@ -44,6 +45,10 @@ func _physics_process(delta):
 func get_input():
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = input_direction * speed
+
+	# Turn the raycast in the direction of players movement
+	if velocity != Vector2.ZERO:
+		ray_cast.target_position = velocity.normalized() * 50 # 50 is length of cast
 
 func _input(event):
 	if event.is_action_pressed("inventory"):
@@ -131,7 +136,7 @@ func mage_attack():
 func _unhandled_input(event: InputEvent):
 	if event is InputEventKey and event.pressed:
 		## Loop through the hotbar slots
-		for i in range(Global.hotbar_size):
+		for i in range(Global_Inventory.hotbar_size):
 			## Check if a specific key is pressed
 			if Input.is_action_just_pressed("hotbar_" + str(i + 1)):
 				use_hotbar_item(i)
@@ -139,19 +144,19 @@ func _unhandled_input(event: InputEvent):
 
 # Hotbar Shortcuts
 func use_hotbar_item(slot_idx):
-	if slot_idx < Global.hotbar_inventory.size():
-		var item = Global.hotbar_inventory[slot_idx]
+	if slot_idx < Global_Inventory.hotbar_inventory.size():
+		var item = Global_Inventory.hotbar_inventory[slot_idx]
 		if item != null:
 			## Use the item in this slot
 			apply_item_effect(item)
 			## Remove the item
 			item["quantity"] -= 1
 			if item["quantity"] <= 0:
-				Global.hotbar_inventory[slot_idx] = null
+				Global_Inventory.hotbar_inventory[slot_idx] = null
 				## Decrease the quantity in the main inventory
-				Global.remove_item(item["name"], item["type"])
+				Global_Inventory.remove_item(item["name"], item["type"])
 			## Emit signal to update the inventory as well
-			Global.inventory_updated.emit()
+			Global_Inventory.inventory_updated.emit()
 
 # Apply effect of the item (if it has one)
 func apply_item_effect(item):
@@ -159,7 +164,7 @@ func apply_item_effect(item):
 		"Increase Speed":
 			speed += 200
 		"Increase Slots":
-			Global.increase_inventory_size(6)
+			Global_Inventory.increase_inventory_size(6)
 		_:
 			print("No effect exists for this item")
 

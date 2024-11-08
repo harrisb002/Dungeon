@@ -36,9 +36,9 @@ func pickup_item():
 		"effect": item_effect,
 		"scene_path": scene_path,
 	}
-	if Global.Player_node:
+	if Global_Inventory.Player_node:
 		# Adding item to players inventory
-		Global.add_item(item, false)
+		Global_Inventory.add_item(item, false)
 		# Remove item from scene
 		self.queue_free()
 		

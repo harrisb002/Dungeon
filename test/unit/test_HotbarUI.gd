@@ -13,15 +13,15 @@ func before_each():
 	_player = Player.new()
 	
 	# Reset the inventory
-	Global.inventory = []
-	Global.hotbar_inventory = []
-	Global.inventory.resize(9)  
-	Global.hotbar_inventory.resize(5) 
+	Global_Inventory.inventory = []
+	Global_Inventory.hotbar_inventory = []
+	Global_Inventory.inventory.resize(9)  
+	Global_Inventory.hotbar_inventory.resize(5) 
 	
 	 ## Get the items to use
-	coin = Global.spawnable_items[0]
-	shroom = Global.spawnable_items[2]
-	flashRing = Global.spawnable_items[3]
+	coin = Global_Inventory.spawnable_items[0]
+	shroom = Global_Inventory.spawnable_items[2]
+	flashRing = Global_Inventory.spawnable_items[3]
 
 func after_each():
 	_player.free()
@@ -30,7 +30,7 @@ func after_each():
 func get_item_inventory_quantity(item) -> int:
 	# Get item in inventory 
 	var amount = 0
-	for i in Global.inventory:
+	for i in Global_Inventory.inventory:
 		if i != null and i["name"] == item["name"] and i["type"] == item["type"]:
 			amount = i["quantity"]
 			break
@@ -39,20 +39,20 @@ func get_item_inventory_quantity(item) -> int:
 func get_item_hotbar_inventory_quantity(item) -> int:
 	# Get item in inventory 
 	var amount = 0
-	for i in Global.hotbar_inventory:
+	for i in Global_Inventory.hotbar_inventory:
 		if i != null and i["name"] == item["name"] and i["type"] == item["type"]:
 			amount = i["quantity"]
 			break
 	return amount
 	
 func inventory_has_item(item) -> bool:
-	for i in Global.inventory:
+	for i in Global_Inventory.inventory:
 		if i != null and i["name"] == item["name"] and i["type"] == item["type"]:
 			return true
 	return false
 
 func hotbar_inventory_has_item(item) -> bool:
-	for i in Global.hotbar_inventory:
+	for i in Global_Inventory.hotbar_inventory:
 		if i != null and i["name"] == item["name"] and i["type"] == item["type"]:
 			return true
 	return false
@@ -61,8 +61,8 @@ func hotbar_inventory_has_item(item) -> bool:
 # Test when item added to hotbar, it is reflected in the hotbar inventory
 func test_assign_hotbar_item():
 	# Add item (coin) to inventory
-	Global.add_item(coin)
-	Global.add_hotbar_item(coin)
+	Global_Inventory.add_item(coin)
+	Global_Inventory.add_hotbar_item(coin)
 	
 	# Check if the hotbar inventory contains this item
 	assert_true(hotbar_inventory_has_item(coin), "Item found in hotbar inventory after assignment")
@@ -70,22 +70,22 @@ func test_assign_hotbar_item():
 # Test when item added to hotbar, it is reflected in the hotbar inventory
 func test_unassign_hotbar_item():
 	# Add item (coin) to inventory
-	Global.add_item(coin)
-	Global.add_hotbar_item(coin)
+	Global_Inventory.add_item(coin)
+	Global_Inventory.add_hotbar_item(coin)
 	
 	# Check if the hotbar inventory contains this item
 	assert_true(hotbar_inventory_has_item(coin), "Item found in hotbar inventory after assignment")
 	
 	# Unassign the hotbar item
-	Global.unassign_hotbar_item(coin["name"], coin["type"])
+	Global_Inventory.unassign_hotbar_item(coin["name"], coin["type"])
 	
 	assert_false(hotbar_inventory_has_item(coin), "Item no present in hotbar inventory after unassignment")
 
 # Test when item in inventory is droped, it is reflected in the hotbar as well
 func test_remove_hotbar_item_upon_inventory_drop():
 	# Add item (coin) to both inventory and hotbar
-	Global.add_item(coin)
-	Global.add_hotbar_item(coin)
+	Global_Inventory.add_item(coin)
+	Global_Inventory.add_hotbar_item(coin)
 
 	# Verify initial quantities in both inventories
 	var inventory_quantity = get_item_inventory_quantity(coin)
@@ -94,8 +94,8 @@ func test_remove_hotbar_item_upon_inventory_drop():
 	assert_eq(hotbar_quantity, 1, "Hotbar quantity should start at 1")
 
 	# Drop the item from inventory
-	Global.remove_item(coin["name"], coin["type"])
-	Global.remove_hotbar_item(coin["name"], coin["type"])
+	Global_Inventory.remove_item(coin["name"], coin["type"])
+	Global_Inventory.remove_hotbar_item(coin["name"], coin["type"])
 
 	# Verify the item is removed completely from both inventories
 	assert_false(inventory_has_item(coin), "Item should be removed from inventory")
@@ -105,8 +105,8 @@ func test_remove_hotbar_item_upon_inventory_drop():
 # Test when item in inventory is droped, it is reflected in the hotbar as well
 func test_use_hotbar_item_with_shroom():
 	# Add item (shroom) to both inventory and hotbar
-	Global.add_item(shroom)
-	Global.add_hotbar_item(shroom)
+	Global_Inventory.add_item(shroom)
+	Global_Inventory.add_hotbar_item(shroom)
 
 	# Verify initial quantities in both inventories
 	var inventory_quantity = get_item_inventory_quantity(shroom)
@@ -115,13 +115,13 @@ func test_use_hotbar_item_with_shroom():
 	assert_eq(hotbar_quantity, 1, "Hotbar quantity should start at 1")
 	
 	# Get the inventory size before the use of the item
-	var initial_inventory_size = Global.inventory.size()
+	var initial_inventory_size = Global_Inventory.inventory.size()
 	
 	# Use the item from hotbar (Using the first slot, defaulted pos. for first item)
 	_player.use_hotbar_item(0)
 	
 	# Get the new inventory size
-	var new_inventory_size = Global.inventory.size()
+	var new_inventory_size = Global_Inventory.inventory.size()
 	
 	# Verify effect upon the inventory (A shroom should add 6 slots)
 	assert_eq(initial_inventory_size + 6, new_inventory_size, "Inventory size should increase by 6")
@@ -132,8 +132,8 @@ func test_use_hotbar_item_with_shroom():
 # Test when item in inventory is droped, it is reflected in the hotbar as well
 func test_use_hotbar_item_with_flashRing():
 	# Add item (flashRing) to both inventory and hotbar
-	Global.add_item(flashRing)
-	Global.add_hotbar_item(flashRing)
+	Global_Inventory.add_item(flashRing)
+	Global_Inventory.add_hotbar_item(flashRing)
 
 	# Verify initial quantities in both inventories
 	var inventory_quantity = get_item_inventory_quantity(flashRing)

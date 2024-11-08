@@ -7,7 +7,7 @@ var dragged_slot = null
 
 func _ready():
 	# Connect the signal to update and load with correct num of columns
-	Global.inventory_updated.connect(_on_inventory_updated)
+	Global_Inventory.inventory_updated.connect(_on_inventory_updated)
 	_on_inventory_updated()
 	
 # Update the inventory UI
@@ -16,9 +16,9 @@ func _on_inventory_updated():
 	clear_grid_container()
 	
 	# Add slots for each inventory item
-	for item in Global.inventory:
+	for item in Global_Inventory.inventory:
 		# Create new slot scene and add it to container
-		var slot = Global.inventory_slot_scene.instantiate()
+		var slot = Global_Inventory.inventory_slot_scene.instantiate()
 		
 		## Connect each slot to the drag and drop events
 		slot.drag_start.connect(_on_drag_start)
@@ -79,5 +79,5 @@ func drop_slot(slot1: Control, slot2: Control):
 		print("Invalid slot found")
 		return
 	else: ## Now attempt to swap the inventory items based on index
-		if Global.swap_inventory_items(slot1_idx, slot2_idx):
+		if Global_Inventory.swap_inventory_items(slot1_idx, slot2_idx):
 			_on_inventory_updated()

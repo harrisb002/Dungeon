@@ -946,6 +946,9 @@ text = "Press Enter to pickup"
 
 [node name="Inventory_Hotbar" parent="InventoryHotbar" instance=ExtResource("10_yub7k")]
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collide_with_areas = true
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
