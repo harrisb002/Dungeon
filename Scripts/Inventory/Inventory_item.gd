@@ -27,7 +27,7 @@ func _process(delta: float):
 		pickup_item()
 
 # Create the dict for item info to be passed when adding it
-func pickup_item():
+func pickup_item(): 
 	var item = {
 		"quantity": 1,
 		"type": item_type,

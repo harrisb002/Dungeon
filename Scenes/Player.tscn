@@ -888,7 +888,7 @@ animation = &"knight_back_attack"
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(1, -4.8)
+position = Vector2(1.2, -5)
 shape = SubResource("CircleShape2D_hrxyr")
 
 [node name="attack_time_out" type="Timer" parent="."]
@@ -947,6 +947,7 @@ text = "Press Enter to pickup"
 [node name="Inventory_Hotbar" parent="InventoryHotbar" instance=ExtResource("10_yub7k")]
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(1.2, -4.8)
 collide_with_areas = true
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

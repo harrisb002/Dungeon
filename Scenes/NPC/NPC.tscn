@@ -209,6 +209,7 @@ animations = [{
 }]
 
 [node name="NPC" type="CharacterBody2D" groups=["NPC"]]
+scale = Vector2(3, 3)
 script = ExtResource("1_essw8")
 npc_id = "npc_1"
 npc_name = "Axel"

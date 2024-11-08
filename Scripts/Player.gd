@@ -16,7 +16,11 @@ var inside_hole = false # Flag for falling in holes
 var curr_direction = "move_right" # Check what side we are currenlty moving 
 var is_attacking = false  # Check if attack frames are on
 
+# Changes the animation based on selection of player
 var animation_prefix = Global_Player.character + "_"
+
+# Used to prevent player movement while interacting with NPC
+var can_move = true
 
 # Reset the player when starting a new game.
 func start():
@@ -56,6 +60,16 @@ func _input(event):
 		inventory_ui.visible = !inventory_ui.visible
 		# Pause the game, on/off
 		get_tree().paused = !get_tree().paused
+	
+	# interact with NPC 
+	if can_move:
+		if event.is_action_pressed("interact"):
+			var target = ray_cast.get_collider()
+			if target != null:
+				## Using group to determine NPC
+				if target.is_in_group("NPC"):
+					print("Hey there NPC!")
+					target.start_dialog()
 
 func _process(delta):
 	if inside_hole:
@@ -71,8 +85,6 @@ func update_animations():
 		fall()
 		
 	if velocity == Vector2.ZERO:
-		# Default to the right
-		animation = "right"
 		animated_sprite.stop()
 	else:
 		if abs(velocity.x) > abs(velocity.y):
