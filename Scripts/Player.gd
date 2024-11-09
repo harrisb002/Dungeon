@@ -7,6 +7,10 @@ extends CharacterBody2D
 @onready var inventory_ui = $InventoryUI
 @onready var inventory_ui_label = $InteractUI/ColorRect/Label
 @onready var ray_cast = $RayCast2D
+@onready var amount = $HUD/Coins/Amount
+@onready var quest_tracker = $HUD/Quest_Tracker
+@onready var title = $HUD/QuestTracker/Details/Title
+@onready var objectives = $HUD/QuestTracker/Details/Objectives
 
 var screen_size  # Size of the game window.
 var start_position = Vector2.ZERO  # Variable to store the player's starting position

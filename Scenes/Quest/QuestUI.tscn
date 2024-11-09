@@ -86,33 +86,33 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="Quest_List" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details"]
+[node name="QuestList" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Quest_Details" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details"]
+[node name="QuestDetails" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="Quest_Title" type="Label" parent="CanvasLayer/Panel/Contents/Details/Quest_Details"]
+[node name="QuestTitle" type="Label" parent="CanvasLayer/Panel/Contents/Details/QuestDetails"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Title"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Quest_Description" type="Label" parent="CanvasLayer/Panel/Contents/Details/Quest_Details"]
+[node name="QuestDescription" type="Label" parent="CanvasLayer/Panel/Contents/Details/QuestDetails"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Description
 "
 
-[node name="Quest_Objectives" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details/Quest_Details"]
+[node name="QuestObjectives" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details/QuestDetails"]
 layout_mode = 2
 
-[node name="Quest_Rewards" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details/Quest_Details"]
+[node name="QuestRewards" type="VBoxContainer" parent="CanvasLayer/Panel/Contents/Details/QuestDetails"]
 layout_mode = 2
 
 [node name="CloseButton" type="Button" parent="CanvasLayer/Panel"]
