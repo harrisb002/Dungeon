@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://blv4i26r0svx5" path="res://allart/Knightwalkcycle/rightwalk.png" id="5_ltp2s"]
 [ext_resource type="PackedScene" uid="uid://onmcrrbo426g" path="res://Scenes/Inventory/Inventory_UI.tscn" id="8_2xf0b"]
 [ext_resource type="Texture2D" uid="uid://cf3hj8pc371fr" path="res://allart/MageArt/jump.png" id="8_mcgsu"]
-[ext_resource type="FontFile" uid="uid://bi04iecmbt37l" path="res://Assets/Fonts/ARCADECLASSIC.TTF" id="8_vxe05"]
+[ext_resource type="FontFile" uid="uid://bi04iecmbt37l" path="res://allart/Fonts/ARCADECLASSIC.TTF" id="8_vxe05"]
 [ext_resource type="Texture2D" uid="uid://bguf87n17mm7" path="res://allart/MageArt/walk.png" id="9_ghf0c"]
 [ext_resource type="PackedScene" uid="uid://c3fw07a62gonv" path="res://Scenes/Inventory/Inventory_Hotbar.tscn" id="10_yub7k"]
 [ext_resource type="Texture2D" uid="uid://dtir5kmhydso1" path="res://Assets/Icons/icon20.png" id="13_uggde"]
@@ -884,6 +884,7 @@ sprite_frames = SubResource("SpriteFrames_vbrsu")
 animation = &"knight_back_attack"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_mask = 4

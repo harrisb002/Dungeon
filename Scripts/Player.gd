@@ -45,10 +45,12 @@ func _ready():
 # Detect whether a key is pressed using Input.is_action_pressed(),
 #   which returns true if it is pressed or false if it isn’t.
 func _physics_process(delta):
-	get_input()
-	move_and_slide()
-	update_animations()
-	attack()
+	# Disable movement while interacting with NPC
+	if can_move: 
+		get_input()
+		move_and_slide()
+		update_animations()
+		attack()
 
 func get_input():
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -73,6 +75,7 @@ func _input(event):
 				## Using group to determine NPC
 				if target.is_in_group("NPC"):
 					print("Hey there NPC!")
+					can_move = false # Disbale movement while interacting
 					target.start_dialog()
 
 func _process(delta):
