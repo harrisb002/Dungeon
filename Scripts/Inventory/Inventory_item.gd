@@ -27,7 +27,7 @@ func _process(delta: float):
 		pickup_item()
 
 # Create the dict for item info to be passed when adding it
-func pickup_item():
+func pickup_item(): 
 	var item = {
 		"quantity": 1,
 		"type": item_type,
@@ -36,9 +36,9 @@ func pickup_item():
 		"effect": item_effect,
 		"scene_path": scene_path,
 	}
-	if Global.Player_node:
+	if Global_Player.Player_node:
 		# Adding item to players inventory
-		Global.add_item(item, false)
+		Global_Inventory.add_item(item, false)
 		# Remove item from scene
 		self.queue_free()
 		

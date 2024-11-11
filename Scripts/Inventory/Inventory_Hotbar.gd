@@ -8,14 +8,14 @@ var drop_target = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Global.inventory_updated.connect(_update_hotbar_ui)
+	Global_Inventory.inventory_updated.connect(_update_hotbar_ui)
 	_update_hotbar_ui()
 	
 # Create the hotbar slots
 func _update_hotbar_ui():
 	clear_hotbar_container()
-	for i in range(Global.hotbar_size):
-		var slot = Global.inventory_slot_scene.instantiate()
+	for i in range(Global_Inventory.hotbar_size):
+		var slot = Global_Inventory.inventory_slot_scene.instantiate()
 		# For each slot, set slot index to be able to identify and manage it
 		slot.set_slot_index(i)
 		
@@ -25,8 +25,8 @@ func _update_hotbar_ui():
 		
 		hotbar_container.add_child(slot)
 		# Check if present and if so, stack it. Else just add it
-		if Global.hotbar_inventory[i] != null:
-			slot.set_item(Global.hotbar_inventory[i])
+		if Global_Inventory.hotbar_inventory[i] != null:
+			slot.set_item(Global_Inventory.hotbar_inventory[i])
 		else:
 			slot.set_empty()
 		slot.update_assignment_status()
@@ -50,19 +50,19 @@ func _on_drag_end():
 		drop_slot(dragged_slot, target_slot)
 	## Drop onto map
 	elif dragged_slot != target_slot:
-		var drop_position = Global.Player_node.global_position
+		var drop_position = Global_Player.Player_node.global_position
 		var drop_offset = Vector2(50, 0)
 		
 		## Drop the Item
-		drop_offset = drop_offset.rotated(Global.Player_node.rotation)
-		Global.drop_item(dragged_slot.item, drop_position + drop_offset)
+		drop_offset = drop_offset.rotated(Global_Player.Player_node.rotation)
+		Global_Inventory.drop_item(dragged_slot.item, drop_position + drop_offset)
 		
 		## Update both the InventoryUI and the hotbar by removing Item
-		Global.remove_item(dragged_slot.item["name"], dragged_slot.item["type"])
+		Global_Inventory.remove_item(dragged_slot.item["name"], dragged_slot.item["type"])
 		## If the quantity <= 0, unassign and remove the item from the hotbar and inventory
 		if dragged_slot.item["quantity"] <= 0:
-			Global.unassign_hotbar_item(dragged_slot.item["name"], dragged_slot.item["type"])
-			Global.remove_item(dragged_slot.item["name"], dragged_slot.item["type"])
+			Global_Inventory.unassign_hotbar_item(dragged_slot.item["name"], dragged_slot.item["type"])
+			Global_Inventory.remove_item(dragged_slot.item["name"], dragged_slot.item["type"])
 			dragged_slot.set_empty()  # Clear the slot visually
 	dragged_slot = null
 
@@ -94,5 +94,5 @@ func drop_slot(slot1: Control, slot2: Control):
 		print("Invalid slot found")
 		return
 	else: ## Now attempt to swap the inventory items based on index
-		if Global.swap_hotbar_items(slot1_idx, slot2_idx):
+		if Global_Inventory.swap_hotbar_items(slot1_idx, slot2_idx):
 			_update_hotbar_ui()
