@@ -1,6 +1,6 @@
 extends Resource
 
-class_name Dialog
+class_name Dialogue
 
 # Vars
 @export var dialogs = {}

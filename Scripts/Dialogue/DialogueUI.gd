@@ -2,9 +2,9 @@ extends Control
 
 # Node Refs
 @onready var panel = $CanvasLayer/Panel
-@onready var dialog_speaker = $CanvasLayer/Panel/DialogBox/DialogSpeaker
-@onready var dialog_text = $CanvasLayer/Panel/DialogBox/DialogText
-@onready var dialog_options = $CanvasLayer/Panel/DialogBox/DialogOptions
+@onready var dialog_speaker = $CanvasLayer/Panel/DialogueBox/DialogueSpeaker
+@onready var dialog_text = $CanvasLayer/Panel/DialogueBox/DialogueText
+@onready var dialog_options = $CanvasLayer/Panel/DialogueBox/DialogueOptions
 
 func _ready():
 	panel.visible = false
@@ -39,8 +39,7 @@ func hide_dialog():
 
 # Handle option selection
 func _on_option_selected(option):
-	pass
-	#get_parent().handle_dialog_choice(option)
+	get_parent().handle_dialog_choice(option)
 
 # Handle close button press (Skip the dialog branches)
 func _on_close_button_pressed():

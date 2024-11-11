@@ -18,14 +18,9 @@ func show_dialogue(npc, text = "", options = {}):
 			return # Ends the dialogue
 		dialogueUI.show_dialogue(npc.npc_name, dialogue["text"], dialogue["options"])
 
-
-# Hide the dialogue
-func hide_dialogue():
-	dialogueUI.hide_dialogue()
-	
 # Manangement for dialogue state
 func handle_dialogue_choice(option):
-	# Fetch the current dialogue branch
+	# Fetch the current dialogue branch for the current interaction
 	var currrent_dialogue = npc.get_current_dialogue()
 	if currrent_dialogue == null:
 		return
@@ -39,6 +34,7 @@ func handle_dialogue_choice(option):
 			npc.set_dialogue_branch(npc.current_branch_idx + 1)
 		hide_dialogue()
 	elif next_state == "exit":
+		# Reset curr state to be start
 		npc.set_dialogue_state("start")
 		hide_dialogue()
 	elif next_state == "give_quest":
@@ -46,8 +42,6 @@ func handle_dialogue_choice(option):
 	else:
 		show_dialogue(npc)
 	
-	
-	
-	
-	
-	
+# Hide the dialogue
+func hide_dialogue():
+	dialogueUI.hide_dialogue()

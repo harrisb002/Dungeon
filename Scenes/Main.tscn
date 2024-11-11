@@ -1,4 +1,4 @@
-[gd_scene load_steps=204 format=4 uid="uid://cu40ek40bcb8x"]
+[gd_scene load_steps=207 format=4 uid="uid://cu40ek40bcb8x"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_7ilkh"]
 [ext_resource type="Texture2D" uid="uid://byw5035hmahfh" path="res://allart/RPGW_Caves_v2/MainLev2.0.png" id="1_wacfu"]
@@ -34,6 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://dd6c34ie1asbu" path="res://Scenes/Quest/Quest_Item.tscn" id="32_bya36"]
 [ext_resource type="PackedScene" uid="uid://c4s5kv0phf7uu" path="res://Scenes/NPC/NPC.tscn" id="33_f5fwq"]
 [ext_resource type="Texture2D" uid="uid://chrl5dn1knwoh" path="res://Assets/Icons/icon24.png" id="33_wc1um"]
+[ext_resource type="Script" path="res://Resources/Dialogue/Dialogue.gd" id="35_3bb3h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5sum"]
 texture = ExtResource("1_wacfu")
@@ -54638,6 +54639,14 @@ sources/9 = SubResource("TileSetAtlasSource_kujlx")
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1kust"]
 radius = 15.0
 
+[sub_resource type="Resource" id="Resource_lrmrt"]
+script = ExtResource("35_3bb3h")
+dialogs = {}
+
+[sub_resource type="Resource" id="Resource_lmes5"]
+script = ExtResource("35_3bb3h")
+dialogs = {}
+
 [node name="Main" type="Node2D"]
 position = Vector2(1, 1)
 script = ExtResource("1_7ilkh")
@@ -54706,6 +54715,9 @@ offset_bottom = -8.0
 
 [node name="RayCast2D" parent="Player" index="8"]
 metadata/_edit_lock_ = true
+
+[node name="QuestTracker" parent="Player/HUD" index="1"]
+visible = false
 
 [node name="Portal" parent="." instance=ExtResource("8_2mpry")]
 position = Vector2(140, -832)
@@ -54796,6 +54808,13 @@ item_icon = ExtResource("33_wc1um")
 
 [node name="NPC" parent="." instance=ExtResource("33_f5fwq")]
 position = Vector2(1025, -810)
+dialogue_resource = SubResource("Resource_lrmrt")
+
+[node name="NPC2" parent="." instance=ExtResource("33_f5fwq")]
+position = Vector2(326, -633)
+npc_id = "npc_2"
+npc_name = "Peruvian"
+dialogue_resource = SubResource("Resource_lmes5")
 
 [editable path="Player"]
 [editable path="Portal"]

@@ -8,7 +8,7 @@ extends CharacterBody2D
 @onready var inventory_ui_label = $InteractUI/ColorRect/Label
 @onready var ray_cast = $RayCast2D
 @onready var amount = $HUD/Coins/Amount
-@onready var quest_tracker = $HUD/Quest_Tracker
+@onready var quest_tracker = $HUD/QuestTracker
 @onready var title = $HUD/QuestTracker/Details/Title
 @onready var objectives = $HUD/QuestTracker/Details/Objectives
 
@@ -108,7 +108,7 @@ func update_animations():
 			else:
 				animation = "forward"
 				curr_direction = "move_up"
-	animated_sprite.play(animation_prefix + animation)
+		animated_sprite.play(animation_prefix + animation)
 
 func attack():
 	if Input.is_action_just_pressed("attack") and not is_attacking:
