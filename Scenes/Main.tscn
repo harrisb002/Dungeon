@@ -54748,10 +54748,10 @@ scale = Vector2(3, 3)
 [node name="Destination_Point" parent="Portal2" index="2"]
 position = Vector2(-13792, 7493)
 
-[node name="Chest_Common" parent="." instance=ExtResource("9_87rob")]
+[node name="Chest_Common" parent="." groups=["Chest"] instance=ExtResource("9_87rob")]
 position = Vector2(105, 36)
 
-[node name="Chest_Golden" parent="." instance=ExtResource("11_dcnqv")]
+[node name="Chest_Golden" parent="." groups=["Chest"] instance=ExtResource("11_dcnqv")]
 position = Vector2(74, 493)
 
 [node name="Chest_Boss" parent="." instance=ExtResource("11_0pjkg")]

@@ -59,6 +59,7 @@ func initiate_items(type, name, effect, texture):
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):
 		player_in_range = true
+		body.interact_ui_label.text = "Press Enter to pick up"
 		body.interact_ui.visible = true
 
 func _on_area_2d_body_exited(body) -> void:

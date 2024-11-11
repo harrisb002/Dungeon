@@ -3,9 +3,12 @@ extends CharacterBody2D
 @export var speed = 1000 
 
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var interact_ui = $InteractUI
 @onready var inventory_ui = $InventoryUI
-@onready var inventory_ui_label = $InteractUI/ColorRect/Label
+
+# Label for interactions
+@onready var interact_ui = $InteractUI
+@onready var interact_ui_label = $InteractUI/ColorRect/Label
+
 @onready var inventory_hotbar = $InventoryHotbar/Inventory_Hotbar
 
 @onready var coin_icon = $HUD/Coins/Icon
@@ -15,6 +18,8 @@ extends CharacterBody2D
 @onready var title = $HUD/QuestTracker/Details/Title
 @onready var objectives = $HUD/QuestTracker/Details/Objectives
 @onready var ray_cast = $RayCast2D
+
+var interact_ui_raycast_visible = false  # Flag to track if UI is shown due to RayCast
 
 var screen_size  # Size of the game window.
 var start_position = Vector2.ZERO  # Variable to store the player's starting position
@@ -59,6 +64,7 @@ func _physics_process(delta):
 		move_and_slide()
 		update_animations()
 		attack()
+	update_interact_ui()  # Update interact UI for NPC detection
 
 func get_input():
 	var input_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -75,20 +81,32 @@ func _input(event):
 		# Pause the game, on/off
 		get_tree().paused = !get_tree().paused
 	
-	# interact with NPC 
-	if can_move:
-		if event.is_action_pressed("interact"):
-			var target = ray_cast.get_collider()
-			if target != null:
-				## Using group to determine NPC
-				if target.is_in_group("NPC"):
-					can_move = false # Disbale movement while interacting
-					Global_Player.inventory_hotbar.visible = false # Remove hotbar during interaction
-					target.start_dialogue()
+	# Checking for interactions with NPC 
+	if can_move and event.is_action_pressed("interact"):
+		var target = ray_cast.get_collider()
+		if target != null and target.is_in_group("NPC"):
+			interact_ui.visible = false
+			can_move = false  # Disable movement while interacting
+			Global_Player.inventory_hotbar.visible = false
+			target.start_dialogue()
 
 func _process(delta):
 	if inside_hole:
 		fall()
+
+# Update the interaction label based on RayCast collision for NPCs
+func update_interact_ui():
+	var target = ray_cast.get_collider()
+	if target != null and target.is_in_group("NPC"):
+		interact_ui_label.text = "Press E to interact"
+		if not interact_ui.visible:
+			interact_ui.visible = true
+		interact_ui_raycast_visible = true  # Set the flag to true
+	else:
+		if interact_ui_raycast_visible:
+			# Only hide if we were showing it due to RayCast
+			interact_ui.visible = false
+			interact_ui_raycast_visible = false  # Reset the flag
 
 func update_animations():
 	var animation = ""
