@@ -950,7 +950,7 @@ text = "Press Enter to pickup"
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(1.2, -4.8)
-collide_with_areas = true
+collision_mask = 512
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

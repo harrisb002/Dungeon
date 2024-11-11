@@ -1,4 +1,4 @@
-[gd_scene load_steps=207 format=4 uid="uid://cu40ek40bcb8x"]
+[gd_scene load_steps=206 format=4 uid="uid://cu40ek40bcb8x"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_7ilkh"]
 [ext_resource type="Texture2D" uid="uid://byw5035hmahfh" path="res://allart/RPGW_Caves_v2/MainLev2.0.png" id="1_wacfu"]
@@ -54639,13 +54639,9 @@ sources/9 = SubResource("TileSetAtlasSource_kujlx")
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1kust"]
 radius = 15.0
 
-[sub_resource type="Resource" id="Resource_lrmrt"]
+[sub_resource type="Resource" id="Resource_hcnoy"]
 script = ExtResource("35_3bb3h")
-dialogs = {}
-
-[sub_resource type="Resource" id="Resource_lmes5"]
-script = ExtResource("35_3bb3h")
-dialogs = {}
+dialogues = {}
 
 [node name="Main" type="Node2D"]
 position = Vector2(1, 1)
@@ -54807,14 +54803,8 @@ scale = Vector2(2, 2)
 item_icon = ExtResource("33_wc1um")
 
 [node name="NPC" parent="." instance=ExtResource("33_f5fwq")]
-position = Vector2(1025, -810)
-dialogue_resource = SubResource("Resource_lrmrt")
-
-[node name="NPC2" parent="." instance=ExtResource("33_f5fwq")]
-position = Vector2(326, -633)
-npc_id = "npc_2"
-npc_name = "Peruvian"
-dialogue_resource = SubResource("Resource_lmes5")
+position = Vector2(399, -669)
+dialogue_resource = SubResource("Resource_hcnoy")
 
 [editable path="Player"]
 [editable path="Portal"]

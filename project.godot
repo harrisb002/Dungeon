@@ -131,3 +131,4 @@ interact={
 2d_physics/layer_7="Key"
 2d_physics/layer_8="Spawn_Items"
 2d_physics/layer_9="Enemies"
+2d_physics/layer_10="NPC"

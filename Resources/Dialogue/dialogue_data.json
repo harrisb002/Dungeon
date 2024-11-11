@@ -3,7 +3,7 @@
 		"trees": [
 			{
 				"branch_id": "npc_1_1",
-				"dialogs": [
+				"dialogues": [
 					{
 						"state": "start",
 						"text": "Thank goodness an adventurer! What do you need?",
@@ -43,7 +43,7 @@
 			},
 			{
 				"branch_id": "npc_1_2",
-				"dialogs": [
+				"dialogues": [
 					{
 						"state": "start",
 						"text": "Hey adventurer! Back already?",
@@ -83,7 +83,7 @@
 			},
 			{
 				"branch_id": "npc_default",
-				"dialogs": [
+				"dialogues": [
 					{
 						"state": "start",
 						"text": "Hey adventurer! We all thank you for your bravery!",
@@ -107,8 +107,7 @@
 		"trees": [
 			{
 				"branch_id": "npc_2_1",
-				
-				"dialogs": [
+				"dialogues": [
 					{
 						"state": "start",
 						"text": "Oh great another adventurer, what do you want?",
@@ -148,7 +147,7 @@
 			},
 			{
 				"branch_id": "npc_2_2",
-				"dialogs": [
+				"dialogues": [
 					{
 						"state": "start",
 						"text": "Back already?",
@@ -188,7 +187,7 @@
 			},
 			{
 				"branch_id": "npc_default",
-				"dialogs": [
+				"dialogues": [
 					{
 						"state": "start",
 						"text": "I am not much for small talk.",

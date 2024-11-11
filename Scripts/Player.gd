@@ -7,7 +7,10 @@ extends CharacterBody2D
 @onready var inventory_ui = $InventoryUI
 @onready var inventory_ui_label = $InteractUI/ColorRect/Label
 @onready var ray_cast = $RayCast2D
+
+@onready var coin_icon = $HUD/Coins/Icon
 @onready var amount = $HUD/Coins/Amount
+
 @onready var quest_tracker = $HUD/QuestTracker
 @onready var title = $HUD/QuestTracker/Details/Title
 @onready var objectives = $HUD/QuestTracker/Details/Objectives
@@ -37,6 +40,7 @@ func start():
 func _ready():
 	# Set the Player reference instance to access the player globally
 	Global_Player.set_player_ref(self)
+	quest_tracker.visible = false # Make the Quest tracker hidden until opened
 	screen_size = get_viewport_rect().size
 	original_scale = scale  # Store the player's original scale
 	start_position = position  # Store the player's start position
@@ -58,7 +62,7 @@ func get_input():
 
 	# Turn the raycast in the direction of players movement
 	if velocity != Vector2.ZERO:
-		ray_cast.target_position = velocity.normalized() * 50 # 50 is length of cast
+		ray_cast.target_position = velocity.normalized() * 50 # Length of cast
 
 func _input(event):
 	if event.is_action_pressed("inventory"):
@@ -71,12 +75,13 @@ func _input(event):
 	if can_move:
 		if event.is_action_pressed("interact"):
 			var target = ray_cast.get_collider()
+			print("Colliding with: ", target)
 			if target != null:
 				## Using group to determine NPC
 				if target.is_in_group("NPC"):
 					print("Hey there NPC!")
 					can_move = false # Disbale movement while interacting
-					target.start_dialog()
+					target.start_dialogue()
 
 func _process(delta):
 	if inside_hole:

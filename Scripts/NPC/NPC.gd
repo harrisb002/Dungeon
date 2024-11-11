@@ -5,6 +5,8 @@ extends CharacterBody2D
 
 # Dialog vars
 @onready var dialogue_manager = $Dialogue_Manager
+
+# Instance the Dialogue resource using class name
 @export var dialogue_resource: Dialogue
 
 # Defined in the dialogue JSON
