@@ -1,4 +1,4 @@
-[gd_scene load_steps=206 format=4 uid="uid://cu40ek40bcb8x"]
+[gd_scene load_steps=207 format=4 uid="uid://cu40ek40bcb8x"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_7ilkh"]
 [ext_resource type="Texture2D" uid="uid://byw5035hmahfh" path="res://allart/RPGW_Caves_v2/MainLev2.0.png" id="1_wacfu"]
@@ -54643,6 +54643,10 @@ radius = 15.0
 script = ExtResource("35_3bb3h")
 dialogues = {}
 
+[sub_resource type="Resource" id="Resource_n83j6"]
+script = ExtResource("35_3bb3h")
+dialogues = {}
+
 [node name="Main" type="Node2D"]
 position = Vector2(1, 1)
 script = ExtResource("1_7ilkh")
@@ -54805,6 +54809,12 @@ item_icon = ExtResource("33_wc1um")
 [node name="NPC" parent="." instance=ExtResource("33_f5fwq")]
 position = Vector2(399, -669)
 dialogue_resource = SubResource("Resource_hcnoy")
+
+[node name="NPC2" parent="." instance=ExtResource("33_f5fwq")]
+position = Vector2(1636, -3185)
+npc_id = "npc_2"
+npc_name = "Peruvian"
+dialogue_resource = SubResource("Resource_n83j6")
 
 [editable path="Player"]
 [editable path="Portal"]

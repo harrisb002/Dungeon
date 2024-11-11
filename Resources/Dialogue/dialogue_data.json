@@ -198,7 +198,7 @@
 					},
 					{
 						"state": "give_quests",
-						"text": "Bring me my potion and you'll have your gold.",
+						"text": "Bring me my posion and you'll have your gold.",
 						"options": {
 							"Go Back": "start"
 						}
