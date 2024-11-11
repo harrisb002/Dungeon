@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://tsts84iirfjf"]
+[gd_scene load_steps=4 format=3 uid="uid://tsts84iirfjf"]
 
 [ext_resource type="Script" path="res://Scripts/Dialogue/DialogueUI.gd" id="1_njxba"]
+[ext_resource type="FontFile" uid="uid://bi04iecmbt37l" path="res://Assets/Fonts/ARCADECLASSIC.TTF" id="2_0h3oq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khdbk"]
 bg_color = Color(0.579958, 0.0886429, 0.140944, 1)
@@ -49,15 +50,16 @@ theme_override_constants/separation = 15
 
 [node name="DialogueSpeaker" type="Label" parent="CanvasLayer/Panel/DialogueBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.129412, 0.72549, 1, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_0h3oq")
+theme_override_font_sizes/font_size = 40
 text = "NPC Name"
 
 [node name="DialogueText" type="Label" parent="CanvasLayer/Panel/DialogueBox"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.787407, 0.917178, 1, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
 text = "Dialogue text..."
 horizontal_alignment = 1
 vertical_alignment = 1

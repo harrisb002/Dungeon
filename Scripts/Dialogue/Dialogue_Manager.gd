@@ -31,7 +31,7 @@ func handle_dialogue_choice(option):
 	
 	if next_state == "end":
 		if npc.current_branch_idx < npc.dialogue_resource.get_npc_dialogue(npc.npc_id).size() - 1:
-			npc.set_dialogue_branch(npc.current_branch_idx + 1)
+			npc.set_dialogue_tree(npc.current_branch_idx + 1)
 		hide_dialogue()
 	elif next_state == "exit":
 		# Reset curr state to be start

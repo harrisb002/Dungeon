@@ -27,7 +27,7 @@ func show_dialogue(speaker, text, options):
 		# Creating a button with options
 		var button = Button.new()
 		button.text = option
-		button.add_theme_font_size_override("font_size", 20)
+		button.add_theme_font_size_override("font_size", 25)
 		
 		# Bind the button to the options selected function for event
 		button.pressed.connect(_on_option_selected.bind(option))
@@ -37,7 +37,8 @@ func show_dialogue(speaker, text, options):
 func hide_dialogue():
 	# Allow the player to move again
 	Global_Player.Player_node.can_move = true
-	panel.visible = false
+	panel.visible = false 
+	Global_Player.inventory_hotbar.visible = true # Show hotbar once done
 
 # Handle option selection
 func _on_option_selected(option):
