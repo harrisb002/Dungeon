@@ -6,16 +6,16 @@
 				"dialogues": [
 					{
 						"state": "start",
-						"text": "Thank goodness an adventurer! What do you need?",
+						"text": "Hey there buddy, i've been hoping to see an adventurer!",
 						"options": {
-							"Ask About Beast": "in_progress",
+							"Ask About Money": "in_progress",
 							"Receive Quests": "give_quests",
 							"Say Farewell": "exit"
 						}
 					},
 					{
 						"state": "in_progress",
-						"text": "This dungeon is known for its dangerous enemies, especially the one that guards the exit. It breathes fire and holds us hostage.",
+						"text": "This dungeon was full of coins, but we have collected most of it already.",
 						"options": {
 							"Say Farewell": "end",
 							"Go Back": "start"
@@ -23,7 +23,7 @@
 					},
 					{
 						"state": "give_quests",
-						"text": "Please, slay the beast and set us free!",
+						"text": "Talk to my former friend Peruvian, we go way back. He can help you get gold, he's very greedy.",
 						"options": {
 							"Say Farewell": "exit",
 							"Go Back": "start"
@@ -31,12 +31,12 @@
 					},
 					{
 						"state": "end",
-						"text": "We thank you, adventurer!",
+						"text": "I thank you, adventurer!",
 						"options": {}
 					},
 					{
 						"state": "exit",
-						"text": "Come back soon adventurer!",
+						"text": "Be safe adventurer!",
 						"options": {}
 					}
 				]
@@ -46,16 +46,16 @@
 				"dialogues": [
 					{
 						"state": "start",
-						"text": "Hey adventurer! Back already?",
+						"text": "Back already?",
 						"options": {
-							"Continue Asking About Beast": "in_progress",
+							"Ask About Money": "in_progress",
 							"Receive Quests": "give_quests",
 							"Say Farewell": "exit"
 						}
 					},
 					{
 						"state": "in_progress",
-						"text": "I heard that Carl the fire ring may help you in your quest, only problem is its been lost for sometime in the labyrinth.",
+						"text": "I heard Peruvian has much of the gold that use to lie in these v",
 						"options": {
 							"Say Farewell": "end",
 							"Go Back": "start"
@@ -63,7 +63,7 @@
 					},
 					{
 						"state": "give_quests",
-						"text": "Please, slay the beast and set us free!",
+						"text": "Find my friend and you will be paid!",
 						"options": {
 							"Say Farewell": "exit",
 							"Go Back": "start"
@@ -71,12 +71,12 @@
 					},
 					{
 						"state": "end",
-						"text": "We thank you, adventurer!",
+						"text": "How excellent, Peruvian was very happy!",
 						"options": {}
 					},
 					{
 						"state": "exit",
-						"text": "Come back soon!",
+						"text": "Take care!",
 						"options": {}
 					}
 				]
@@ -86,7 +86,7 @@
 				"dialogues": [
 					{
 						"state": "start",
-						"text": "Hey adventurer! We all thank you for your bravery!",
+						"text": "I hope all is well.",
 						"options": {
 							"Receive Quests": "give_quests",
 							"Say Farewell": "exit"
@@ -94,7 +94,7 @@
 					},
 					{
 						"state": "give_quests",
-						"text": "Please, slay the beast and set us free!",
+						"text": "Sure! If I have anything, you can find it in your Quest Log.",
 						"options": {
 							"Go Back": "start"
 						}
@@ -119,7 +119,7 @@
 					},
 					{
 						"state": "in_progress",
-						"text": "This dungeon is full of treasure, but bring me a poison potion and I will pay you 50 coins!",
+						"text": "This dungeon was full of treasure, but bring me a poison potion and I will pay you 50 coins!",
 						"options": {
 							"Say Farewell": "end",
 							"Go Back": "start"
@@ -198,7 +198,7 @@
 					},
 					{
 						"state": "give_quests",
-						"text": "Bring me my posion and you'll have your gold.",
+						"text": "If I had anything, you would find it in your Quest Log.",
 						"options": {
 							"Go Back": "start"
 						}
@@ -206,5 +206,109 @@
 				]
 			}
 		]
-	}
+	},
+	"npc_3": {
+		"trees": [
+			{
+				"branch_id": "npc_3_1",
+				"dialogues": [
+					{
+						"state": "start",
+						"text": "Thank goodness an adventurer! What do you need?",
+						"options": {
+							"Ask About Beast": "in_progress",
+							"Receive Quests": "give_quests",
+							"Say Farewell": "exit"
+						}
+					},
+					{
+						"state": "in_progress",
+						"text": "This dungeon is known for its dangerous enemies, especially the one that guards the exit. It breathes fire and holds us hostage.",
+						"options": {
+							"Say Farewell": "end",
+							"Go Back": "start"
+						}
+					},
+					{
+						"state": "give_quests",
+						"text": "Please, slay the beast and set us free!",
+						"options": {
+							"Say Farewell": "exit",
+							"Go Back": "start"
+						}
+					},
+					{
+						"state": "end",
+						"text": "We thank you, adventurer!",
+						"options": {}
+					},
+					{
+						"state": "exit",
+						"text": "Come back soon adventurer!",
+						"options": {}
+					}
+				]
+			},
+			{
+				"branch_id": "npc_3_2",
+				"dialogues": [
+					{
+						"state": "start",
+						"text": "Hey adventurer! Back already?",
+						"options": {
+							"Continue Asking About Beast": "in_progress",
+							"Receive Quests": "give_quests",
+							"Say Farewell": "exit"
+						}
+					},
+					{
+						"state": "in_progress",
+						"text": "I heard that Carl the fire ring may help you in your quest, only problem is its been lost for sometime in the labyrinth.",
+						"options": {
+							"Say Farewell": "end",
+							"Go Back": "start"
+						}
+					},
+					{
+						"state": "give_quests",
+						"text": "Please, slay the beast and set us free!",
+						"options": {
+							"Say Farewell": "exit",
+							"Go Back": "start"
+						}
+					},
+					{
+						"state": "end",
+						"text": "We thank you, adventurer!",
+						"options": {}
+					},
+					{
+						"state": "exit",
+						"text": "Come back soon!",
+						"options": {}
+					}
+				]
+			},
+			{
+				"branch_id": "npc_default",
+				"dialogues": [
+					{
+						"state": "start",
+						"text": "Hey adventurer! We all thank you for your bravery!",
+						"options": {
+							"Receive Quests": "give_quests",
+							"Say Farewell": "exit"
+						}
+					},
+					{
+						"state": "give_quests",
+						"text": "Please, slay the beast and set us free!",
+						"options": {
+							"Go Back": "start"
+						}
+					}
+				]
+			}
+		]
+	},
 }

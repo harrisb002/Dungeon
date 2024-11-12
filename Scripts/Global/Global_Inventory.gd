@@ -17,18 +17,17 @@ var hotbar_inventory = []
 
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
-	{"quantity": 0, "type": "Money", "name": "Coin", "effect": "", "texture": preload("res://allart/InventoryItems/coin.png")},
-	{"quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
-	{"quantity": 0, "type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png")},
-	{"quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
-	{"quantity": 0, "type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
-	{"quantity": 0, "type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
-	{"quantity": 0, "type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png")},
-	{"quantity": 0, "type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png")},
-	{"quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png")},
-	{"quantity": 0, "type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png")},
-	{"quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png")},
-	{"quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png")},
+	{"id": "common_key", "quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
+	{"id": "shroom", "quantity": 0, "type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png")},
+	{"id": "flash_ring", "quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
+	{"id": "arrow", "quantity": 0, "type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
+	{"id": "fire_skin", "quantity": 0, "type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
+	{"id": "health_potion", "quantity": 0, "type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png")},
+	{"id": "cloak", "quantity": 0, "type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png")},
+	{"id": "magic_potion", "quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png")},
+	{"id": "poison_potion", "quantity": 0, "type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png")},
+	{"id": "shield_potion", "quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png")},
+	{"id": "stamina_potion", "quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png")},
 ]
 
 func _ready():
@@ -37,6 +36,13 @@ func _ready():
 
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):
+	## Check if item is needed for an active quest
+	if Global_Inventory.is_item_needed(item.id):
+		## Update the objective with the type collection
+		Global_Player.check_quest_objectives(item.id, "collection", item.quantity)
+	else: 
+		print("Item is not needed for any active quest")
+
 	var added_to_hotbar = false
 	# Add the item to hotbar
 	if to_hotbar:
@@ -58,6 +64,16 @@ func add_item(item, to_hotbar = false):
 				inventory_updated.emit()
 				return true
 		return false
+
+# Check if item added is a quest item for the currently selected quest
+func is_item_needed(item_id: String) -> bool:
+	if Global_Player.selected_quest != null:
+		for objective in Global_Player.selected_quest.objectives:
+			## Checking if targetID for quest is the same as the itemID (REQUIRES THEM TO MATCH)
+			## Ensure this in: Global_Inventory -> spawnable_items
+			if objective.target_id == item_id and objective.target_type == "collection" and not objective.is_completed:
+				return true
+	return false
 
 # Decrement/Remove item based on name and type
 func remove_item(item_name, item_type):
@@ -132,7 +148,6 @@ func adjust_drop_position(pos):
 
 	# If no valid position was found after attempts, return the original position
 	return pos
-
 
 # Drops an item at a specified position, adjusting for nearby items
 func drop_item(item_data, drop_position):

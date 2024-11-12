@@ -1,4 +1,4 @@
-[gd_scene load_steps=127 format=3 uid="uid://chxd6ijec3lqs"]
+[gd_scene load_steps=128 format=3 uid="uid://chxd6ijec3lqs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_3s2n2"]
 [ext_resource type="Texture2D" uid="uid://cdfnu26fcrtlj" path="res://allart/Knightattacks/backattack.png" id="2_btk8a"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bguf87n17mm7" path="res://allart/MageArt/walk.png" id="9_ghf0c"]
 [ext_resource type="PackedScene" uid="uid://c3fw07a62gonv" path="res://Scenes/Inventory/Inventory_Hotbar.tscn" id="10_yub7k"]
 [ext_resource type="Texture2D" uid="uid://dtir5kmhydso1" path="res://Assets/Icons/icon20.png" id="13_uggde"]
+[ext_resource type="PackedScene" uid="uid://ohiphwf318il" path="res://Scenes/Quest/Quest_Manager.tscn" id="14_efdkd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acllo"]
 radius = 13.0
@@ -991,10 +992,9 @@ theme_override_font_sizes/font_size = 50
 text = "0"
 
 [node name="QuestTracker" type="ColorRect" parent="HUD"]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 316.0
-offset_bottom = 216.0
+offset_right = 300.0
+offset_bottom = 200.0
+scale = Vector2(2.10053, 1.29529)
 color = Color(0.141176, 0.141176, 0.141176, 0.788235)
 
 [node name="Details" type="VBoxContainer" parent="HUD/QuestTracker"]
@@ -1008,8 +1008,8 @@ theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="HUD/QuestTracker/Details"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.139088, 0.688307, 0.191008, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(0.0862745, 1, 0.384314, 1)
+theme_override_font_sizes/font_size = 10
 text = "Title
 "
 horizontal_alignment = 1
@@ -1019,6 +1019,10 @@ uppercase = true
 [node name="Objectives" type="VBoxContainer" parent="HUD/QuestTracker/Details"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="Quest_Manager" parent="." instance=ExtResource("14_efdkd")]
+visible = true
+scale = Vector2(1, 1)
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

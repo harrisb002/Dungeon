@@ -9,14 +9,14 @@ func _ready():
 	# Connect the signal to update and load with correct num of columns
 	Global_Inventory.inventory_updated.connect(_on_inventory_updated)
 	_on_inventory_updated()
-	
+
 # Update the inventory UI
 func _on_inventory_updated():
 	# Clear the current slots
 	clear_grid_container()
 	
 	# Add slots for each inventory item
-	for item in Global_Inventory.inventory:
+	for item in Global_Inventory.inventory:	
 		# Create new slot scene and add it to container
 		var slot = Global_Inventory.inventory_slot_scene.instantiate()
 		

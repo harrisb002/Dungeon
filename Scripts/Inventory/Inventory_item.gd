@@ -2,6 +2,7 @@
 extends Node2D
 
 # Export, Allows setting it through the inspector
+@export var item_id = ""
 @export var item_name = ""
 @export var item_type = ""
 @export var item_texture = Texture
@@ -29,6 +30,7 @@ func _process(delta: float):
 # Create the dict for item info to be passed when adding it
 func pickup_item(): 
 	var item = {
+		"id": item_id,
 		"quantity": 1,
 		"type": item_type,
 		"name": item_name,

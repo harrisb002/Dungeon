@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ohiphwf318il"]
+
+[ext_resource type="Script" path="res://Scripts/Quest/Quest_Manager.gd" id="1_btuu3"]
+[ext_resource type="PackedScene" uid="uid://dndqcv838sdm6" path="res://Scenes/Quest/QuestUI.tscn" id="2_xcnsm"]
+
+[node name="Quest_Manager" type="Node2D"]
+visible = false
+script = ExtResource("1_btuu3")
+
+[node name="QuestUI" parent="." instance=ExtResource("2_xcnsm")]
