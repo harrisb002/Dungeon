@@ -69,7 +69,7 @@ func get_quest_dialogue() -> Dictionary:
 					# Return the obj. dialogue in the dialogueUI by passing the text & options
 					# Only play once for when the objective is not yet complete
 					return {"text": objective.objective_dialog, "options": {}}
-					
+
 	# Return any other data in the JSON file if nothing found
 	return {"text": "", "options": {}}
 
