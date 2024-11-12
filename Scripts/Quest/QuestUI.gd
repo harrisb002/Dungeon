@@ -10,7 +10,6 @@ extends Control
 
 # keeps track of the selected quest to show its details in the questUI
 var selected_quest: Quest = null
-var quest_manager
  
 func _ready():
 	panel.visible = false
@@ -19,9 +18,9 @@ func _ready():
 	clear_quest_details()
 	
 	## Quest_Manager/UI connection
-	quest_manager = get_parent()
-	quest_manager.quest_updated.connect(_on_quest_updated)
-	quest_manager.objective_updated(_on_objectives_updated)
+	Global_Player.quest_manager = get_parent()
+	Global_Player.quest_manager.quest_updated.connect(_on_quest_updated)
+	Global_Player.quest_manager.objective_updated.connect(_on_objectives_updated)
 
 # Show/hide quest log
 func show_hide_log():
@@ -42,7 +41,7 @@ func update_quest_list():
 	if active_quests.size() == 0:
 		clear_quest_details()
 		Global_Player.selected_quest = null
-		#Global_Player.Player_node.update_quest_tracker(null)
+		Global_Player.update_quest_tracker(null)
 	else: 
 		for quest in active_quests:
 			var button = Button.new()
@@ -50,12 +49,17 @@ func update_quest_list():
 			button.text = quest.quest_name
 			button.pressed.connect(_on_quest_selected.bind(quest))
 			quest_list.add_child(button)
-
+	
+	# Update quest tracker
+	Global_Player.update_quest_tracker(selected_quest)
+	
 # Updates the Quest details node with the selected quest 
 # information when that quest button is selected
 # this populates the QuestUI with any currenlty selected quest
 func _on_quest_selected(quest: Quest):
 	selected_quest = quest
+	Global_Player.selected_quest = quest
+	
 	# Populate thge details passed from the active quest
 	quest_title.text = quest.quest_name
 	quest_description.text = quest.quest_description
@@ -119,3 +123,6 @@ func _on_objectives_updated(quest_id: String, objectives_id: String):
 		_on_quest_selected(selected_quest)
 	else:
 		clear_quest_details()
+
+func _on_close_button_pressed() -> void:
+	show_hide_log()

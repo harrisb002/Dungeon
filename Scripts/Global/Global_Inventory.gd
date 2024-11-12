@@ -36,6 +36,13 @@ func _ready():
 
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):
+	## Check if item is needed for an active quest
+	if Global_Inventory.is_item_needed(item.id):
+		## Update the objective with the type collection
+		Global_Player.check_quest_objectives(item.id, "collection", item.quantity)
+	else: 
+		print("Item is not needed for any active quest")
+
 	var added_to_hotbar = false
 	# Add the item to hotbar
 	if to_hotbar:
@@ -57,6 +64,17 @@ func add_item(item, to_hotbar = false):
 				inventory_updated.emit()
 				return true
 		return false
+
+# Check if item added is a quest item for the currently selected quest
+func is_item_needed(item_id: String) -> bool:
+	if Global_Player.selected_quest != null:
+		for objective in Global_Player.selected_quest.objectives:
+			## Checking if targetID for quest is the same as the itemID (REQUIRES THEM TO MATCH)
+			## Ensure this in: Global_Inventory -> spawnable_items
+			if objective.target_id == item_id and objective.target_type == "collection" and not objective.is_completed:
+				return true
+	return false
+
 # Decrement/Remove item based on name and type
 func remove_item(item_name, item_type):
 	for i in range(inventory.size()):

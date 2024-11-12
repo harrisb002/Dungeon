@@ -54758,6 +54758,7 @@ position = Vector2(-436, 15)
 [node name="GoldKey" parent="." instance=ExtResource("11_imjwl")]
 position = Vector2(748, -577)
 scale = Vector2(2, 2)
+item_id = "1"
 item_name = "Key"
 item_type = "Golden"
 item_texture = ExtResource("12_rejvy")
@@ -54766,6 +54767,7 @@ item_effect = "Open Chest"
 [node name="BossKey" parent="." instance=ExtResource("11_imjwl")]
 position = Vector2(182, -1094)
 scale = Vector2(2, 2)
+item_id = "2"
 item_name = "Key"
 item_type = "Boss"
 item_texture = ExtResource("16_p6kqc")

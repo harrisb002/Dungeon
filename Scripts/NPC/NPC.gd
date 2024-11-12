@@ -23,7 +23,7 @@ func _ready():
 	# Init the npc ref
 	dialogue_manager.npc = self
 	# Get the quest manager form the player node via global
-	quest_manager = Global_Player.Player_node.quest_manager
+	quest_manager = Global_Player.quest_manager
 	print("NPC is ready, quests are loaded: ", quests.size())
 
 # Starts the interaction with the NPC

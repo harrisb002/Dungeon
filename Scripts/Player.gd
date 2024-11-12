@@ -10,15 +10,16 @@ extends CharacterBody2D
 @onready var inventory_ui = $InventoryUI
 @onready var inventory_hotbar = $InventoryHotbar/Inventory_Hotbar
 
+# Quest vars
+@onready var quest_manager_node = $Quest_Manager
+@onready var objectives_node = $HUD/QuestTracker/Details/Objectives
+@onready var quest_tracker_node = $HUD/QuestTracker
+@onready var amount_node = $HUD/Coins/Amount
+@onready var title_node = $HUD/QuestTracker/Details/Title
+
 # Coin vars
 @onready var coin_icon = $HUD/Coins/Icon
-@onready var amount = $HUD/Coins/Amount
-
 # Quest vars
-@onready var quest_manager = $Quest_Manager
-@onready var quest_tracker = $HUD/QuestTracker
-@onready var title = $HUD/QuestTracker/Details/Title
-@onready var objectives = $HUD/QuestTracker/Details/Objectives
 @onready var ray_cast = $RayCast2D
 
 var interact_ui_raycast_visible = false  # Flag to track if UI is shown due to RayCast
@@ -50,10 +51,21 @@ func start():
 func _ready():
 	# Set the Player reference instance to access the player globally
 	Global_Player.set_player_ref(self)
+	
+	# Sets nodes related to quest management interactions
+	Global_Player.set_quest_node_refs(quest_manager_node, quest_tracker_node, title_node, objectives_node, amount_node)
+	
 	# Set inventory hotbar to be accessible globally
 	Global_Player.set_inventory_hotbar(inventory_hotbar)
 	
-	quest_tracker.visible = false # Make the Quest tracker hidden until opened
+	# Make the Quest tracker hidden until opened
+	Global_Player.quest_tracker.visible = false 
+	Global_Player.update_coins()
+	
+	# Signal connections for Quest managment
+	Global_Player.quest_manager.quest_updated.connect(Global_Player._on_quest_updated)
+	Global_Player.quest_manager.objective_updated.connect(Global_Player._on_objective_updated)
+	
 	screen_size = get_viewport_rect().size
 	original_scale = scale  # Store the player's original scale
 	start_position = position  # Store the player's start position
@@ -89,14 +101,17 @@ func _input(event):
 		# Checking for interactions with NPC 
 		if event.is_action_pressed("interact"):
 			var target = ray_cast.get_collider()
+			
 			if target != null and target.is_in_group("NPC"):
 				interact_ui.visible = false
 				can_move = false  # Disable movement while interacting
 				Global_Player.inventory_hotbar.visible = false
+				Global_Player.check_quest_objectives(target.npc_id, "talk_to")
 				target.start_dialogue()
+				
 		# Opening the QuestUI
 		if event.is_action_pressed("quest_menu"):
-			quest_manager.show_hide_log()
+			Global_Player.quest_manager.show_hide_log()
 
 func _process(delta):
 	if inside_hole:
