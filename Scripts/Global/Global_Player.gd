@@ -94,10 +94,6 @@ func update_quest_tracker(quest: Quest):
 
 			objectives.add_child(label)
 
-	# no active quest, hide tracker
-	else:
-		quest_tracker.visible = false
-
 # Update tracker if quest is completed
 func _on_quest_updated(quest_id: String):
 	var quest = quest_manager.get_quest(quest_id)
