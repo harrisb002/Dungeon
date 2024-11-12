@@ -14,6 +14,7 @@ extends CharacterBody2D
 @onready var coin_icon = $HUD/Coins/Icon
 @onready var amount = $HUD/Coins/Amount
 
+@onready var quest_manager = $Quest_Manager
 @onready var quest_tracker = $HUD/QuestTracker
 @onready var title = $HUD/QuestTracker/Details/Title
 @onready var objectives = $HUD/QuestTracker/Details/Objectives

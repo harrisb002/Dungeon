@@ -8,7 +8,11 @@ class_name Quest
 @export var quest_name: String
 @export var quest_description: String
 @export var state: String = "not_started"
+
+## ID of the dialogue branch that the player should 
+## be at to be able to accept this quest
 @export var unlock_id: String  
+
 @export var objectives: Array[Objectives] = []
 @export var rewards: Array[Rewards] = []
 
