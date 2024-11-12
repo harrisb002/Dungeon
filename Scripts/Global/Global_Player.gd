@@ -76,6 +76,7 @@ func update_coins():
 func update_quest_tracker(quest: Quest):
 	# if we have an active quest, populate tracker
 	if quest:
+		print("Quest is being tracked")
 		quest_tracker.visible = true
 		title.text = quest.quest_name
 

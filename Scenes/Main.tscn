@@ -1,4 +1,4 @@
-[gd_scene load_steps=205 format=4 uid="uid://cu40ek40bcb8x"]
+[gd_scene load_steps=213 format=4 uid="uid://cu40ek40bcb8x"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_7ilkh"]
 [ext_resource type="Texture2D" uid="uid://byw5035hmahfh" path="res://allart/RPGW_Caves_v2/MainLev2.0.png" id="1_wacfu"]
@@ -32,7 +32,11 @@
 [ext_resource type="PackedScene" uid="uid://bkwpajbtatup7" path="res://Scenes/Mobscenes/mushroom.tscn" id="21_ntrs1"]
 [ext_resource type="PackedScene" uid="uid://bxl4jjno3gkek" path="res://Scenes/Mobscenes/fireworm.tscn" id="22_nx5bl"]
 [ext_resource type="PackedScene" uid="uid://c4s5kv0phf7uu" path="res://Scenes/NPC/NPC.tscn" id="33_f5fwq"]
+[ext_resource type="Texture2D" uid="uid://dswd2isskfmyr" path="res://Assets/Icons/icon10.png" id="34_jdp6e"]
 [ext_resource type="Script" path="res://Resources/Dialogue/Dialogue.gd" id="35_3bb3h"]
+[ext_resource type="Script" path="res://Resources/Quest/Quests.gd" id="35_ccr4q"]
+[ext_resource type="Script" path="res://Resources/Quest/Objectives.gd" id="36_c73ra"]
+[ext_resource type="Script" path="res://Resources/Quest/Rewards.gd" id="37_wc3rq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5sum"]
 texture = ExtResource("1_wacfu")
@@ -54645,6 +54649,37 @@ dialogues = {}
 script = ExtResource("35_3bb3h")
 dialogues = {}
 
+[sub_resource type="Resource" id="Resource_06kyn"]
+script = ExtResource("36_c73ra")
+id = "obj_collection_01"
+description = "Find the Posion Potion"
+is_completed = false
+target_id = "poison_potion"
+target_type = "collection"
+required_quantity = 1
+collected_quantity = 0
+objective_dialog = ""
+
+[sub_resource type="Resource" id="Resource_mvtd8"]
+resource_local_to_scene = true
+script = ExtResource("37_wc3rq")
+reward_type = "coins"
+reward_amount = 50
+
+[sub_resource type="Resource" id="Resource_k5prf"]
+script = ExtResource("35_ccr4q")
+quest_id = "npc_quest_02"
+quest_name = "With Poison comes money"
+quest_description = "Find the Posion Potion for Peruvian"
+state = "not_started"
+unlock_id = "npc_2_1"
+objectives = Array[ExtResource("36_c73ra")]([SubResource("Resource_06kyn")])
+rewards = Array[ExtResource("37_wc3rq")]([SubResource("Resource_mvtd8")])
+
+[sub_resource type="Resource" id="Resource_5h7g3"]
+script = ExtResource("35_3bb3h")
+dialogues = {}
+
 [node name="Main" type="Node2D"]
 position = Vector2(1, 1)
 script = ExtResource("1_7ilkh")
@@ -54714,8 +54749,8 @@ offset_bottom = -8.0
 [node name="RayCast2D" parent="Player" index="8"]
 metadata/_edit_lock_ = true
 
-[node name="QuestTracker" parent="Player/HUD" index="1"]
-visible = false
+[node name="Quest_Manager" parent="Player" index="10"]
+position = Vector2(77, -123)
 
 [node name="Portal" parent="." instance=ExtResource("8_2mpry")]
 position = Vector2(140, -832)
@@ -54773,6 +54808,13 @@ item_type = "Boss"
 item_texture = ExtResource("16_p6kqc")
 item_effect = "Open Chest"
 
+[node name="Inventory_Item" parent="." instance=ExtResource("11_imjwl")]
+position = Vector2(897, -892)
+item_id = "poison_potion"
+item_name = "Poison Potion"
+item_type = "Potion"
+item_texture = ExtResource("34_jdp6e")
+
 [node name="boss" parent="." instance=ExtResource("17_s412h")]
 position = Vector2(1016, -2305)
 
@@ -54804,12 +54846,19 @@ collision_mask = 2
 [node name="NPC" parent="." instance=ExtResource("33_f5fwq")]
 position = Vector2(399, -669)
 dialogue_resource = SubResource("Resource_hcnoy")
+quests = Array[ExtResource("35_ccr4q")]([])
 
 [node name="NPC2" parent="." instance=ExtResource("33_f5fwq")]
 position = Vector2(1636, -3185)
 npc_id = "npc_2"
 npc_name = "Peruvian"
 dialogue_resource = SubResource("Resource_n83j6")
+quests = Array[ExtResource("35_ccr4q")]([SubResource("Resource_k5prf")])
+
+[node name="NPC3" parent="." instance=ExtResource("33_f5fwq")]
+position = Vector2(1510, -4299)
+dialogue_resource = SubResource("Resource_5h7g3")
+quests = Array[ExtResource("35_ccr4q")]([])
 
 [editable path="Player"]
 [editable path="Portal"]

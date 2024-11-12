@@ -7,6 +7,7 @@ extends Control
 @onready var quest_objectives = $CanvasLayer/Panel/Contents/Details/QuestDetails/QuestObjectives
 @onready var quest_rewards = $CanvasLayer/Panel/Contents/Details/QuestDetails/QuestRewards
 
+var quest_manager
 
 # keeps track of the selected quest to show its details in the questUI
 var selected_quest: Quest = null
@@ -18,9 +19,13 @@ func _ready():
 	clear_quest_details()
 	
 	## Quest_Manager/UI connection
-	Global_Player.quest_manager = get_parent()
-	Global_Player.quest_manager.quest_updated.connect(_on_quest_updated)
-	Global_Player.quest_manager.objective_updated.connect(_on_objectives_updated)
+	quest_manager = Global_Player.quest_manager
+	# Ensure quest_manager is set before connecting signals
+	if quest_manager != null:
+		quest_manager.quest_updated.connect(_on_quest_updated)
+		quest_manager.objective_updated.connect(_on_objectives_updated)
+	else:
+		print("Error: Quest manager is not initialized in Global_Player.")
 
 # Show/hide quest log
 func show_hide_log():
@@ -37,7 +42,7 @@ func update_quest_list():
 		quest_list.remove_child(child)
 		
 	# Populate with new items
-	var active_quests = get_parent().get_active_quests()
+	var active_quests = Global_Player.quest_manager.get_active_quests()
 	if active_quests.size() == 0:
 		clear_quest_details()
 		Global_Player.selected_quest = null
@@ -70,7 +75,7 @@ func _on_quest_selected(quest: Quest):
 	
 	for objective in quest.objectives:
 		var label = Label.new()
-		label.add_theme_font_size_override("font_size", 30)
+		label.add_theme_font_size_override("font_size", 20)
 		
 		if objective.target_type == "collection":
 			## Must collect an item, showing item description and amount needed
@@ -93,7 +98,7 @@ func _on_quest_selected(quest: Quest):
 	
 	for reward in quest.rewards:
 		var label = Label.new()
-		label.add_theme_font_size_override("font_size", 30)
+		label.add_theme_font_size_override("font_size", 20)
 		## Golden type color
 		label.add_theme_color_override("font_color", Color(0, 0.84, 0))
 		label.text = "Rewards: " + reward.reward_type.capitalize() 	+ ": " + str(reward.reward_amount)
@@ -116,6 +121,7 @@ func _on_quest_updated(quest_id: String):
 		_on_quest_selected(selected_quest)
 	else:
 		update_quest_list()
+	selected_quest = null
 	
 # Trigger to update quest details
 func _on_objectives_updated(quest_id: String, objectives_id: String):
@@ -123,6 +129,7 @@ func _on_objectives_updated(quest_id: String, objectives_id: String):
 		_on_quest_selected(selected_quest)
 	else:
 		clear_quest_details()
+	selected_quest = null
 
 func _on_close_button_pressed() -> void:
 	show_hide_log()

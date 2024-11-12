@@ -52,6 +52,10 @@ func _ready():
 	# Set the Player reference instance to access the player globally
 	Global_Player.set_player_ref(self)
 	
+	# Signal connections for Quest managment
+	quest_manager_node.quest_updated.connect(Global_Player._on_quest_updated)
+	quest_manager_node.objective_updated.connect(Global_Player._on_objective_updated)
+	
 	# Sets nodes related to quest management interactions
 	Global_Player.set_quest_node_refs(quest_manager_node, quest_tracker_node, title_node, objectives_node, amount_node)
 	
@@ -59,12 +63,8 @@ func _ready():
 	Global_Player.set_inventory_hotbar(inventory_hotbar)
 	
 	# Make the Quest tracker hidden until opened
-	Global_Player.quest_tracker.visible = false 
+	Global_Player.quest_tracker.visible = true 
 	Global_Player.update_coins()
-	
-	# Signal connections for Quest managment
-	Global_Player.quest_manager.quest_updated.connect(Global_Player._on_quest_updated)
-	Global_Player.quest_manager.objective_updated.connect(Global_Player._on_objective_updated)
 	
 	screen_size = get_viewport_rect().size
 	original_scale = scale  # Store the player's original scale
