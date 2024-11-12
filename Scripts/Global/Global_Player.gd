@@ -3,6 +3,9 @@ extends Node
 var Player_node: Node = null
 var inventory_hotbar = null
 
+# DEtermines what the current quest is
+var selected_quest: Quest = null
+
 # Holds the animation_prefix for the current character selected
 var character = ""
 

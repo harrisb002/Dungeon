@@ -3,17 +3,18 @@ extends CharacterBody2D
 @export var speed = 1000 
 
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var inventory_ui = $InventoryUI
 
-# Label for interactions
+# Inventory vars
 @onready var interact_ui = $InteractUI
 @onready var interact_ui_label = $InteractUI/ColorRect/Label
-
+@onready var inventory_ui = $InventoryUI
 @onready var inventory_hotbar = $InventoryHotbar/Inventory_Hotbar
 
+# Coin vars
 @onready var coin_icon = $HUD/Coins/Icon
 @onready var amount = $HUD/Coins/Amount
 
+# Quest vars
 @onready var quest_manager = $Quest_Manager
 @onready var quest_tracker = $HUD/QuestTracker
 @onready var title = $HUD/QuestTracker/Details/Title
@@ -22,19 +23,21 @@ extends CharacterBody2D
 
 var interact_ui_raycast_visible = false  # Flag to track if UI is shown due to RayCast
 
+# Player positioning
 var screen_size  # Size of the game window.
 var start_position = Vector2.ZERO  # Variable to store the player's starting position
 var original_scale = Vector2.ONE  # Variable to store the player's original scale
 var inside_hole = false # Flag for falling in holes
 
+# Attack/animation vars
 var curr_direction = "move_right" # Check what side we are currenlty moving 
 var is_attacking = false  # Check if attack frames are on
 
 # Changes the animation based on selection of player
 var animation_prefix = Global_Player.character + "_"
 
-# Used to prevent player movement while interacting with NPC
-var can_move = true
+# QuestUI/Interactions vars
+var can_move = true # Used to prevent player movement while interacting with NPC
 
 # Reset the player when starting a new game.
 func start():
@@ -82,14 +85,18 @@ func _input(event):
 		# Pause the game, on/off
 		get_tree().paused = !get_tree().paused
 	
-	# Checking for interactions with NPC 
-	if can_move and event.is_action_pressed("interact"):
-		var target = ray_cast.get_collider()
-		if target != null and target.is_in_group("NPC"):
-			interact_ui.visible = false
-			can_move = false  # Disable movement while interacting
-			Global_Player.inventory_hotbar.visible = false
-			target.start_dialogue()
+	if can_move:
+		# Checking for interactions with NPC 
+		if event.is_action_pressed("interact"):
+			var target = ray_cast.get_collider()
+			if target != null and target.is_in_group("NPC"):
+				interact_ui.visible = false
+				can_move = false  # Disable movement while interacting
+				Global_Player.inventory_hotbar.visible = false
+				target.start_dialogue()
+		# Opening the QuestUI
+		if event.is_action_pressed("quest_menu"):
+			quest_manager.show_hide_log()
 
 func _process(delta):
 	if inside_hole:

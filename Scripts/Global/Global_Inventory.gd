@@ -17,18 +17,17 @@ var hotbar_inventory = []
 
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
-	{"quantity": 0, "type": "Money", "name": "Coin", "effect": "", "texture": preload("res://allart/InventoryItems/coin.png")},
-	{"quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
-	{"quantity": 0, "type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png")},
-	{"quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
-	{"quantity": 0, "type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
-	{"quantity": 0, "type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
-	{"quantity": 0, "type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png")},
-	{"quantity": 0, "type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png")},
-	{"quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png")},
-	{"quantity": 0, "type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png")},
-	{"quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png")},
-	{"quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png")},
+	{"id": 1, "quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
+	{"id": 2, "quantity": 0, "type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png")},
+	{"id": 3, "quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
+	{"id": 4, "quantity": 0, "type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
+	{"id": 5, "quantity": 0, "type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
+	{"id": 6, "quantity": 0, "type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png")},
+	{"id": 7, "quantity": 0, "type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png")},
+	{"id": 8, "quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png")},
+	{"id": 9, "quantity": 0, "type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png")},
+	{"id": 10, "quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png")},
+	{"id": 11, "quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png")},
 ]
 
 func _ready():
@@ -58,7 +57,6 @@ func add_item(item, to_hotbar = false):
 				inventory_updated.emit()
 				return true
 		return false
-
 # Decrement/Remove item based on name and type
 func remove_item(item_name, item_type):
 	for i in range(inventory.size()):
@@ -132,7 +130,6 @@ func adjust_drop_position(pos):
 
 	# If no valid position was found after attempts, return the original position
 	return pos
-
 
 # Drops an item at a specified position, adjusting for nearby items
 func drop_item(item_data, drop_position):

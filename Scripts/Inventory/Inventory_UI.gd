@@ -17,6 +17,9 @@ func _on_inventory_updated():
 	
 	# Add slots for each inventory item
 	for item in Global_Inventory.inventory:
+		## Check if item is needed for current quest
+		is_item_needed(item.id)
+		
 		# Create new slot scene and add it to container
 		var slot = Global_Inventory.inventory_slot_scene.instantiate()
 		
@@ -29,6 +32,14 @@ func _on_inventory_updated():
 			slot.set_item(item)
 		else:
 			slot.set_empty()
+
+# Check if item added is a quest item for the currently selected quest
+func is_item_needed(item_id: String) -> bool:
+	if Global_Player.selected_quest != null:
+		for objective in Global_Player.selected_quest.objectives:
+			if objective.target_id == item_id and objective.target_type == "collection" and not objective.is_completed:
+				return true
+	return false
 
 # Clear grid upon each update to ensure correct quantity
 func clear_grid_container():

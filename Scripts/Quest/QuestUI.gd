@@ -14,12 +14,14 @@ var quest_manager
  
 func _ready():
 	panel.visible = false
-	#clear_quest_details()
+	
+	# Clear before populating the QuestUI
+	clear_quest_details()
 	
 	## Quest_Manager/UI connection
-	#quest_manager = get_parent()
-	#quest_manager.quest_updated.connect(_on_quest_updated)
-	#quest_manager.objective_updated(_on_objectives_updated)
+	quest_manager = get_parent()
+	quest_manager.quest_updated.connect(_on_quest_updated)
+	quest_manager.objective_updated(_on_objectives_updated)
 
 # Show/hide quest log
 func show_hide_log():
@@ -39,8 +41,8 @@ func update_quest_list():
 	var active_quests = get_parent().get_active_quests()
 	if active_quests.size() == 0:
 		clear_quest_details()
-		# Global.player.selected_quest = null
-		# Global.player.update_quest_tracker(null)
+		Global_Player.selected_quest = null
+		#Global_Player.Player_node.update_quest_tracker(null)
 	else: 
 		for quest in active_quests:
 			var button = Button.new()
