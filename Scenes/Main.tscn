@@ -1,4 +1,4 @@
-[gd_scene load_steps=207 format=4 uid="uid://cu40ek40bcb8x"]
+[gd_scene load_steps=205 format=4 uid="uid://cu40ek40bcb8x"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_7ilkh"]
 [ext_resource type="Texture2D" uid="uid://byw5035hmahfh" path="res://allart/RPGW_Caves_v2/MainLev2.0.png" id="1_wacfu"]
@@ -31,9 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://ca43y0gknt7sc" path="res://Scenes/Mobscenes/skeleton.tscn" id="20_l6d2x"]
 [ext_resource type="PackedScene" uid="uid://bkwpajbtatup7" path="res://Scenes/Mobscenes/mushroom.tscn" id="21_ntrs1"]
 [ext_resource type="PackedScene" uid="uid://bxl4jjno3gkek" path="res://Scenes/Mobscenes/fireworm.tscn" id="22_nx5bl"]
-[ext_resource type="PackedScene" uid="uid://dd6c34ie1asbu" path="res://Scenes/Quest/Quest_Item.tscn" id="32_bya36"]
 [ext_resource type="PackedScene" uid="uid://c4s5kv0phf7uu" path="res://Scenes/NPC/NPC.tscn" id="33_f5fwq"]
-[ext_resource type="Texture2D" uid="uid://chrl5dn1knwoh" path="res://Assets/Icons/icon24.png" id="33_wc1um"]
 [ext_resource type="Script" path="res://Resources/Dialogue/Dialogue.gd" id="35_3bb3h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5sum"]
@@ -54800,11 +54798,6 @@ collision_mask = 2
 position = Vector2(3209, -871)
 collision_layer = 2
 collision_mask = 2
-
-[node name="QuestItem" parent="." instance=ExtResource("32_bya36")]
-position = Vector2(139, -601)
-scale = Vector2(2, 2)
-item_icon = ExtResource("33_wc1um")
 
 [node name="NPC" parent="." instance=ExtResource("33_f5fwq")]
 position = Vector2(399, -669)

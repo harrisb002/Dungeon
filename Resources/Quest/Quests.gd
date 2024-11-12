@@ -1,3 +1,5 @@
+## Defines the quest structure including its objectives and rewards
+
 extends Resource
 
 class_name Quest
@@ -20,12 +22,14 @@ func is_completed() -> bool:
 # Completes objectives
 func complete_objective(objective_id: String, quantity: int = 1):
 	for objective in objectives:
+		## Get what objective is being completed 
 		if objective.id == objective_id:
 			if objective.target_type == "collection":
 				objective.collected_quantity += quantity
 				if objective.collected_quantity >= objective.required_quantity:
 					objective.is_completed = true
 			else:
+				## Just talking to an NPC so just mark as completed
 				objective.is_completed = true
 			break
 	if is_completed():

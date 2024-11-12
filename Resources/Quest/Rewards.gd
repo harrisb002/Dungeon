@@ -1,3 +1,5 @@
+## Creates the rewards type and amount for the quests
+
 extends Resource
 
 class_name Rewards
