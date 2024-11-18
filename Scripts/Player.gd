@@ -49,6 +49,9 @@ func start():
 
 # Run as soon as the object/scene is ready in the game, done before everything else
 func _ready():
+	
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	
 	# Set the Player reference instance to access the player globally
 	Global_Player.set_player_ref(self)
 	
@@ -74,6 +77,10 @@ func _ready():
 # Detect whether a key is pressed using Input.is_action_pressed(),
 #   which returns true if it is pressed or false if it isn’t.
 func _physics_process(delta):
+	
+	if get_tree().paused:
+		return
+	
 	# Disable movement while interacting with NPC
 	if can_move: 
 		get_input()
@@ -114,6 +121,10 @@ func _input(event):
 			Global_Player.quest_manager.show_hide_log()
 
 func _process(delta):
+	
+	if get_tree().paused:
+		return
+	
 	if inside_hole:
 		fall()
 

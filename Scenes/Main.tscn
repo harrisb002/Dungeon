@@ -1,4 +1,4 @@
-[gd_scene load_steps=213 format=4 uid="uid://cu40ek40bcb8x"]
+[gd_scene load_steps=214 format=4 uid="uid://cu40ek40bcb8x"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_7ilkh"]
 [ext_resource type="Texture2D" uid="uid://byw5035hmahfh" path="res://allart/RPGW_Caves_v2/MainLev2.0.png" id="1_wacfu"]
@@ -11,13 +11,13 @@
 [ext_resource type="Script" path="res://Scripts/Tile_Map_Parser.gd" id="7_u6lfh"]
 [ext_resource type="PackedScene" uid="uid://dejeyibf4qjqd" path="res://Scenes/portal.tscn" id="8_2mpry"]
 [ext_resource type="Texture2D" uid="uid://cmcwb85mmobdr" path="res://allart/Pixel Art Top Down - Basic v1/Texture/TX Tileset Stone Ground.png" id="8_fo5jn"]
-[ext_resource type="PackedScene" uid="uid://c6rpn5eochphp" path="res://Scenes/Chests/Chest_Common.tscn" id="9_87rob"]
+[ext_resource type="PackedScene" uid="uid://c6rpn5eochphp" path="res://Scenes/Chests/chest_Common.tscn" id="9_87rob"]
 [ext_resource type="Texture2D" uid="uid://c6k80at516op5" path="res://allart/Pixel Art Top Down - Basic v1/Texture/TX Tileset Wall.png" id="9_x3qcc"]
 [ext_resource type="Texture2D" uid="uid://wwcfuykauhgb" path="res://allart/Pixel Art Top Down - Basic v1/Texture/TX Props.png" id="10_axypq"]
 [ext_resource type="Texture2D" uid="uid://lxaxwy4tw8jv" path="res://allart/RPGW_ECave_v1/_PNG/Grounds.png" id="10_yntoi"]
 [ext_resource type="PackedScene" uid="uid://b88bdcshrb5ng" path="res://Scenes/Chests/Chest_Boss.tscn" id="11_0pjkg"]
 [ext_resource type="PackedScene" uid="uid://beyb6gfsi63nm" path="res://Scenes/Chests/Chest_Golden.tscn" id="11_dcnqv"]
-[ext_resource type="PackedScene" uid="uid://g535jauvdah6" path="res://Scenes/Inventory/Inventory_Item.tscn" id="11_imjwl"]
+[ext_resource type="PackedScene" uid="uid://g535jauvdah6" path="res://Scenes/Inventory/Inventory_item.tscn" id="11_imjwl"]
 [ext_resource type="Texture2D" uid="uid://7frq4p2oqefn" path="res://allart/RPGW_ECave_v1/_PNG/Hills2.png" id="11_jkyt2"]
 [ext_resource type="Texture2D" uid="uid://dnttdw78odwxd" path="res://allart/2D Pixel Dungeon Asset Pack/items and trap_animation/keys/keys_1_1.png" id="12_rejvy"]
 [ext_resource type="Texture2D" uid="uid://voa7u5mb1tv1" path="res://allart/RPGW_ECave_v1/_PNG/Hills1.png" id="13_jamg3"]
@@ -37,6 +37,7 @@
 [ext_resource type="Script" path="res://Resources/Quest/Quests.gd" id="35_ccr4q"]
 [ext_resource type="Script" path="res://Resources/Quest/Objectives.gd" id="36_c73ra"]
 [ext_resource type="Script" path="res://Resources/Quest/Rewards.gd" id="37_wc3rq"]
+[ext_resource type="PackedScene" uid="uid://bx351m2ndfot" path="res://Scenes/Pause Menu/pause_menu.tscn" id="38_06kbr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5sum"]
 texture = ExtResource("1_wacfu")
@@ -54859,6 +54860,15 @@ quests = Array[ExtResource("35_ccr4q")]([SubResource("Resource_k5prf")])
 position = Vector2(1510, -4299)
 dialogue_resource = SubResource("Resource_5h7g3")
 quests = Array[ExtResource("35_ccr4q")]([])
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="PauseMenu" parent="PauseMenu" instance=ExtResource("38_06kbr")]
+offset_right = 1590.0
+offset_bottom = 829.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [editable path="Player"]
 [editable path="Portal"]
