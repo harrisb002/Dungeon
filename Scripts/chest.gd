@@ -30,13 +30,12 @@ func _process(delta: float):
 func _on_chest_zone_body_entered(body):
 	if body.is_in_group("player"):
 		nearby_chest = true
-		body.inventory_ui_label.text = "Press O to pickup"
+		body.interact_ui_label.text = "Press O to open"
 		body.interact_ui.visible = true
 
 func _on_chest_zone_body_exited(body):
 	if body.is_in_group("player"):
 		nearby_chest = false
-		body.inventory_ui_label.text = "Press Enter to pickup"
 		body.interact_ui.visible = false
 
 # Handles opening all chest types based on keys present in inventory
@@ -48,9 +47,9 @@ func open_chest(chest: StaticBody2D, chest_type):
 		return
 	
 	## Check if player has key in inventory
-	if key_type != null and Global.has_key_in_inventory("Key", key_type):
+	if key_type != null and Global_Inventory.has_key_in_inventory("Key", key_type):
 		# Remove the key from the player's inventory
-		Global.remove_item("Key", key_type)
+		Global_Inventory.remove_item("Key", key_type)
 		## Make the chest Open
 		$open.visible = true
 		$closed.visible = false

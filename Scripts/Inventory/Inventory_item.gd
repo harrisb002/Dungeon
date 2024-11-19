@@ -2,6 +2,7 @@
 extends Node2D
 
 # Export, Allows setting it through the inspector
+@export var item_id = ""
 @export var item_name = ""
 @export var item_type = ""
 @export var item_texture = Texture
@@ -26,9 +27,10 @@ func _process(delta: float):
 	if player_in_range and Input.is_action_just_pressed("pickup"):
 		pickup_item()
 
-# Creatthe dict for item info to be passed when adding it
-func pickup_item():
+# Create the dict for item info to be passed when adding it
+func pickup_item(): 
 	var item = {
+		"id": item_id,
 		"quantity": 1,
 		"type": item_type,
 		"name": item_name,
@@ -36,9 +38,9 @@ func pickup_item():
 		"effect": item_effect,
 		"scene_path": scene_path,
 	}
-	if Global.Player_node:
+	if Global_Player.Player_node:
 		# Adding item to players inventory
-		Global.add_item(item, false)
+		Global_Inventory.add_item(item, false)
 		# Remove item from scene
 		self.queue_free()
 		
@@ -59,6 +61,7 @@ func initiate_items(type, name, effect, texture):
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):
 		player_in_range = true
+		body.interact_ui_label.text = "Press Enter to pick up"
 		body.interact_ui.visible = true
 
 func _on_area_2d_body_exited(body) -> void:

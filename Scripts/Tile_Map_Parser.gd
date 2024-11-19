@@ -9,13 +9,11 @@ extends Node2D
 @export var items_per_row: int = 12 
 
 func _ready():
-	## Init the tile map Globally
-	Global.tile_map = tile_map
+	## Init the tile map Global_Inventoryly
+	Global_Inventory.tile_map = tile_map
 	create_items()
 
-func create_items():
-	#print("Creating Items in TileMapLayer")
-	
+func create_items():	
 	var spawnable_cells = []
 	for cell in tile_map.get_used_cells():
 		var tile_data = tile_map.get_cell_tile_data(cell)
@@ -29,23 +27,19 @@ func create_items():
 	
 	for cell in selected_cells:
 		var atlas_coords = Vector2i(cell.x % items_per_row, 0)
-		var item_data = Global.spawnable_items[randi() % Global.spawnable_items.size()]
+		var item_data = Global_Inventory.spawnable_items[randi() % Global_Inventory.spawnable_items.size()]
 		
-		# Print selected cell and its local position
-		#print("Selected cell:", cell, "Local Position:", tile_map.map_to_local(cell))
-
 		# Spawn item and place debug marker
 		add_item_by_data(cell, item_data, atlas_coords)
 
 func add_item_by_data(cell: Vector2i, item_data: Dictionary, atlas_coords: Vector2i):
-	#print("Creating item:", item_data["name"], "at Cell:", cell)
 	var item_instance
 	
 	# Load and instantiate the Inventory_Item scene
-	if Global.inventory_item == null:
-		print("Error: inventory_item is null in Global script")
+	if Global_Inventory.inventory_item_scene == null:
+		print("Error: inventory_item is null in Global_Inventory script")
 	else:
-		item_instance = Global.inventory_item.instantiate()
+		item_instance = Global_Inventory.inventory_item_scene.instantiate()
 	
 	item_instance.set_item_data(item_data)
 
@@ -53,10 +47,9 @@ func add_item_by_data(cell: Vector2i, item_data: Dictionary, atlas_coords: Vecto
 	var item_position = tile_map.map_to_local(cell) + Vector2(8, 8)  # Adjust for center
 
 	# Ensure no overlap by adjusting the drop position
-	item_position = Global.adjust_drop_position(item_position)
+	item_position = Global_Inventory.adjust_drop_position(item_position)
 	
 	item_instance.position = item_position
 	item_instance.scale = Vector2(1, 1)  # Set scale as needed
 
 	add_child(item_instance)
-	#print("Item placed at position:", item_position)

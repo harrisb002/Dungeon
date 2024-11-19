@@ -57,10 +57,10 @@ func _physics_process(delta: float) -> void:
 
 
 func recalulate_path():
-	print(nav_agent.get_current_navigation_path())
+	#print(nav_agent.get_current_navigation_path())
 	if player:
 		nav_agent.target_position = player.global_position
-		print( "new path",nav_agent.get_current_navigation_path())
+		#print( "new path",nav_agent.get_current_navigation_path())
 	else: 
 		nav_agent.target_position = home_pos
 		
@@ -74,7 +74,7 @@ func _on_detectionarea_area_entered(area: Area2D) -> void:
 	
 	if area.owner.is_in_group("player")  :
 		player = area.owner
-		print("Player detected:", player)
+		#print("Player detected:", player)
 
 
 
