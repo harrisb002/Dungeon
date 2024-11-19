@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://btijf0rrchjjv"]
+
+[ext_resource type="Script" path="res://Scripts/Boss/health_bar.gd" id="1_07j2e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ddpc"]
+bg_color = Color(0.685416, 0.1824, 0.160032, 1)
+
+[node name="HealthBar" type="ProgressBar"]
+offset_left = -57.0
+offset_top = 1.0
+offset_right = 60.0
+offset_bottom = 28.0
+theme_override_styles/background = SubResource("StyleBoxFlat_0ddpc")
+show_percentage = false
+script = ExtResource("1_07j2e")

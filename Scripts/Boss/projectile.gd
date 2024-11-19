@@ -13,5 +13,7 @@ func _process(delta: float) -> void:
 	position += transform.x * speed * delta
 
 func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"): 
+		body.take_damage(10)
 	#do dmage to player here
 	queue_free()
