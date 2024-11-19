@@ -40,6 +40,11 @@ var animation_prefix = Global_Player.character + "_"
 # QuestUI/Interactions vars
 var can_move = true # Used to prevent player movement while interacting with NPC
 
+var health = 0
+@export var max_hp = 200
+var min_hp = 0
+var is_dead = false
+
 # Reset the player when starting a new game.
 func start():
 	animated_sprite.animation = (animation_prefix + "right")  # Set default animation
@@ -49,6 +54,7 @@ func start():
 
 # Run as soon as the object/scene is ready in the game, done before everything else
 func _ready():
+	health = max_hp
 	
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	
@@ -274,3 +280,15 @@ func _on_hit_box_body_entered(_body: Node2D):
 
 func _on_hit_box_body_exited(_body: Node2D):
 	inside_hole = false
+	
+func take_damage(dmg: int) -> void:
+	if not is_dead:
+		health -= dmg
+		if health <= 0:
+				die()
+				
+func die():
+	if is_dead:
+		return
+	else:	
+		queue_free()
