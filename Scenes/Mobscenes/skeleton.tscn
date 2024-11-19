@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://ca43y0gknt7sc"]
+[gd_scene load_steps=15 format=3 uid="uid://ca43y0gknt7sc"]
 
 [ext_resource type="PackedScene" uid="uid://bqpcj3r4s3qts" path="res://Scenes/Mobscenes/basemobstructer.tscn" id="1_s05q3"]
 [ext_resource type="Script" path="res://skeleton.gd" id="2_yf52q"]
 [ext_resource type="Texture2D" uid="uid://enr3cg8x45p4" path="res://allart/MOBSS/Monsters_Creatures_Fantasy/Skeleton/Idle.png" id="3_74le5"]
 [ext_resource type="Texture2D" uid="uid://cpi50rei580h4" path="res://allart/MOBSS/Monsters_Creatures_Fantasy/Skeleton/Walk.png" id="4_mxrq5"]
+[ext_resource type="PackedScene" uid="uid://btijf0rrchjjv" path="res://Scripts/Boss/health_bar.tscn" id="5_ou7wk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wxeoe"]
 atlas = ExtResource("3_74le5")
@@ -74,10 +75,17 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="skeleton" instance=ExtResource("1_s05q3")]
+[node name="skeleton" groups=["enemy"] instance=ExtResource("1_s05q3")]
 script = ExtResource("2_yf52q")
+max_hp = 20
 
 [node name="Animation" type="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_ysvcf")
 animation = &"Idle"
 frame_progress = 0.762298
+
+[node name="HealthBar" parent="." index="5" instance=ExtResource("5_ou7wk")]
+offset_left = -29.0
+offset_top = 35.0
+offset_right = 27.0
+offset_bottom = 48.0

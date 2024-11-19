@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://tp42ctnbye3c"]
+[gd_scene load_steps=76 format=3 uid="uid://tp42ctnbye3c"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss.gd" id="1_ouu1t"]
 [ext_resource type="PackedScene" uid="uid://foxbh42w4vyu" path="res://Scenes/Boss/boss_minion.tscn" id="2_e7we8"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cyuxbove3pqgg" path="res://allart/BossArt/Samurai_Archer/Shot.png" id="7_eakln"]
 [ext_resource type="Texture2D" uid="uid://brmodgbtr0wh6" path="res://allart/BossArt/Samurai_Archer/Run.png" id="7_peyew"]
 [ext_resource type="Texture2D" uid="uid://bcsvoja2ocpmd" path="res://allart/BossArt/Samurai_Archer/Walk.png" id="8_0rr67"]
+[ext_resource type="PackedScene" uid="uid://btijf0rrchjjv" path="res://Scripts/Boss/health_bar.tscn" id="12_aenwi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_te184"]
 atlas = ExtResource("4_65y6r")
@@ -515,11 +516,11 @@ one_shot = true
 wait_time = 3.0
 one_shot = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="hp_bar" type="TextureProgressBar" parent="CanvasLayer"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="HealthBar" parent="." instance=ExtResource("12_aenwi")]
+offset_left = -39.0
+offset_top = 90.0
+offset_right = 39.0
+offset_bottom = 107.0
 
 [connection signal="body_entered" from="Detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="Detection_area" to="." method="_on_detection_area_body_exited"]
