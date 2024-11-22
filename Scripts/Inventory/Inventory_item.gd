@@ -7,6 +7,7 @@ extends Node2D
 @export var item_type = ""
 @export var item_texture = Texture
 @export var item_effect = ""
+@export var item_scale = Vector2(1, 1) # Default scale
 var scene_path: String =  "res://Scenes/Inventory/Inventory_Item.tscn"
 
 # Allow for dynamically changed sprites
@@ -37,6 +38,7 @@ func pickup_item():
 		"texture": item_texture,
 		"effect": item_effect,
 		"scene_path": scene_path,
+		"scale": scale  # Used when dropping items
 	}
 	if Global_Player.Player_node:
 		# Adding item to players inventory
@@ -50,14 +52,16 @@ func set_item_data(data):
 	item_name = data["name"]
 	item_effect = data["effect"]
 	item_texture = data["texture"]
+	item_scale = data["scale"]
 
 # Set the items values for spawning
-func initiate_items(type, name, effect, texture):
+func initiate_items(type, name, effect, texture, scale):
 	item_type = type
 	item_name = name
 	item_effect = effect
 	item_texture = texture
-
+	item_scale = scale
+	
 func _on_area_2d_body_entered(body) -> void:
 	if body.is_in_group("player"):
 		player_in_range = true

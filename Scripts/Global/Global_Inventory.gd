@@ -17,17 +17,17 @@ var hotbar_inventory = []
 
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
-	{"id": "common_key", "quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png")},
-	{"id": "shroom", "quantity": 0, "type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png")},
-	{"id": "flash_ring", "quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png")},
-	{"id": "arrow", "quantity": 0, "type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png")},
-	{"id": "fire_skin", "quantity": 0, "type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png")},
-	{"id": "health_potion", "quantity": 0, "type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png")},
-	{"id": "cloak", "quantity": 0, "type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png")},
-	{"id": "magic_potion", "quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png")},
-	{"id": "poison_potion", "quantity": 0, "type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png")},
-	{"id": "shield_potion", "quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png")},
-	{"id": "stamina_potion", "quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png")},
+	{"id": "common_key", "quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png"), "scale": Vector2(1, 1)},
+	{"id": "shroom", "quantity": 0, "type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png"), "scale": Vector2(1, 1)},
+	{"id": "flash_ring", "quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png"), "scale": Vector2(1, 1)},
+	{"id": "arrow", "quantity": 0, "type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png"), "scale": Vector2(1, 1)},
+	{"id": "fire_skin", "quantity": 0, "type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png"), "scale": Vector2(1, 1)},
+	{"id": "health_potion", "quantity": 0, "type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png"), "scale": Vector2(1, 1)},
+	{"id": "cloak", "quantity": 0, "type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png"), "scale": Vector2(1, 1)},
+	{"id": "magic_potion", "quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png"), "scale": Vector2(1, 1)},
+	{"id": "poison_potion", "quantity": 0, "type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png"), "scale": Vector2(1, 1)},
+	{"id": "shield_potion", "quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png"), "scale": Vector2(1, 1)},
+	{"id": "stamina_potion", "quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png"), "scale": Vector2(1, 1)},
 ]
 
 func _ready():
@@ -36,12 +36,19 @@ func _ready():
 
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):
+	## Bool for item used for Quest completion
+	var item_used
+	
 	## Check if item is needed for an active quest
 	if Global_Inventory.is_item_needed(item.id):
-		## Update the objective with the type collection
-		Global_Player.check_quest_objectives(item.id, "collection", item.quantity)
+		## Update the objective with the type collection (if item was used then dont add it to inventory)
+		item_used = Global_Player.check_quest_objectives(item.id, "collection")
 	else: 
 		print("Item is not needed for any active quest")
+	
+	## Dont add item if used for Quest
+	if item_used:
+		return 
 
 	var added_to_hotbar = false
 	# Add the item to hotbar
@@ -162,7 +169,6 @@ func drop_item(item_data, drop_position):
 	item_instance.global_position = drop_position
 	
 	# Set the scale to match the inventory size
-	item_instance.scale = Vector2(3, 3) 
 	get_tree().current_scene.add_child(item_instance)
 
 # Swap the inventory items based on their resp. indicies
@@ -204,3 +210,19 @@ func has_key_in_inventory(item_name: String, item_type: String) -> bool:
 		if item != null and item["name"] == item_name and item["type"] == item_type:
 			return true
 	return false
+
+# Get the quantity of an item in the inventory
+func get_item_quantity(item_id: String, item_type: String) -> int:
+	for item in inventory:
+		if item != null and item["id"] == item_id and item["type"] == item_type:
+			return item["quantity"]
+	return 0
+
+func remove_item_quantity(item_id: String, item_type: String, quantity: int):
+	for i in range(inventory.size()):
+		if inventory[i] != null and inventory[i]["id"] == item_id and inventory[i]["type"] == item_type:
+			inventory[i]["quantity"] -= quantity
+			if inventory[i]["quantity"] <= 0:
+				inventory[i] = null
+			inventory_updated.emit()
+			return

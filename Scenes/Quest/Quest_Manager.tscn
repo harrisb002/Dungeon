@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dndqcv838sdm6" path="res://Scenes/Quest/QuestUI.tscn" id="2_xcnsm"]
 
 [node name="Quest_Manager" type="Node2D"]
-visible = false
 script = ExtResource("1_btuu3")
 
 [node name="QuestUI" parent="." instance=ExtResource("2_xcnsm")]
+visibility_layer = 0

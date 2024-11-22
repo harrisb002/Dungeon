@@ -36,10 +36,10 @@ func set_inventory_hotbar(hotbar):
 
 # Check & update the objectives for the currenlty selected quest
 # Also handles the logic to update th quest upon completion
-func check_quest_objectives(target_id: String, target_type: String, quantity: int = 1):
+func check_quest_objectives(target_id: String, target_type: String, quantity: int = 1) -> bool:
 	# No selected quest
 	if Global_Player.selected_quest == null:
-		return
+		return false
 	
 	# Update objectives
 	var objective_updated = false
@@ -47,23 +47,35 @@ func check_quest_objectives(target_id: String, target_type: String, quantity: in
 		if objective.target_id == target_id and objective.target_type == target_type and not objective.is_completed:
 			print("Completing objective for quest: ", Global_Player.selected_quest.quest_name)
 			Global_Player.selected_quest.complete_objective(objective.id, quantity)
+			## Remove the item if already in inventory
+			Global_Inventory.remove_item(objective.target_id, objective.item_type)
 			objective_updated = true
 			break
 	
 	# Provide rewards
+	if objective_updated and Global_Player.selected_quest.is_completed():
+		Global_Player.selected_quest.state = "completed" 
+		handle_quest_completion(selected_quest)
+		return true
+
+	# Update UI
 	if objective_updated:
-		if Global_Player.selected_quest.is_completed():
-			handle_quest_completion(selected_quest)
-	
-		# Update UI
 		update_quest_tracker(selected_quest)
+	
+	return false
 
 # Player rewards
 func handle_quest_completion(quest: Quest):
+	if quest.rewards_given:
+		return 
+	
 	for reward in quest.rewards:
 		if reward.reward_type == "coins":
 			coin_amount += reward.reward_amount
+			print("Coins rewarded: ", reward.reward_amount)  # Debug print
 			update_coins()
+			
+	quest.rewards_given = true  # Mark rewards as given
 	update_quest_tracker(quest)
 	quest_manager.update_quest(quest.quest_id, "completed")
 
@@ -88,7 +100,8 @@ func update_quest_tracker(quest: Quest):
 			label.text = objective.description
 
 			if objective.is_completed:
-				label.add_theme_color_override("font_color", Color(0, 1, 0))
+				label.queue_free()
+				quest_tracker.visible = false
 			else:
 				label.add_theme_color_override("font_color", Color(1,0, 0))
 
