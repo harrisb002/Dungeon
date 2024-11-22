@@ -1,11 +1,3 @@
-# Godot specific
-.import/
-export.cfg
-*.tres
-*.res
-*.godot
-*.pck
-
 # Compiled files
 *.import/
 *.d
