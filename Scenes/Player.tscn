@@ -1,4 +1,4 @@
-[gd_scene load_steps=128 format=3 uid="uid://chxd6ijec3lqs"]
+[gd_scene load_steps=129 format=3 uid="uid://chxd6ijec3lqs"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_3s2n2"]
 [ext_resource type="Texture2D" uid="uid://cdfnu26fcrtlj" path="res://allart/Knightattacks/backattack.png" id="2_btk8a"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://c3fw07a62gonv" path="res://Scenes/Inventory/Inventory_Hotbar.tscn" id="10_yub7k"]
 [ext_resource type="Texture2D" uid="uid://dtir5kmhydso1" path="res://Assets/Icons/icon20.png" id="13_uggde"]
 [ext_resource type="PackedScene" uid="uid://ohiphwf318il" path="res://Scenes/Quest/Quest_Manager.tscn" id="14_efdkd"]
+[ext_resource type="PackedScene" uid="uid://btijf0rrchjjv" path="res://Scripts/Boss/health_bar.tscn" id="15_srbkm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acllo"]
 radius = 13.0
@@ -1022,6 +1023,13 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Quest_Manager" parent="." instance=ExtResource("14_efdkd")]
+visible = true
+
+[node name="HealthBar" parent="." instance=ExtResource("15_srbkm")]
+offset_left = -24.0
+offset_top = 19.0
+offset_right = 24.0
+offset_bottom = 27.0
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

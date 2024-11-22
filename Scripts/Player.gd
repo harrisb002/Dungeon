@@ -40,6 +40,11 @@ var animation_prefix = Global_Player.character + "_"
 # QuestUI/Interactions vars
 var can_move = true # Used to prevent player movement while interacting with NPC
 
+var health = 0
+@export var max_hp = 200
+var min_hp = 0
+var is_dead = false
+
 # Reset the player when starting a new game.
 func start():
 	animated_sprite.animation = (animation_prefix + "right")  # Set default animation
@@ -49,6 +54,10 @@ func start():
 
 # Run as soon as the object/scene is ready in the game, done before everything else
 func _ready():
+	health = max_hp
+	
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	
 	# Set the Player reference instance to access the player globally
 	Global_Player.set_player_ref(self)
 	
@@ -73,6 +82,10 @@ func _ready():
 # Detect whether a key is pressed using Input.is_action_pressed(),
 #   which returns true if it is pressed or false if it isn’t.
 func _physics_process(delta):
+	
+	if get_tree().paused:
+		return
+	
 	# Disable movement while interacting with NPC
 	if can_move: 
 		get_input()
@@ -118,6 +131,10 @@ func _input(event):
 			Global_Player.quest_manager.show_hide_log()
 
 func _process(delta):
+	
+	if get_tree().paused:
+		return
+	
 	if inside_hole:
 		fall()
 
@@ -267,3 +284,15 @@ func _on_hit_box_body_entered(_body: Node2D):
 
 func _on_hit_box_body_exited(_body: Node2D):
 	inside_hole = false
+	
+func take_damage(dmg: int) -> void:
+	if not is_dead:
+		health -= dmg
+		if health <= 0:
+				die()
+				
+func die():
+	if is_dead:
+		return
+	else:	
+		queue_free()

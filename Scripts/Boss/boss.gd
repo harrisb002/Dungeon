@@ -17,10 +17,10 @@ var is_dashing: bool = false
 var dash_range: float = 400
 var alive_count = 0
 var dash_direction
-var boss_hp = 0
+var health = 0
 @export var max_hp = 100
+var min_hp = 0
 var is_dead = false
-
 var melee_count = 0
 
 var stagger = 0
@@ -38,7 +38,7 @@ var stagger = 0
 
 
 func _ready() -> void:
-	boss_hp = max_hp
+	health = max_hp
 	CONST_SPEED = speed
 	minion_timer = $Minion_Timer
 	#minion_timer.connect("timeout", Callable(self, "_on_timer_timeout"))
@@ -50,10 +50,10 @@ func _ready() -> void:
 	
 func take_damage(dmg: int) -> void:
 	if not is_dead:
-		boss_hp -= dmg
+		health -= dmg
 		#print(boss_hp)
 		increase_stagger(dmg)
-		if boss_hp <= 0:
+		if health <= 0:
 				#speed = 0
 				die()
 
@@ -70,6 +70,7 @@ func die():
 	ranged_attack_timer.stop()
 	is_dead = true
 	$AnimatedSprite2D.play("death")
+	
 	while $AnimatedSprite2D.frame < 4:
 			await get_tree().process_frame
 	$AnimatedSprite2D.pause()
