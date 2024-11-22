@@ -47,6 +47,8 @@ func check_quest_objectives(target_id: String, target_type: String, quantity: in
 		if objective.target_id == target_id and objective.target_type == target_type and not objective.is_completed:
 			print("Completing objective for quest: ", Global_Player.selected_quest.quest_name)
 			Global_Player.selected_quest.complete_objective(objective.id, quantity)
+			## Remove the item if already in inventory
+			Global_Inventory.remove_item(objective.target_id, objective.item_type)
 			objective_updated = true
 			break
 	
@@ -63,6 +65,9 @@ func check_quest_objectives(target_id: String, target_type: String, quantity: in
 
 # Player rewards
 func handle_quest_completion(quest: Quest):
+	if quest.state == "completed":
+		return  # Dont allow reqrds if already completed
+		
 	for reward in quest.rewards:
 		if reward.reward_type == "coins":
 			coin_amount += reward.reward_amount

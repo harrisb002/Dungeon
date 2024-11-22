@@ -42,7 +42,7 @@ func add_item(item, to_hotbar = false):
 	## Check if item is needed for an active quest
 	if Global_Inventory.is_item_needed(item.id):
 		## Update the objective with the type collection (if item was used then dont add it to inventory)
-		item_used = Global_Player.check_quest_objectives(item.id, "collection", item.quantity)
+		item_used = Global_Player.check_quest_objectives(item.id, "collection")
 	else: 
 		print("Item is not needed for any active quest")
 	
@@ -211,3 +211,19 @@ func has_key_in_inventory(item_name: String, item_type: String) -> bool:
 		if item != null and item["name"] == item_name and item["type"] == item_type:
 			return true
 	return false
+
+# Get the quantity of an item in the inventory
+func get_item_quantity(item_id: String, item_type: String) -> int:
+	for item in inventory:
+		if item != null and item["id"] == item_id and item["type"] == item_type:
+			return item["quantity"]
+	return 0
+
+func remove_item_quantity(item_id: String, item_type: String, quantity: int):
+	for i in range(inventory.size()):
+		if inventory[i] != null and inventory[i]["id"] == item_id and inventory[i]["type"] == item_type:
+			inventory[i]["quantity"] -= quantity
+			if inventory[i]["quantity"] <= 0:
+				inventory[i] = null
+			inventory_updated.emit()
+			return

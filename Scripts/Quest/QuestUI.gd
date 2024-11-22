@@ -29,11 +29,15 @@ func _ready():
 
 # Show/hide quest log
 func show_hide_log():
+	if panel.visible == !panel.visible:
+		return # Dont allow updates with no state change
+	
 	panel.visible = !panel.visible
-	## When opening the QuestUI, immediately populate with the quest details
-	update_quest_list()
-	if selected_quest:
-		_on_quest_selected(selected_quest)
+	
+	if panel.visible:## When opening the QuestUI, immediately populate with the quest details
+		update_quest_list()
+		if selected_quest:
+			_on_quest_selected(selected_quest)
 
 # Populate quest list
 func update_quest_list():
@@ -64,6 +68,9 @@ func update_quest_list():
 func _on_quest_selected(quest: Quest):
 	selected_quest = quest
 	Global_Player.selected_quest = quest
+	
+	# Check for automatic completion of quest objectives (i.e. item already in inventory)
+	Global_Player.quest_manager.check_quest_item_completion(quest)
 	
 	# Populate thge details passed from the active quest
 	quest_title.text = quest.quest_name
