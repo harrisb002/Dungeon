@@ -1,0 +1,160 @@
+[gd_scene load_steps=21 format=3 uid="uid://s8eh4l0sa21d"]
+
+[ext_resource type="Script" path="res://Scripts/Boss/boss_2.gd" id="1_6wla5"]
+[ext_resource type="Texture2D" uid="uid://dydcl07arp0xp" path="res://allart/BossArt/Samurai_Archer/Idle.png" id="2_b73my"]
+[ext_resource type="PackedScene" uid="uid://btijf0rrchjjv" path="res://Scripts/Boss/health_bar.tscn" id="2_fvtby"]
+[ext_resource type="Script" path="res://Scenes/Boss/state_machine.gd" id="3_uib35"]
+[ext_resource type="Script" path="res://Scenes/Boss/idle.gd" id="4_jayr6"]
+[ext_resource type="Script" path="res://Scenes/Boss/attack.gd" id="6_mscet"]
+[ext_resource type="Script" path="res://Scenes/Boss/first.gd" id="7_0ost6"]
+[ext_resource type="Script" path="res://Scenes/Boss/card.gd" id="8_uurbq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_voqyc"]
+atlas = ExtResource("2_b73my")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8ks7"]
+atlas = ExtResource("2_b73my")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3jo3"]
+atlas = ExtResource("2_b73my")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0qde"]
+atlas = ExtResource("2_b73my")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t18qb"]
+atlas = ExtResource("2_b73my")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkxke"]
+atlas = ExtResource("2_b73my")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ds31r"]
+atlas = ExtResource("2_b73my")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5bnb"]
+atlas = ExtResource("2_b73my")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71fsf"]
+atlas = ExtResource("2_b73my")
+region = Rect2(1024, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1bwak"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_voqyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8ks7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l3jo3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0qde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t18qb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkxke")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ds31r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5bnb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71fsf")
+}],
+"loop": true,
+"name": &"temp",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bd0m3"]
+radius = 600.003
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3ulk7"]
+height = 20.0
+
+[node name="Boss_2" type="CharacterBody2D"]
+script = ExtResource("1_6wla5")
+
+[node name="animations" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -64)
+sprite_frames = SubResource("SpriteFrames_1bwak")
+animation = &"temp"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, -40)
+shape = SubResource("CircleShape2D_bd0m3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_3ulk7")
+
+[node name="HealthBar" parent="." instance=ExtResource("2_fvtby")]
+offset_left = -70.0
+offset_top = 11.0
+offset_right = 71.0
+offset_bottom = 29.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("3_uib35")
+starting_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_jayr6")
+animation_name = "temp"
+
+[node name="AttackDecider" type="Node" parent="StateMachine"]
+script = ExtResource("6_mscet")
+animation_name = "temp"
+
+[node name="First" type="Node" parent="StateMachine/AttackDecider"]
+script = ExtResource("7_0ost6")
+
+[node name="Card" type="Node" parent="StateMachine/AttackDecider/First"]
+script = ExtResource("8_uurbq")
+
+[node name="InterCard" type="Node" parent="StateMachine/AttackDecider/First"]
+
+[node name="CleaveL" type="Node" parent="StateMachine/AttackDecider/First"]
+
+[node name="CleaveR" type="Node" parent="StateMachine/AttackDecider/First"]
+
+[node name="In" type="Node" parent="StateMachine/AttackDecider/First"]
+
+[node name="Out" type="Node" parent="StateMachine/AttackDecider/First"]
+
+[node name="Second" type="Node" parent="StateMachine/AttackDecider"]
+
+[node name="CloneCleaveL" type="Node" parent="StateMachine/AttackDecider/Second"]
+
+[node name="CloneCleaveR" type="Node" parent="StateMachine/AttackDecider/Second"]
+
+[node name="CloneIn" type="Node" parent="StateMachine/AttackDecider/Second"]
+
+[node name="CloneOut" type="Node" parent="StateMachine/AttackDecider/Second"]
+
+[node name="Third" type="Node" parent="StateMachine/AttackDecider"]
+
+[node name="Spin" type="Node" parent="StateMachine/AttackDecider/Third"]
+
+[node name="InterIn_InterOut_CardOut" type="Node" parent="StateMachine/AttackDecider/Third"]
+
+[node name="CardOut_InterOut_InterIn" type="Node" parent="StateMachine/AttackDecider/Third"]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
