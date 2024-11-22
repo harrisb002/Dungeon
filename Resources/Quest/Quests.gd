@@ -8,19 +8,18 @@ class_name Quest
 @export var quest_name: String
 @export var quest_description: String
 @export var state: String = "not_started"
-
-## ID of the dialogue branch that the player should 
-## be at to be able to accept this quest
-@export var unlock_id: String  
-
 @export var objectives: Array[Objectives] = []
 @export var rewards: Array[Rewards] = []
+
+## Ensure rewards are only given once
+var rewards_given = false
 
 # Checks completed objectives
 func is_completed() -> bool:
 	for objective in objectives:
 		if not objective.is_completed:
 			return false
+	state = "completed"  # Mark the quest as completed
 	return true
 
 # Completes objectives
@@ -36,7 +35,7 @@ func complete_objective(objective_id: String, quantity: int = 1):
 					print("Removing Item from inventory due to quest completion.")
 					Global_Inventory.remove_item(objective.target_id, objective.item_type)
 			else:
-				## Just talking to an NPC so just mark as completed
+				## Talking to an NPC so just mark as completed
 				objective.is_completed = true
 			break
 	if is_completed():

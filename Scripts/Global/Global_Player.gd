@@ -53,25 +53,29 @@ func check_quest_objectives(target_id: String, target_type: String, quantity: in
 			break
 	
 	# Provide rewards
-	if objective_updated:
-		if Global_Player.selected_quest.is_completed():
-			handle_quest_completion(selected_quest)
-			return true
+	if objective_updated and Global_Player.selected_quest.is_completed():
+		Global_Player.selected_quest.state = "completed" 
+		handle_quest_completion(selected_quest)
+		return true
 
-		# Update UI
+	# Update UI
+	if objective_updated:
 		update_quest_tracker(selected_quest)
 	
 	return false
 
 # Player rewards
 func handle_quest_completion(quest: Quest):
-	if quest.state == "completed":
-		return  # Dont allow reqrds if already completed
-		
+	if quest.rewards_given:
+		return 
+	
 	for reward in quest.rewards:
 		if reward.reward_type == "coins":
 			coin_amount += reward.reward_amount
+			print("Coins rewarded: ", reward.reward_amount)  # Debug print
 			update_coins()
+			
+	quest.rewards_given = true  # Mark rewards as given
 	update_quest_tracker(quest)
 	quest_manager.update_quest(quest.quest_id, "completed")
 

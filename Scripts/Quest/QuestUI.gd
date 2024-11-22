@@ -68,7 +68,8 @@ func update_quest_list():
 func _on_quest_selected(quest: Quest):
 	selected_quest = quest
 	Global_Player.selected_quest = quest
-	
+	Global_Player.update_quest_tracker(selected_quest)
+
 	# Check for automatic completion of quest objectives (i.e. item already in inventory)
 	Global_Player.quest_manager.check_quest_item_completion(quest)
 	
