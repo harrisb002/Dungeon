@@ -36,12 +36,19 @@ func _ready():
 
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):
+	## Bool for item used for Quest completion
+	var item_used
+	
 	## Check if item is needed for an active quest
 	if Global_Inventory.is_item_needed(item.id):
-		## Update the objective with the type collection
-		Global_Player.check_quest_objectives(item.id, "collection", item.quantity)
+		## Update the objective with the type collection (if item was used then dont add it to inventory)
+		item_used = Global_Player.check_quest_objectives(item.id, "collection", item.quantity)
 	else: 
 		print("Item is not needed for any active quest")
+	
+	## Dont add item if used for Quest
+	if item_used:
+		return 
 
 	var added_to_hotbar = false
 	# Add the item to hotbar

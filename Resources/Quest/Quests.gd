@@ -32,6 +32,9 @@ func complete_objective(objective_id: String, quantity: int = 1):
 				objective.collected_quantity += quantity
 				if objective.collected_quantity >= objective.required_quantity:
 					objective.is_completed = true
+					## Update inventory (Using name of item and type)
+					print("Removing Item from inventory due to quest completion.")
+					Global_Inventory.remove_item(objective.target_id, objective.item_type)
 			else:
 				## Just talking to an NPC so just mark as completed
 				objective.is_completed = true

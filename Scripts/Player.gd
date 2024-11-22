@@ -63,7 +63,6 @@ func _ready():
 	Global_Player.set_inventory_hotbar(inventory_hotbar)
 	
 	# Make the Quest tracker hidden until opened
-	Global_Player.quest_tracker.visible = true 
 	Global_Player.update_coins()
 	
 	screen_size = get_viewport_rect().size

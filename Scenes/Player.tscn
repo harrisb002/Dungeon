@@ -992,6 +992,7 @@ theme_override_font_sizes/font_size = 50
 text = "0"
 
 [node name="QuestTracker" type="ColorRect" parent="HUD"]
+visible = false
 offset_right = 300.0
 offset_bottom = 200.0
 scale = Vector2(2.10053, 1.29529)
@@ -1021,7 +1022,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Quest_Manager" parent="." instance=ExtResource("14_efdkd")]
-visible = true
 
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

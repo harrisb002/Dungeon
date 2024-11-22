@@ -36,10 +36,10 @@ func set_inventory_hotbar(hotbar):
 
 # Check & update the objectives for the currenlty selected quest
 # Also handles the logic to update th quest upon completion
-func check_quest_objectives(target_id: String, target_type: String, quantity: int = 1):
+func check_quest_objectives(target_id: String, target_type: String, quantity: int = 1) -> bool:
 	# No selected quest
 	if Global_Player.selected_quest == null:
-		return
+		return false
 	
 	# Update objectives
 	var objective_updated = false
@@ -54,9 +54,12 @@ func check_quest_objectives(target_id: String, target_type: String, quantity: in
 	if objective_updated:
 		if Global_Player.selected_quest.is_completed():
 			handle_quest_completion(selected_quest)
-	
+			return true
+
 		# Update UI
 		update_quest_tracker(selected_quest)
+	
+	return false
 
 # Player rewards
 func handle_quest_completion(quest: Quest):
@@ -88,7 +91,8 @@ func update_quest_tracker(quest: Quest):
 			label.text = objective.description
 
 			if objective.is_completed:
-				label.add_theme_color_override("font_color", Color(0, 1, 0))
+				label.queue_free()
+				quest_tracker.visible = false
 			else:
 				label.add_theme_color_override("font_color", Color(1,0, 0))
 
