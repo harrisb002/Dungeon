@@ -26,7 +26,10 @@ func _update_hotbar_ui():
 		hotbar_container.add_child(slot)
 		# Check if present and if so, stack it. Else just add it
 		if Global_Inventory.hotbar_inventory[i] != null:
-			slot.set_item(Global_Inventory.hotbar_inventory[i])
+			if Global_Inventory.hotbar_inventory[i]["quantity"] <= 0:
+				slot.set_empty()
+			else:
+				slot.set_item(Global_Inventory.hotbar_inventory[i])
 		else:
 			slot.set_empty()
 		slot.update_assignment_status()

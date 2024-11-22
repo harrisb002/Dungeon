@@ -60,7 +60,7 @@ func hide_dialogue():
 # At current branch, offer all curr available quests
 func offer_quests(branch_id: String):
 	for quest in npc.quests:
-		if quest.unlock_id == branch_id and quest.state == "not_started":
+		if quest.state == "not_started":
 			npc.offer_quest(quest.quest_id)
 	
 # At the default branch, then offer all previously unaccepted quests (Will fix with preReqs later)
