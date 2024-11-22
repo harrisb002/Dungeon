@@ -93,6 +93,11 @@ func _input(event):
 	if event.is_action_pressed("inventory"):
 		# Create a toggle switch
 		inventory_ui.visible = !inventory_ui.visible
+		
+		# Ensure the quest tracker visibility is the opposite of inventory
+		if Global_Player.selected_quest != null:
+			quest_tracker_node.visible = !inventory_ui.visible
+
 		# Pause the game, on/off
 		get_tree().paused = !get_tree().paused
 	
