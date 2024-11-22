@@ -56,8 +56,9 @@ func start():
 func _ready():
 	health = max_hp
 	
-	process_mode = Node.PROCESS_MODE_PAUSABLE
-	
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	set_process_input(true)
+
 	# Set the Player reference instance to access the player globally
 	Global_Player.set_player_ref(self)
 	
@@ -104,15 +105,15 @@ func get_input():
 
 func _input(event):
 	if event.is_action_pressed("inventory"):
-		# Create a toggle switch
+		# Toggle the Inventory
 		inventory_ui.visible = !inventory_ui.visible
-		
+
 		# Ensure the quest tracker visibility is the opposite of inventory
 		if Global_Player.selected_quest != null:
 			quest_tracker_node.visible = !inventory_ui.visible
 
 		# Pause the game, on/off
-		get_tree().paused = !get_tree().paused
+		get_tree().paused = inventory_ui.visible
 	
 	if can_move:
 		# Checking for interactions with NPC 
@@ -129,7 +130,7 @@ func _input(event):
 		# Opening the QuestUI
 		if event.is_action_pressed("quest_menu"):
 			Global_Player.quest_manager.show_hide_log()
-
+ 
 func _process(delta):
 	
 	if get_tree().paused:

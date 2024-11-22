@@ -1023,7 +1023,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Quest_Manager" parent="." instance=ExtResource("14_efdkd")]
-visible = true
 
 [node name="HealthBar" parent="." instance=ExtResource("15_srbkm")]
 offset_left = -24.0
