@@ -1030,7 +1030,10 @@ offset_top = 19.0
 offset_right = 24.0
 offset_bottom = 27.0
 
+[node name="ItemEffectTimer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
 [connection signal="timeout" from="attack_time_out" to="." method="_on_attack_time_out_timeout"]
+[connection signal="timeout" from="ItemEffectTimer" to="." method="_on_item_effect_timer_timeout"]

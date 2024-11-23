@@ -9,6 +9,7 @@ extends CharacterBody2D
 @onready var interact_ui_label = $InteractUI/ColorRect/Label
 @onready var inventory_ui = $InventoryUI
 @onready var inventory_hotbar = $InventoryHotbar/Inventory_Hotbar
+@onready var item_effect_timer = $ItemEffectTimer
 
 # Quest vars
 @onready var quest_manager_node = $Quest_Manager
@@ -252,11 +253,26 @@ func use_hotbar_item(slot_idx):
 func apply_item_effect(item):
 	match item["effect"]:
 		"Increase Speed":
-			speed += 200
+			apply_temporary_effect("speed", 200, item.get("duration", 5))
 		"Increase Slots":
 			Global_Inventory.increase_inventory_size(6)
+		"+20 Health":
+			health += 20
 		_:
 			print("No effect exists for this item")
+
+# Helper function for applying temporary effects
+func apply_temporary_effect(property: String, value: float, duration: float):
+	if has_node("EffectTimer"):
+		item_effect_timer.stop()  # Reset the timer if it's already running
+	self.set(property, self.get(property) + value)  # Apply the effect
+	item_effect_timer.wait_time = duration
+	item_effect_timer.start()  # Start the timer to end the effect
+
+func _on_item_effect_timer_timeout() -> void:
+	# Reset effects applied by temporary items
+	if speed > 1000:
+		speed = 1000  # Reset to default speed
 
 func _on_attack_time_out_timeout():
 	$attack_time_out.stop()
