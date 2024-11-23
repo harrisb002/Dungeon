@@ -1,3 +1,9 @@
+# Ignore all .godot files
+*.godot
+
+# Exclude project.godot from being ignored
+!project.godot
+
 # Compiled files
 *.import/
 *.d
