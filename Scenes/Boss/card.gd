@@ -7,6 +7,7 @@ extends State
 var attack_angles: Array = [0.0, 90.0, 180.0, 270.0]
 
 func enter() -> void:
+	print("card")
 	super()
 	perform_all_attacks()
 
@@ -29,8 +30,17 @@ func perform_all_attacks() -> void:
 # Perform the attack in a given direction (based on the angle)
 func perform_attack(angle: float) -> void:
 	var direction = Vector2(cos(deg_to_rad(angle)), sin(deg_to_rad(angle)))  # Get direction from angle
-	var attack_area = RayCast2D.new()  # Use RayCast2D for attack detection (or use Area2D)
-	attack_area.cast_to = direction * attack_radius  # Attack in the direction of the angle
+	var attack_area = RayCast2D.new()  # Create a RayCast2D instance
+
+	# Add RayCast2D to the scene (for example, to parent or self)
+	parent.add_child(attack_area)
+
+	# Set the starting position and cast_to for the RayCast2D
+	attack_area.position = parent.position  # Starting position of the ray
+	attack_area.cast_to = direction * attack_radius  # Direction and length of the ray
+
+	# Enable the RayCast2D to start checking
+	attack_area.enabled = true
 
 	# Spawn the attack or trigger animation/logic here
 	# Example: Check for collisions with enemies or deal damage

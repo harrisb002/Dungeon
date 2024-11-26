@@ -10,6 +10,7 @@ var current_state: State
 func init(parent: Boss_2) -> void:
 	for child in get_children():
 		child.parent = parent
+		print("Assigned parent to state:", child, "with parent:", parent)
 
 	# Initialize to the default state
 	change_state(starting_state)
