@@ -167,9 +167,8 @@ animation_name = "temp"
 
 [node name="Out" type="Node" parent="StateMachine/First"]
 
-[node name="Card" type="Node" parent="StateMachine" node_paths=PackedStringArray("inter_card_state")]
+[node name="Card" type="Node" parent="StateMachine"]
 script = ExtResource("8_uurbq")
-inter_card_state = NodePath("../Idle")
 animation_name = "temp"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

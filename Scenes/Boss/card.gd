@@ -1,15 +1,14 @@
 extends State
 
-@export var inter_card_state: State  # The state for transition after attacks
-@export var attack_radius: float = 100.0  # The radius of the attack range
-
-# Cardinal directions (0° for north, 90° for east, 180° for south, 270° for west)
-var attack_angles: Array = [0.0, 90.0, 180.0, 270.0]
+@export var indicator_duration: float = 10.0  # Duration for the indicators
+@export var attack_size: float = 500.0  # Size of the triangles
+@export var attack_angles: Array = [0.0, 90.0, 180.0, 270.0]  # Cardinal directions in degrees
 
 func enter() -> void:
-	print("card")
+	print("card state entered")
 	super()
-	perform_all_attacks()
+	print("attacking")
+	display_attack_indicators()
 
 func process_input(event: InputEvent) -> State:
 	return null
@@ -20,29 +19,51 @@ func process_physics(delta: float) -> State:
 
 func process_frame(delta: float) -> State:
 	return null
-	#return inter_card_state
 
-# Perform all 4 attacks at once, in the cardinal directions
-func perform_all_attacks() -> void:
+# Display red triangular indicators in all cardinal directions
+func display_attack_indicators() -> void:
 	for angle in attack_angles:
-		perform_attack(angle)
+		spawn_triangle_indicator(angle)
 
-# Perform the attack in a given direction (based on the angle)
-func perform_attack(angle: float) -> void:
-	var direction = Vector2(cos(deg_to_rad(angle)), sin(deg_to_rad(angle)))  # Get direction from angle
-	var attack_area = RayCast2D.new()  # Create a RayCast2D instance
+# Create a triangular indicator for the given angle
+func spawn_triangle_indicator(angle: float) -> void:
+	print("attack")
+	
+	if parent == null:
+		print("Error: Parent is not set. Aborting triangle creation.")
+		return  # Early exit if parent is not assigned
+	
+	# Print the parent and its position for debugging
+	print("Parent: ", parent)
+	print("Parent position: ", parent.position)
+	
+	# Convert angle to a Vector2 direction
+	var direction = Vector2(cos(deg_to_rad(angle)), sin(deg_to_rad(angle)))
 
-	# Add RayCast2D to the scene (for example, to parent or self)
-	parent.add_child(attack_area)
+	# Create a new triangle indicator
+	var triangle = Polygon2D.new()
+	triangle.polygon = [
+		Vector2(0, 0),  # Tip of the triangle
+		Vector2(-attack_size / 2, attack_size),  # Left corner
+		Vector2(attack_size / 2, attack_size)  # Right corner
+	]
+	triangle.color = Color(1, 0, 0, 0.8)  # Semi-transparent red
 
-	# Set the starting position and cast_to for the RayCast2D
-	attack_area.position = parent.position  # Starting position of the ray
-	attack_area.cast_to = direction * attack_radius  # Direction and length of the ray
+	# Position the triangle at the origin of the boss (parent position)
+	var attack_position = parent.position + direction * attack_size * 1.5
+	print("Attack position: ", attack_position)
 
-	# Enable the RayCast2D to start checking
-	attack_area.enabled = true
+	# Set the triangle's position and rotation
+	triangle.position = attack_position
+	triangle.rotation = direction.angle()  # direction.angle() returns the angle in radians
 
-	# Spawn the attack or trigger animation/logic here
-	# Example: Check for collisions with enemies or deal damage
-	print("Attacking in direction: ", angle)
-	# Add any effects or collision detection logic (e.g., Area2D detection, RayCast2D checks, etc.)
+	# Set the Z-index to ensure it's visible above other objects
+	triangle.z_index = 100  # Increase Z-index for visibility
+
+	# Add the triangle to the parent (the Boss_2 node)
+	parent.add_child(triangle)
+
+	# Optionally, remove the indicator after a duration
+	if indicator_duration > 0:
+		await get_tree().create_timer(indicator_duration).timeout
+		triangle.queue_free()
