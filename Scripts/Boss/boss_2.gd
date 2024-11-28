@@ -22,7 +22,7 @@ func _ready() -> void:
 	# Initialize the state machine, passing a reference of the player to the states,
 	# that way they can move and react accordingly
 	state_machine.init(self)
-
+	
 func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_input(event)
 	
@@ -33,11 +33,11 @@ func _process(delta: float) -> void:
 	state_machine.process_frame(delta)
 	
 	
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		state_machine.change_state(attack_state)
+#func _on_area_2d_body_entered(body: Node2D) -> void:
+#	if body.is_in_group("player"):
+#		state_machine.change_state(attack_state)
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		state_machine.change_state(idle_state)
+#func _on_area_2d_body_exited(body: Node2D) -> void:
+#	if body.is_in_group("player"):
+#		state_machine.change_state(idle_state)
 	

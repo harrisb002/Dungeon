@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://s8eh4l0sa21d"]
+[gd_scene load_steps=23 format=3 uid="uid://s8eh4l0sa21d"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss_2.gd" id="1_6wla5"]
 [ext_resource type="Texture2D" uid="uid://dydcl07arp0xp" path="res://allart/BossArt/Samurai_Archer/Idle.png" id="2_b73my"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://Scenes/Boss/attack.gd" id="6_mscet"]
 [ext_resource type="Script" path="res://Scenes/Boss/first.gd" id="7_0ost6"]
 [ext_resource type="Script" path="res://Scenes/Boss/card.gd" id="8_uurbq"]
+[ext_resource type="Script" path="res://Scenes/Boss/second.gd" id="9_vr3on"]
+[ext_resource type="Script" path="res://Scenes/Boss/third.gd" id="10_culrp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_voqyc"]
 atlas = ExtResource("2_b73my")
@@ -81,13 +83,15 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bd0m3"]
-radius = 600.003
+radius = 1205.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3ulk7"]
 height = 20.0
 
-[node name="Boss_2" type="CharacterBody2D"]
+[node name="Boss_2" type="CharacterBody2D" node_paths=PackedStringArray("attack_state", "idle_state")]
 script = ExtResource("1_6wla5")
+attack_state = NodePath("StateMachine/AttackDecider")
+idle_state = NodePath("StateMachine/Idle")
 
 [node name="animations" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -64)
@@ -110,35 +114,26 @@ offset_top = 11.0
 offset_right = 71.0
 offset_bottom = 29.0
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("3_uib35")
 starting_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_state")]
 script = ExtResource("4_jayr6")
+attack_state = NodePath("../AttackDecider")
 animation_name = "temp"
 
-[node name="AttackDecider" type="Node" parent="StateMachine"]
+[node name="AttackDecider" type="Node" parent="StateMachine" node_paths=PackedStringArray("first_state", "second_state", "third_state")]
 script = ExtResource("6_mscet")
+first_state = NodePath("../First")
+second_state = NodePath("Second")
+third_state = NodePath("Third")
 animation_name = "temp"
-
-[node name="First" type="Node" parent="StateMachine/AttackDecider"]
-script = ExtResource("7_0ost6")
-
-[node name="Card" type="Node" parent="StateMachine/AttackDecider/First"]
-script = ExtResource("8_uurbq")
-
-[node name="InterCard" type="Node" parent="StateMachine/AttackDecider/First"]
-
-[node name="CleaveL" type="Node" parent="StateMachine/AttackDecider/First"]
-
-[node name="CleaveR" type="Node" parent="StateMachine/AttackDecider/First"]
-
-[node name="In" type="Node" parent="StateMachine/AttackDecider/First"]
-
-[node name="Out" type="Node" parent="StateMachine/AttackDecider/First"]
 
 [node name="Second" type="Node" parent="StateMachine/AttackDecider"]
+script = ExtResource("9_vr3on")
 
 [node name="CloneCleaveL" type="Node" parent="StateMachine/AttackDecider/Second"]
 
@@ -149,12 +144,32 @@ script = ExtResource("8_uurbq")
 [node name="CloneOut" type="Node" parent="StateMachine/AttackDecider/Second"]
 
 [node name="Third" type="Node" parent="StateMachine/AttackDecider"]
+script = ExtResource("10_culrp")
 
 [node name="Spin" type="Node" parent="StateMachine/AttackDecider/Third"]
 
 [node name="InterIn_InterOut_CardOut" type="Node" parent="StateMachine/AttackDecider/Third"]
 
 [node name="CardOut_InterOut_InterIn" type="Node" parent="StateMachine/AttackDecider/Third"]
+
+[node name="First" type="Node" parent="StateMachine" node_paths=PackedStringArray("card_state")]
+script = ExtResource("7_0ost6")
+card_state = NodePath("../Card")
+animation_name = "temp"
+
+[node name="InterCard" type="Node" parent="StateMachine/First"]
+
+[node name="CleaveL" type="Node" parent="StateMachine/First"]
+
+[node name="CleaveR" type="Node" parent="StateMachine/First"]
+
+[node name="In" type="Node" parent="StateMachine/First"]
+
+[node name="Out" type="Node" parent="StateMachine/First"]
+
+[node name="Card" type="Node" parent="StateMachine"]
+script = ExtResource("8_uurbq")
+animation_name = "temp"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
