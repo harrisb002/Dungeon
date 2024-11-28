@@ -38,23 +38,31 @@ func set_inventory_hotbar(hotbar):
 # Also handles the logic to update th quest upon completion
 func check_quest_objectives(target_id: String, target_type: String, quantity: int = 1) -> bool:
 	# No selected quest
-	if Global_Player.selected_quest == null:
+	if selected_quest == null:
 		return false
 	
 	# Update objectives
 	var objective_updated = false
-	for objective in Global_Player.selected_quest.objectives:
-		if objective.target_id == target_id and objective.target_type == target_type and not objective.is_completed:
-			print("Completing objective for quest: ", Global_Player.selected_quest.quest_name)
-			Global_Player.selected_quest.complete_objective(objective.id, quantity)
-			## Remove the item if already in inventory
-			Global_Inventory.remove_item(objective.target_id, objective.item_type)
+	for objective in selected_quest.objectives:
+		if objective.target_type == "coins" and not objective.is_completed:
+			# Check if the coin_amount meets the required target
+			if coin_amount >= objective.required_quantity:
+				print("Completing coin collection objective for quest: ", selected_quest.quest_name)
+				# Deduct coins required for the quest
+				coin_amount -= objective.required_quantity
+				update_coins()
+				objective.is_completed = true
+				objective_updated = true
+				break
+				
+		elif objective.target_id == target_id and objective.target_type == target_type and not objective.is_completed:
+			print("Completing other objective for quest: ", selected_quest.quest_name)
+			selected_quest.complete_objective(objective.id, quantity)
 			objective_updated = true
 			break
-	
 	# Provide rewards
-	if objective_updated and Global_Player.selected_quest.is_completed():
-		Global_Player.selected_quest.state = "completed" 
+	if objective_updated and selected_quest.is_completed():
+		selected_quest.state = "completed" 
 		handle_quest_completion(selected_quest)
 		return true
 
@@ -64,24 +72,43 @@ func check_quest_objectives(target_id: String, target_type: String, quantity: in
 	
 	return false
 
-# Player rewards
-func handle_quest_completion(quest: Quest):
-	if quest.rewards_given:
-		return 
-	
-	for reward in quest.rewards:
-		if reward.reward_type == "coins":
-			coin_amount += reward.reward_amount
-			print("Coins rewarded: ", reward.reward_amount)  # Debug print
-			update_coins()
-			
-	quest.rewards_given = true  # Mark rewards as given
-	update_quest_tracker(quest)
-	quest_manager.update_quest(quest.quest_id, "completed")
+func add_coins(amount: int):
+	coin_amount += amount
+	update_coins()  # Update UI
+	if selected_quest != null:
+		check_quest_objectives("coins", "collection")  # Check if any coin-related objectives are completed
 
 # Update coin UI
 func update_coins():
 	amount.text = str(coin_amount)
+
+# Player rewards
+func handle_quest_completion(quest: Quest):
+	if quest.rewards_given:
+		return 
+
+	for reward in quest.rewards:
+		if reward.reward_type == "coins":
+			add_coins(reward.reward_amount)  # Use add_coins to update coins
+			print("Coins rewarded: ", reward.reward_amount)  # Debug print
+			update_coins()
+		elif reward.reward_type == "item":
+			# Find the item data in the quest_items list
+			var item_data = null
+			for item in Global_Inventory.quest_items:
+				if item["id"] == reward.reward_item_id:
+					item_data = item
+					break
+			if item_data != null:
+				item_data["quantity"] = reward.reward_item_quantity
+				Global_Inventory.recieve_quest_item(item_data)
+				print("Reward item added to inventory: ", item_data["name"])
+			else:
+				print("Reward item not found for ID: ", reward.reward_item_id)
+
+	quest.rewards_given = true  # Mark rewards as given
+	update_quest_tracker(quest)
+	quest_manager.update_quest(quest.quest_id, "completed")
 
 # Update tracker UI (This sets the selected Quest node)
 # hides if no quest has been selected or when a quest is complete

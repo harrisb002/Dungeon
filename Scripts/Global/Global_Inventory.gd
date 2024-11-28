@@ -17,22 +17,41 @@ var hotbar_inventory = []
 
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
-	{"id": "common_key", "quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png"), "scale": Vector2(1, 1)},
-	{"id": "shroom", "quantity": 0, "type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png"), "scale": Vector2(1, 1)},
-	{"id": "flash_ring", "quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "texture": preload("res://allart/InventoryItems/increaseSpeed.png"), "scale": Vector2(1, 1)},
-	{"id": "arrow", "quantity": 0, "type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png"), "scale": Vector2(1, 1)},
-	{"id": "fire_skin", "quantity": 0, "type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png"), "scale": Vector2(1, 1)},
-	{"id": "health_potion", "quantity": 0, "type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png"), "scale": Vector2(1, 1)},
-	{"id": "cloak", "quantity": 0, "type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png"), "scale": Vector2(1, 1)},
-	{"id": "magic_potion", "quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png"), "scale": Vector2(1, 1)},
-	{"id": "poison_potion", "quantity": 0, "type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png"), "scale": Vector2(1, 1)},
-	{"id": "shield_potion", "quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png"), "scale": Vector2(1, 1)},
-	{"id": "stamina_potion", "quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png"), "scale": Vector2(1, 1)},
+	{"id": "common_key", "quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png"), "scale": Vector2(2, 2)},
+	{"id": "flash_ring", "quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "duration": 5, "texture": preload("res://allart/InventoryItems/increaseSpeed.png"), "scale": Vector2(2, 2)},
+	{"id": "arrow", "quantity": 0, "type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png"), "scale": Vector2(2, 2)},
+	{"id": "fire_skin", "quantity": 0, "type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png"), "scale": Vector2(2, 2)},
+	{"id": "health_potion", "quantity": 0, "type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png"), "scale": Vector2(2, 2)},
+	{"id": "cloak", "quantity": 0, "type": "Potion", "name": "Cloak", "effect": "Invisible for 20 seconds", "texture": preload("res://allart/InventoryItems/invisibility.png"), "scale": Vector2(2, 2)},
+	{"id": "magic_potion", "quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png"), "scale": Vector2(2, 2)},
+	{"id": "shield_potion", "quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png"), "scale": Vector2(2, 2)},
+	{"id": "stamina_potion", "quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png"), "scale": Vector2(2, 2)},
+]
+
+var quest_items = [
+	{"id": "poison_potion", "quantity": 0, "type": "Potion", "name": "Poison Potion", "effect": "Poison enemy", "texture": preload("res://allart/InventoryItems/poison.png"), "scale": Vector2(2, 2)},
+	{"id": "shroom", "quantity": 0, "type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png"), "scale": Vector2(2, 2)},
 ]
 
 func _ready():
 	inventory.resize(9)
 	hotbar_inventory.resize(hotbar_size)
+
+# Adds reward item from quest completion
+func recieve_quest_item(item):
+	for i in range(inventory.size()):
+		# Stack the item if it already exists in inventory
+		# Based on dict. found in inventory_item.gd, pickup_items
+		if inventory[i] != null and inventory[i]["name"] == item["name"] and inventory[i]["type"] == item["type"]:
+			inventory[i]["quantity"] += 1
+			inventory_updated.emit()
+			return true
+		elif inventory[i] == null:
+			item["quantity"] = 1  
+			inventory[i] = item
+			inventory_updated.emit()
+			return true
+	return false
 
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):
@@ -168,6 +187,10 @@ func drop_item(item_data, drop_position):
 	drop_position = adjust_drop_position(drop_position)
 	item_instance.global_position = drop_position
 	
+		# Set the scale to match the inventory item's scale
+	if item_data.has("scale"):
+		item_instance.scale = item_data["scale"]
+
 	# Set the scale to match the inventory size
 	get_tree().current_scene.add_child(item_instance)
 
