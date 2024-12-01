@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://bcx4eoh1cffb7"]
+
+[ext_resource type="Script" path="res://Scripts/Shop/Shop.gd" id="1_6lgne"]
+[ext_resource type="Texture2D" uid="uid://bw3b3e1ktyul7" path="res://Assets/Shop.png" id="1_y0msn"]
+[ext_resource type="Texture2D" uid="uid://cmpi85bpkk8o1" path="res://allart/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Character_2.png" id="2_60ki1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhuqk"]
+atlas = ExtResource("1_y0msn")
+region = Rect2(0, 174, 34, 29)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6581w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhuqk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qv8qd"]
+atlas = ExtResource("2_60ki1")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_es440"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qv8qd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n0rtg"]
+size = Vector2(26, 21.75)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_34uu5"]
+radius = 20.0
+
+[node name="Shop" type="StaticBody2D"]
+script = ExtResource("1_6lgne")
+
+[node name="shop" type="AnimatedSprite2D" parent="."]
+position = Vector2(2.98023e-08, 1.49012e-08)
+scale = Vector2(0.970588, 0.982759)
+sprite_frames = SubResource("SpriteFrames_6581w")
+
+[node name="teller" type="AnimatedSprite2D" parent="."]
+show_behind_parent = true
+light_mask = 513
+position = Vector2(-0.75, 7.89062)
+scale = Vector2(0.78125, 0.861328)
+sprite_frames = SubResource("SpriteFrames_es440")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 3.875)
+shape = SubResource("RectangleShape2D_n0rtg")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, 9)
+shape = SubResource("CircleShape2D_34uu5")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
