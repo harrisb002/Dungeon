@@ -26,6 +26,7 @@ var spawnable_items = [
 	{"id": "magic_potion", "quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png"), "scale": Vector2(2, 2)},
 	{"id": "shield_potion", "quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png"), "scale": Vector2(2, 2)},
 	{"id": "stamina_potion", "quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png"), "scale": Vector2(2, 2)},
+	{"id": "map", "quantity": 0, "type": "Guide", "name": "Dungeon Map", "effect": "Discovery", "texture": preload("res://allart/InventoryItems/map.png"), "scale": Vector2(2, 2)},
 ]
 
 var quest_items = [
