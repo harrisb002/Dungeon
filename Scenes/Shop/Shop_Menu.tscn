@@ -103,7 +103,7 @@ color = Color(0.35, 0.35, 0.35, 0.254902)
 position = Vector2(9, 7)
 scale = Vector2(0.550781, 0.455078)
 sprite_frames = SubResource("SpriteFrames_ku1u7")
-animation = &"Shroom"
+animation = &"HealthPotion"
 
 [node name="ButtonLeft" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)

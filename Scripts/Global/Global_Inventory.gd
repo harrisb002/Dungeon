@@ -11,6 +11,14 @@ var tile_map: TileMapLayer = null
 @onready var inventory_slot_scene = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
 @onready var inventory_item_scene = preload("res://Scenes/Inventory/Inventory_Item.tscn")
 
+# Export, Allows setting it through the inspector
+@export var item_id = ""
+@export var item_name = ""
+@export var item_type = ""
+@export var item_texture = Texture
+@export var item_effect = ""
+@export var item_scale = Vector2(1, 1) # Default scale
+
 var inventory = []
 var hotbar_size = 5
 var hotbar_inventory = []
@@ -53,6 +61,14 @@ func recieve_quest_item(item):
 			inventory_updated.emit()
 			return true
 	return false
+
+# Set the properties to allow items to be dropped and utilize saved values
+func set_item_data(data):
+	item_type = data["type"]
+	item_name = data["name"]
+	item_effect = data["effect"]
+	item_texture = data["texture"]
+	item_scale = data["scale"]
 
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):
