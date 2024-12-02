@@ -1,6 +1,8 @@
 extends StaticBody2D
 
 @onready var icon = $Icon
+@onready var price = $Price
+@onready var buyButton = $BuyButtonColor
 
 var shop_items = [
 	{"id": "flash_ring", "type": "Attachment", "name": "FlashRing", "effect": "Increase Speed", "price": 100, "duration": 5, "texture": preload("res://allart/InventoryItems/increaseSpeed.png"), "scale": Vector2(2, 2)},
@@ -18,6 +20,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if self.visible == true:
 		icon.play(curr_item["name"])
+		if Global_Player.coin_amount >= curr_item["price"]:
+			buyButton.color = "00a07c22" # Green
+		else:
+			buyButton.color = "ff000022" # Red
 
 func _on_button_left_pressed() -> void:
 	swap_item_back()
