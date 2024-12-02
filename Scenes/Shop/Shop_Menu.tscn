@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://tpbf7i61jv2p"]
 
 [ext_resource type="Texture2D" uid="uid://c6kh3e04xoys1" path="res://Assets/Icons/icon26.png" id="1_cdoc6"]
-[ext_resource type="Script" path="res://Scenes/Shop/Shop_Menu.gd" id="1_xvh5u"]
+[ext_resource type="Script" path="res://Scripts/Shop/Shop_Menu.gd" id="1_xvh5u"]
 [ext_resource type="Texture2D" uid="uid://br6h7514itwa3" path="res://Assets/Icons/icon2.png" id="2_yaahv"]
 [ext_resource type="Texture2D" uid="uid://chrl5dn1knwoh" path="res://Assets/Icons/icon24.png" id="3_3po51"]
 [ext_resource type="Texture2D" uid="uid://buw6lx2nxbwjg" path="res://Assets/Icons/icon32.png" id="4_6akw6"]
@@ -91,13 +91,15 @@ animations = [{
 }]
 
 [node name="ShopMenu" type="StaticBody2D"]
-scale = Vector2(10, 10)
+position = Vector2(-54, -57)
+scale = Vector2(2, 2)
 script = ExtResource("1_xvh5u")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 60.0
 offset_bottom = 28.0
-color = Color(0.35, 0.35, 0.35, 0.254902)
+color = Color(0.158472, 0.158472, 0.158472, 0.898039)
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="AnimatedSprite2D" parent="."]
 position = Vector2(9, 7)
@@ -111,6 +113,7 @@ offset_left = 2.0
 offset_top = 15.0
 offset_right = 15.0
 offset_bottom = 28.0
+metadata/_edit_use_anchors_ = true
 
 [node name="LeftButtonIcon" type="AnimatedSprite2D" parent="."]
 position = Vector2(7.76589, 22.7191)
@@ -124,6 +127,7 @@ offset_left = 17.0
 offset_top = 15.0
 offset_right = 30.0
 offset_bottom = 28.0
+metadata/_edit_use_anchors_ = true
 
 [node name="RightButtonIcon" type="AnimatedSprite2D" parent="."]
 position = Vector2(23, 20)
@@ -145,20 +149,33 @@ offset_bottom = 11.0
 theme_override_fonts/font = ExtResource("7_5mu2r")
 theme_override_font_sizes/font_size = 10
 text = "100"
+metadata/_edit_use_anchors_ = true
 
-[node name="ButButtonColor" type="ColorRect" parent="."]
+[node name="Label" type="Label" parent="."]
+offset_left = 52.0
+offset_top = 30.0
+offset_right = 88.0
+offset_bottom = 53.0
+
+[node name="BuyButtonColor" type="ColorRect" parent="."]
 offset_left = 34.0
-offset_top = 16.0
+offset_top = 15.0
 offset_right = 59.0
-offset_bottom = 27.0
+offset_bottom = 26.0
 color = Color(1, 0, 0, 0.133333)
+metadata/_edit_use_anchors_ = true
 
 [node name="BuyButton" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
-offset_left = 34.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 34.5
 offset_top = 16.0
-offset_right = 59.0
-offset_bottom = 27.0
+offset_right = 57.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="ButtonLeft" to="." method="_on_button_left_pressed"]
 [connection signal="pressed" from="ButtonRight" to="." method="_on_button_right_pressed"]
