@@ -12,6 +12,14 @@ var tile_map: TileMapLayer = null
 @onready var inventory_item_scene = preload("res://Scenes/Inventory/Inventory_Item.tscn")
 var Inventory_Script = preload("res://Scripts/Inventory/Inventory_item.gd").new()
 
+# Export, Allows setting it through the inspector
+@export var item_id = ""
+@export var item_name = ""
+@export var item_type = ""
+@export var item_texture = Texture
+@export var item_effect = ""
+@export var item_scale = Vector2(1, 1) # Default scale
+
 var inventory = []
 var hotbar_size = 5
 var hotbar_inventory = []
@@ -31,6 +39,7 @@ var spawnable_items = [
 	{"id": "magic_potion", "quantity": 0, "type": "Potion", "name": "Magic Potion", "effect": "Restore mana", "texture": preload("res://allart/InventoryItems/magicPotion.png"), "scale": Vector2(2, 2)},
 	{"id": "shield_potion", "quantity": 0, "type": "Potion", "name": "Shield Potion", "effect": "+20 Shield", "texture": preload("res://allart/InventoryItems/shieldPotion.png"), "scale": Vector2(2, 2)},
 	{"id": "stamina_potion", "quantity": 0, "type": "Potion", "name": "Stamina Potion", "effect": "Reduce stamina", "texture": preload("res://allart/InventoryItems/staminaPotion.png"), "scale": Vector2(2, 2)},
+	{"id": "map", "quantity": 0, "type": "Guide", "name": "Dungeon Map", "effect": "Discovery", "texture": preload("res://allart/InventoryItems/map.png"), "scale": Vector2(2, 2)},
 ]
 
 var quest_items = [
@@ -57,6 +66,14 @@ func recieve_quest_item(item):
 			inventory_updated.emit()
 			return true
 	return false
+
+# Set the properties to allow items to be dropped and utilize saved values
+func set_item_data(data):
+	item_type = data["type"]
+	item_name = data["name"]
+	item_effect = data["effect"]
+	item_texture = data["texture"]
+	item_scale = data["scale"]
 
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):
