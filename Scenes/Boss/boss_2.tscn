@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://s8eh4l0sa21d"]
+[gd_scene load_steps=29 format=3 uid="uid://s8eh4l0sa21d"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss_2.gd" id="1_6wla5"]
 [ext_resource type="Texture2D" uid="uid://dydcl07arp0xp" path="res://allart/BossArt/Samurai_Archer/Idle.png" id="2_b73my"]
@@ -10,6 +10,12 @@
 [ext_resource type="Script" path="res://Scenes/Boss/card.gd" id="8_uurbq"]
 [ext_resource type="Script" path="res://Scenes/Boss/second.gd" id="9_vr3on"]
 [ext_resource type="Script" path="res://Scenes/Boss/third.gd" id="10_culrp"]
+[ext_resource type="PackedScene" uid="uid://dcxg0yymar8eh" path="res://Scenes/Boss/cone.tscn" id="11_h4ea0"]
+[ext_resource type="Script" path="res://Scenes/Boss/inter_card.gd" id="12_43q14"]
+[ext_resource type="Script" path="res://Scenes/Boss/cleave_l.gd" id="13_kw8lm"]
+[ext_resource type="Script" path="res://Scenes/Boss/cleave_r.gd" id="14_bsddf"]
+[ext_resource type="Script" path="res://Scenes/Boss/in.gd" id="15_60vct"]
+[ext_resource type="Script" path="res://Scenes/Boss/out.gd" id="16_5d53s"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_voqyc"]
 atlas = ExtResource("2_b73my")
@@ -83,7 +89,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bd0m3"]
-radius = 1205.0
+radius = 2224.26
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3ulk7"]
 height = 20.0
@@ -128,20 +134,9 @@ animation_name = "temp"
 [node name="AttackDecider" type="Node" parent="StateMachine" node_paths=PackedStringArray("first_state", "second_state", "third_state")]
 script = ExtResource("6_mscet")
 first_state = NodePath("../First")
-second_state = NodePath("Second")
+second_state = NodePath("../Second")
 third_state = NodePath("Third")
 animation_name = "temp"
-
-[node name="Second" type="Node" parent="StateMachine/AttackDecider"]
-script = ExtResource("9_vr3on")
-
-[node name="CloneCleaveL" type="Node" parent="StateMachine/AttackDecider/Second"]
-
-[node name="CloneCleaveR" type="Node" parent="StateMachine/AttackDecider/Second"]
-
-[node name="CloneIn" type="Node" parent="StateMachine/AttackDecider/Second"]
-
-[node name="CloneOut" type="Node" parent="StateMachine/AttackDecider/Second"]
 
 [node name="Third" type="Node" parent="StateMachine/AttackDecider"]
 script = ExtResource("10_culrp")
@@ -157,19 +152,43 @@ script = ExtResource("7_0ost6")
 card_state = NodePath("../Card")
 animation_name = "temp"
 
-[node name="InterCard" type="Node" parent="StateMachine/First"]
-
-[node name="CleaveL" type="Node" parent="StateMachine/First"]
-
-[node name="CleaveR" type="Node" parent="StateMachine/First"]
-
-[node name="In" type="Node" parent="StateMachine/First"]
-
-[node name="Out" type="Node" parent="StateMachine/First"]
-
-[node name="Card" type="Node" parent="StateMachine"]
+[node name="Card" type="Node" parent="StateMachine" node_paths=PackedStringArray("Inter_state")]
 script = ExtResource("8_uurbq")
+Inter_state = NodePath("../InterCard")
+cone_scene = ExtResource("11_h4ea0")
 animation_name = "temp"
+
+[node name="InterCard" type="Node" parent="StateMachine" node_paths=PackedStringArray("cleaveL_State")]
+script = ExtResource("12_43q14")
+cleaveL_State = NodePath("../CleaveL")
+cone_scene = ExtResource("11_h4ea0")
+
+[node name="CleaveL" type="Node" parent="StateMachine" node_paths=PackedStringArray("cleaveaR_State")]
+script = ExtResource("13_kw8lm")
+cleaveaR_State = NodePath("../CleaveR")
+
+[node name="CleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("in_stat")]
+script = ExtResource("14_bsddf")
+in_stat = NodePath("../In")
+
+[node name="In" type="Node" parent="StateMachine" node_paths=PackedStringArray("out_state")]
+script = ExtResource("15_60vct")
+out_state = NodePath("../Out")
+
+[node name="Out" type="Node" parent="StateMachine"]
+script = ExtResource("16_5d53s")
+
+[node name="Second" type="Node" parent="StateMachine" node_paths=PackedStringArray("clone_cleaveL_state")]
+script = ExtResource("9_vr3on")
+clone_cleaveL_state = NodePath(".")
+
+[node name="CloneCleaveL" type="Node" parent="StateMachine/Second"]
+
+[node name="CloneCleaveR" type="Node" parent="StateMachine/Second"]
+
+[node name="CloneIn" type="Node" parent="StateMachine/Second"]
+
+[node name="CloneOut" type="Node" parent="StateMachine/Second"]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

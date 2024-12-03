@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bhh2cacikp2js"]
+
+[node name="cleave" type="Area2D"]
+
+[node name="Poly2d2" type="Polygon2D" parent="."]
+modulate = Color(0.8, 0, 0, 0.678431)
+polygon = PackedVector2Array(-15, -2081, -849, -2072, -871, 1135)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+position = Vector2(2894, -14)
+polygon = PackedVector2Array(-3, -37, -853, -2108, 865, -2107)

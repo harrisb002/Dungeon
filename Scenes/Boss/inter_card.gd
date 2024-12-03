@@ -1,9 +1,9 @@
 extends State
 
 @export var indicator_duration: float = 2.0  # Duration for the indicators
-@export var attack_angles: Array = [0.0, 90.0, 180.0, 270.0]  # Cardinal directions in degrees
+@export var attack_angles: Array = [45.0, 135.0, 215.0, 315.0]  # Cardinal directions in degrees
 
-@export var Inter_state: State
+@export var cleaveL_State: State
 
 @export var cone_scene: PackedScene
 
@@ -33,7 +33,7 @@ func process_frame(delta: float) -> State:
 		return null  # Still waiting for the timer
 	elif attack_timer != null and attack_timer.is_stopped():
 		attack_timer.queue_free()  # Clean up the timer
-		return Inter_state
+		return cleaveL_State
 	return null
 
 # Display red triangular indicators in all cardinal directions
@@ -65,3 +65,5 @@ func spawn_triangle_indicator(angle: float) -> void:
 		cone_instance.apply_damage()  # Call the damage application method
 		cone_instance.queue_free()
 	
+
+		 

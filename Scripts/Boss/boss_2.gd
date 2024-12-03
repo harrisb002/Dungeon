@@ -23,6 +23,8 @@ func _ready() -> void:
 	# that way they can move and react accordingly
 	state_machine.init(self)
 	
+	
+	
 func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_input(event)
 	
@@ -41,3 +43,7 @@ func _process(delta: float) -> void:
 #	if body.is_in_group("player"):
 #		state_machine.change_state(idle_state)
 	
+
+
+func _on_cone_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.
