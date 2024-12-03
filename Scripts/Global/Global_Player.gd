@@ -10,7 +10,7 @@ var quest_tracker: Node = null
 var title: Node = null
 var amount: Node = null
 
-var coin_amount = 0 # Used for rewards
+var coin_amount = 100 # Used for rewards
 
 #Inventory vars
 var inventory_hotbar = null

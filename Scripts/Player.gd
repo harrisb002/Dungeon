@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed = 1000 
+@export var speed = 800 
 
 @onready var animated_sprite = $AnimatedSprite2D
 
@@ -255,7 +255,7 @@ func apply_item_effect(item):
 		"Increase Speed":
 			apply_temporary_effect("speed", 200, item.get("duration", 5))
 		"Increase Slots":
-			Global_Inventory.increase_inventory_size(6)
+			Global_Inventory.increase_inventory_size(3)
 		"+20 Health":
 			health += 20
 		_:
@@ -263,7 +263,10 @@ func apply_item_effect(item):
 
 # Helper function for applying temporary effects
 func apply_temporary_effect(property: String, value: float, duration: float):
-	if has_node("EffectTimer"):
+	if item_effect_timer == null:
+		print("Error: ItemEffectTimer is null!")
+		return
+	if has_node("ItemEffectTimer"):
 		item_effect_timer.stop()  # Reset the timer if it's already running
 	self.set(property, self.get(property) + value)  # Apply the effect
 	item_effect_timer.wait_time = duration
