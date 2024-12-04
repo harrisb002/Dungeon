@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://bhh2cacikp2js"]
+[gd_scene load_steps=2 format=3 uid="uid://bhh2cacikp2js"]
+
+[ext_resource type="Script" path="res://Scenes/Boss/cleave.gd" id="1_giqsj"]
 
 [node name="cleave" type="Area2D"]
+script = ExtResource("1_giqsj")
 
 [node name="Poly2d" type="Polygon2D" parent="."]
 modulate = Color(0.8, 0, 0, 0.678431)
