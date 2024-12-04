@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://s8eh4l0sa21d"]
+[gd_scene load_steps=30 format=3 uid="uid://s8eh4l0sa21d"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss_2.gd" id="1_6wla5"]
 [ext_resource type="Texture2D" uid="uid://dydcl07arp0xp" path="res://allart/BossArt/Samurai_Archer/Idle.png" id="2_b73my"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Scenes/Boss/third.gd" id="10_culrp"]
 [ext_resource type="PackedScene" uid="uid://dcxg0yymar8eh" path="res://Scenes/Boss/cone.tscn" id="11_h4ea0"]
 [ext_resource type="Script" path="res://Scenes/Boss/inter_card.gd" id="12_43q14"]
+[ext_resource type="PackedScene" uid="uid://bhh2cacikp2js" path="res://Scenes/Boss/cleave.tscn" id="13_5t0h7"]
 [ext_resource type="Script" path="res://Scenes/Boss/cleave_l.gd" id="13_kw8lm"]
 [ext_resource type="Script" path="res://Scenes/Boss/cleave_r.gd" id="14_bsddf"]
 [ext_resource type="Script" path="res://Scenes/Boss/in.gd" id="15_60vct"]
@@ -166,17 +167,12 @@ cone_scene = ExtResource("11_h4ea0")
 [node name="CleaveL" type="Node" parent="StateMachine" node_paths=PackedStringArray("cleaveaR_State")]
 script = ExtResource("13_kw8lm")
 cleaveaR_State = NodePath("../CleaveR")
+cleave_scene = ExtResource("13_5t0h7")
 
-[node name="CleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("in_stat")]
+[node name="CleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("in_state")]
 script = ExtResource("14_bsddf")
-in_stat = NodePath("../In")
-
-[node name="In" type="Node" parent="StateMachine" node_paths=PackedStringArray("out_state")]
-script = ExtResource("15_60vct")
-out_state = NodePath("../Out")
-
-[node name="Out" type="Node" parent="StateMachine"]
-script = ExtResource("16_5d53s")
+in_state = NodePath("../Second")
+cleave_scene = ExtResource("13_5t0h7")
 
 [node name="Second" type="Node" parent="StateMachine" node_paths=PackedStringArray("clone_cleaveL_state")]
 script = ExtResource("9_vr3on")
@@ -189,6 +185,15 @@ clone_cleaveL_state = NodePath(".")
 [node name="CloneIn" type="Node" parent="StateMachine/Second"]
 
 [node name="CloneOut" type="Node" parent="StateMachine/Second"]
+
+[node name="work in progress" type="Node" parent="."]
+
+[node name="In" type="Node" parent="work in progress" node_paths=PackedStringArray("out_state")]
+script = ExtResource("15_60vct")
+out_state = NodePath("../Out")
+
+[node name="Out" type="Node" parent="work in progress"]
+script = ExtResource("16_5d53s")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
