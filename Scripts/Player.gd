@@ -263,10 +263,7 @@ func apply_item_effect(item):
 
 # Helper function for applying temporary effects
 func apply_temporary_effect(property: String, value: float, duration: float):
-	if item_effect_timer == null:
-		print("Error: ItemEffectTimer is null!")
-		return
-	if has_node("ItemEffectTimer"):
+	if has_node("EffectTimer"):
 		item_effect_timer.stop()  # Reset the timer if it's already running
 	self.set(property, self.get(property) + value)  # Apply the effect
 	item_effect_timer.wait_time = duration
@@ -274,8 +271,8 @@ func apply_temporary_effect(property: String, value: float, duration: float):
 
 func _on_item_effect_timer_timeout() -> void:
 	# Reset effects applied by temporary items
-	if speed > 1000:
-		speed = 1000  # Reset to default speed
+	if speed > 800:
+		speed = 800  # Reset to default speed
 
 func _on_attack_time_out_timeout():
 	$attack_time_out.stop()

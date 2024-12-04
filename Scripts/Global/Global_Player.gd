@@ -44,6 +44,7 @@ func check_quest_objectives(target_id: String, target_type: String, quantity: in
 	# Update objectives
 	var objective_updated = false
 	for objective in selected_quest.objectives:
+		print("objective.target_id: ", objective.target_id)
 		if objective.target_type == "coins" and not objective.is_completed:
 			# Check if the coin_amount meets the required target
 			if coin_amount >= objective.required_quantity:
@@ -55,7 +56,7 @@ func check_quest_objectives(target_id: String, target_type: String, quantity: in
 				objective_updated = true
 				break
 				
-		elif objective.target_id == target_id and objective.target_type == target_type and not objective.is_completed:
+		elif objective.target_id == target_id and not objective.is_completed:
 			print("Completing other objective for quest: ", selected_quest.quest_name)
 			selected_quest.complete_objective(objective.id, quantity)
 			objective_updated = true
