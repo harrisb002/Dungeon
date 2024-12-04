@@ -42,6 +42,7 @@ size = Vector2(26, 21.75)
 radius = 31.0161
 
 [node name="Shop" type="StaticBody2D"]
+collision_layer = 2
 script = ExtResource("1_6lgne")
 
 [node name="shop" type="AnimatedSprite2D" parent="."]

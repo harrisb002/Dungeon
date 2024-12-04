@@ -33,22 +33,29 @@ func after_each():
 
 # Test opening a Common chest with a Common key
 func test_open_common_chest_with_common_key():
-	# Add a Common key to the inventory
-	var common_key = {"name": "Key", "type": "Common", "quantity": 1}
+	var common_key = {"id": "common_key", "quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png"), "scale": Vector2(2, 2)}
+
 	Global_Inventory.add_item(common_key)
-	
-	# Set the chest type to COMMON and attempt to open it
+
 	_chest.chest_type = Chest.ChestType.COMMON
+	_chest.nearby_chest = true
+
+	# Debug inventory and key validation
+	print("Inventory before:", Global_Inventory.inventory)
+	print("Chest type:", _chest.chest_type)
+	print("Key type needed:", _chest.chest_keys.get(_chest.chest_type, null))
+
 	_chest.open_chest(_chest, _chest.chest_type)
-	
-	# Check if the chest is open and key is used
+
 	assert_true(_chest.get_node("open").visible, "Common chest opened with a Common key.")
+	assert_false(_chest.get_node("closed").visible, "Closed chest is no longer visible.")
 	assert_false(Global_Inventory.has_key_in_inventory("Key", "Common"), "Common key was removed from inventory after use.")
 
 # Test opening a Golden chest with a Golden key
 func test_open_golden_chest_with_golden_key():
 	# Add a Golden key to the inventory
-	var golden_key = {"name": "Key", "type": "Golden", "quantity": 1}
+	var golden_key = {"id": "gold_key", "quantity": 0, "type": "Golden", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/goldKey.png"), "scale": Vector2(2, 2)}
+	
 	Global_Inventory.add_item(golden_key)
 	
 	# Set the chest type to GOLDEN and attempt to open it
@@ -62,7 +69,7 @@ func test_open_golden_chest_with_golden_key():
 # Test opening a Boss chest with a Boss key
 func test_open_boss_chest_with_boss_key():
 	# Add a Boss key to the inventory
-	var boss_key = {"name": "Key", "type": "Boss", "quantity": 1}
+	var boss_key = {"id": "boss_key", "quantity": 0, "type": "Boss", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/bossKey.png"), "scale": Vector2(2, 2)}
 	Global_Inventory.add_item(boss_key)
 	
 	# Set the chest type to BOSS and attempt to open it
