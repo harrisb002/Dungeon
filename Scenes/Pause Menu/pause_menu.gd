@@ -81,7 +81,7 @@ extends Control
 func _ready():
 	# Make sure menu starts hidden
 	hide()
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	#process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(_delta):
 	if Input.is_action_just_pressed("pause_menu"):
