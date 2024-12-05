@@ -325,21 +325,19 @@ func die():
 		queue_free()
 
 
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	if(area.owner == null):
-		return
-	
-	if area.owner.is_in_group("enemy")  :
-		print("check")
-		#in_attackrange=true
-		#is_attacking = true
-		#if area.owner != null:
-		area.owner.take_damage(10)
-		
-	
-
-
-func _on_area_2d_area_exited(area: Area2D) -> void:
-	if area.owner.is_in_group('enemy'):
-		in_attackrange =  false
+#
+#func _on_area_2d_area_entered(area: Area2D) -> void:
+	#if(area.owner == null):
+		#return
+	#
+	#if area.owner.is_in_group("enemy")  :
+		#print("check")
+		##in_attackrange=true
+		##is_attacking = true
+		##if area.owner != null:
+		#area.owner.take_damage(10)
+		#
+#
+#func _on_area_2d_area_exited(area: Area2D) -> void:
+	#if area.owner.is_in_group('enemy'):
+		#in_attackrange =  false
