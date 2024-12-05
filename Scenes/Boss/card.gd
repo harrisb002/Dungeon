@@ -1,7 +1,7 @@
 extends State
 
-@export var indicator_duration: float = 2.0  # Duration for the indicators
-@export var attack_angles: Array = [0.0, 90.0, 180.0, 270.0]  # Cardinal directions in degrees
+@export var indicator_duration: float = 2.0 
+@export var attack_angles: Array = [0.0, 90.0, 180.0, 270.0] # Cardinal directions in degrees
 
 @export var Inter_state: State
 
@@ -25,14 +25,13 @@ func process_input(event: InputEvent) -> State:
 	return null
 
 func process_physics(delta: float) -> State:
-	parent.move_and_slide()
 	return null
 
 func process_frame(delta: float) -> State:
 	if attack_timer != null and not attack_timer.is_stopped():
-		return null  # Still waiting for the timer
+		return null
 	elif attack_timer != null and attack_timer.is_stopped():
-		attack_timer.queue_free()  # Clean up the timer
+		attack_timer.queue_free() 
 		return Inter_state
 	return null
 
@@ -55,13 +54,12 @@ func spawn_triangle_indicator(angle: float) -> void:
 	cone_instance.name = "Cone_" + str(angle)
 	get_tree().root.add_child(cone_instance)
 
-	# Set position and rotation
 	cone_instance.global_position = parent.global_position
 	cone_instance.rotation_degrees = angle
 
-	# Remove the cone after duration and apply damage
+	# Remove the attack
 	if indicator_duration > 0:
 		await get_tree().create_timer(indicator_duration).timeout
-		cone_instance.apply_damage()  # Call the damage application method
+		cone_instance.apply_damage()
 		cone_instance.queue_free()
 	

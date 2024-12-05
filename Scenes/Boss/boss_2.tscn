@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://s8eh4l0sa21d"]
+[gd_scene load_steps=35 format=3 uid="uid://s8eh4l0sa21d"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss_2.gd" id="1_6wla5"]
 [ext_resource type="Texture2D" uid="uid://dydcl07arp0xp" path="res://allart/BossArt/Samurai_Archer/Idle.png" id="2_b73my"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://Scenes/Boss/in.gd" id="15_60vct"]
 [ext_resource type="Script" path="res://Scenes/Boss/out.gd" id="16_5d53s"]
 [ext_resource type="Script" path="res://Scenes/Boss/clone_cleave_l.gd" id="16_axlld"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_spawn_state.gd" id="16_kbogt"]
 [ext_resource type="Script" path="res://Scenes/Boss/clone_cleave_r.gd" id="17_13bfo"]
 [ext_resource type="Script" path="res://Scenes/Boss/clone_in.gd" id="18_44hjn"]
 [ext_resource type="Script" path="res://Scenes/Boss/clone_out.gd" id="19_udsoy"]
@@ -97,9 +98,10 @@ animations = [{
 radius = 2224.26
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3ulk7"]
-height = 20.0
+height = 66.0
 
-[node name="Boss_2" type="CharacterBody2D" node_paths=PackedStringArray("attack_state", "idle_state")]
+[node name="Boss_2" type="CharacterBody2D" node_paths=PackedStringArray("attack_state", "idle_state") groups=["enemy"]]
+collision_layer = 256
 script = ExtResource("1_6wla5")
 attack_state = NodePath("StateMachine/AttackDecider")
 idle_state = NodePath("StateMachine/Idle")
@@ -110,13 +112,14 @@ sprite_frames = SubResource("SpriteFrames_1bwak")
 animation = &"temp"
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 257
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-1, -40)
 shape = SubResource("CircleShape2D_bd0m3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(-1, -32)
 shape = SubResource("CapsuleShape2D_3ulk7")
 
 [node name="HealthBar" parent="." instance=ExtResource("2_fvtby")]
@@ -173,20 +176,28 @@ script = ExtResource("13_kw8lm")
 cleaveaR_State = NodePath("../CleaveR")
 cleave_scene = ExtResource("13_5t0h7")
 
-[node name="CleaveR" type="Node" parent="StateMachine"]
+[node name="CleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("second_state")]
 script = ExtResource("14_bsddf")
+second_state = NodePath("../Second")
 cleave_scene = ExtResource("13_5t0h7")
 
-[node name="Second" type="Node" parent="StateMachine" node_paths=PackedStringArray("clone_cleaveL_state")]
+[node name="Second" type="Node" parent="StateMachine" node_paths=PackedStringArray("cloneSpawn_state")]
 script = ExtResource("9_vr3on")
-clone_cleaveL_state = NodePath(".")
+cloneSpawn_state = NodePath("../CloneSpawnState")
+
+[node name="CloneSpawnState" type="Node" parent="StateMachine" node_paths=PackedStringArray("clone_cleaveL_state")]
+script = ExtResource("16_kbogt")
+clone_cleaveL_state = NodePath("../CloneCleaveL")
 
 [node name="CloneCleaveL" type="Node" parent="StateMachine" node_paths=PackedStringArray("cloneCleaveR_state")]
 script = ExtResource("16_axlld")
 cloneCleaveR_state = NodePath("../CloneCleaveR")
+cleave_scene = ExtResource("13_5t0h7")
 
-[node name="CloneCleaveR" type="Node" parent="StateMachine"]
+[node name="CloneCleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("attackDecider_state")]
 script = ExtResource("17_13bfo")
+attackDecider_state = NodePath("../First")
+cleave_scene = ExtResource("13_5t0h7")
 
 [node name="work in progress" type="Node" parent="."]
 

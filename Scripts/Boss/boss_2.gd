@@ -47,3 +47,19 @@ func _process(delta: float) -> void:
 
 func _on_cone_body_entered(body: Node2D) -> void:
 	pass # Replace with function body.
+	
+
+var is_dead = false;
+func take_damage(dmg: int) -> void:
+	if not is_dead:
+		health -= dmg
+		#print(boss_hp)
+		if health <= 0:
+				#speed = 0
+				die()
+				
+func die():
+	if is_dead:
+		return
+	else:	
+		queue_free()

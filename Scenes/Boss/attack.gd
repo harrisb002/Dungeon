@@ -16,15 +16,12 @@ func enter() -> void:
 	parent.velocity = Vector2.ZERO
 
 func process_physics(delta: float) -> State:
-	parent.move_and_slide()
 
-	# Track waiting time only if delay has started
 	if waiting_for_delay:
 		time_waited += delta
-		if time_waited >= 3.0:
+		if time_waited >= 1.0:
 			waiting_for_delay = false
-			time_waited = 0.0  # Reset timer
-			# Proceed with state decision
+			time_waited = 0.0
 			match parent.next_state_index:
 				0:
 					parent.next_state_index += 1
@@ -37,6 +34,5 @@ func process_physics(delta: float) -> State:
 					return third_state
 		return null
 	
-	# Start delay for the next transition
 	waiting_for_delay = true
 	return null

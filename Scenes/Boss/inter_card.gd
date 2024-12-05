@@ -25,22 +25,20 @@ func process_input(event: InputEvent) -> State:
 	return null
 
 func process_physics(delta: float) -> State:
-	parent.move_and_slide()
 	return null
 
 func process_frame(delta: float) -> State:
 	if attack_timer != null and not attack_timer.is_stopped():
-		return null  # Still waiting for the timer
+		return null 
 	elif attack_timer != null and attack_timer.is_stopped():
-		attack_timer.queue_free()  # Clean up the timer
+		attack_timer.queue_free()
 		return cleaveL_State
 	return null
 
-# Display red triangular indicators in all cardinal directions
 func display_attack_indicators() -> void:
 	for angle in attack_angles:
 		spawn_triangle_indicator(angle)
-# Create a triangular indicator for the given angle
+
 func spawn_triangle_indicator(angle: float) -> void:
 	if parent == null:
 		print("Error: Parent is not set. Aborting triangle creation.")
@@ -55,14 +53,12 @@ func spawn_triangle_indicator(angle: float) -> void:
 	cone_instance.name = "Cone_" + str(angle)
 	get_tree().root.add_child(cone_instance)
 
-	# Set position and rotation
 	cone_instance.global_position = parent.global_position
 	cone_instance.rotation_degrees = angle
 
-	# Remove the cone after duration and apply damage
 	if indicator_duration > 0:
 		await get_tree().create_timer(indicator_duration).timeout
-		cone_instance.apply_damage()  # Call the damage application method
+		cone_instance.apply_damage()
 		cone_instance.queue_free()
 	
 

@@ -2,7 +2,7 @@ extends State
 
 @export var cleave_duration: float = 2.0  # Duration for the cleave attack
 @export var cleaveaR_State: State  # State to transition to after the attack
-@export var cleave_scene: PackedScene  # Packed scene for Cleave
+@export var cleave_scene: PackedScene 
 
 var attack_timer: Timer = null
 
@@ -22,15 +22,14 @@ func process_input(event: InputEvent) -> State:
 	return null
 
 func process_physics(delta: float) -> State:
-	parent.move_and_slide()
 	return null
 
 func process_frame(delta: float) -> State:
 	if attack_timer != null and not attack_timer.is_stopped():
-		return null  # Still waiting for the timer
+		return null  
 	elif attack_timer != null and attack_timer.is_stopped():
-		attack_timer.queue_free()  # Clean up the timer
-		return cleaveaR_State  # Transition to the next state
+		attack_timer.queue_free()  
+		return cleaveaR_State 
 	return null
 
 func perform_cleave() -> void:
@@ -42,17 +41,14 @@ func perform_cleave() -> void:
 		print("Error: Cleave scene is not assigned.")
 		return
 
-	# Instance the Cleave scene
 	var cleave_instance = cleave_scene.instantiate()
 	cleave_instance.name = "Cleave"
 	get_tree().root.add_child(cleave_instance)
 
-	# Set position and rotation
 	cleave_instance.global_position = parent.global_position
 	cleave_instance.rotation_degrees = parent.rotation_degrees
 
-	# Apply damage after duration
 	if cleave_duration > 0:
 		await get_tree().create_timer(cleave_duration).timeout
-		cleave_instance.apply_damage()  # Call the damage application method
+		cleave_instance.apply_damage()  
 		cleave_instance.queue_free()
