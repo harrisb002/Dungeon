@@ -1,8 +1,73 @@
-[gd_scene load_steps=23 format=3 uid="uid://bxl4jjno3gkek"]
+[gd_scene load_steps=40 format=3 uid="uid://bxl4jjno3gkek"]
 
 [ext_resource type="PackedScene" uid="uid://bqpcj3r4s3qts" path="res://Scenes/Mobscenes/basemobstructer.tscn" id="1_ssg2b"]
 [ext_resource type="Texture2D" uid="uid://cqywtxtv3a05b" path="res://allart/MOBSS/Fire Worm/Sprites/Worm/Idle.png" id="2_a4q0i"]
+[ext_resource type="Texture2D" uid="uid://cyas405ylcyrj" path="res://allart/MOBSS/Fire Worm/Sprites/Worm/Attack.png" id="2_sfy2p"]
 [ext_resource type="Texture2D" uid="uid://b3qsojv07qnyb" path="res://allart/MOBSS/Fire Worm/Sprites/Worm/Walk.png" id="3_540u5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76ie3"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(0, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ei3ip"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(90, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ouhnq"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(180, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfxlm"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(270, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1bc2"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(360, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hn38s"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(450, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtl05"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(540, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7q11k"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(630, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vf8ci"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(720, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmdg5"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(810, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7j07q"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(900, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwmow"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(990, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gixi"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(1080, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtep3"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(1170, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ve4p6"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(1260, 0, 90, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vri50"]
+atlas = ExtResource("2_sfy2p")
+region = Rect2(1350, 0, 90, 90)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e73lj"]
 atlas = ExtResource("2_a4q0i")
@@ -80,6 +145,59 @@ region = Rect2(720, 0, 90, 90)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_76ie3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ei3ip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ouhnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfxlm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1bc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hn38s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtl05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7q11k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vf8ci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmdg5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7j07q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwmow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gixi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtep3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ve4p6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vri50")
+}],
+"loop": true,
+"name": &"Attack",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_e73lj")
 }, {
 "duration": 1.0,
@@ -148,5 +266,10 @@ scale = Vector2(2, 2)
 
 [node name="Animation" type="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_s4fan")
-animation = &"Walk"
-frame_progress = 0.612092
+animation = &"Attack"
+
+[node name="HealthBar" parent="." index="7"]
+offset_left = -67.0
+offset_top = 21.5
+offset_right = 67.0
+offset_bottom = 32.5
