@@ -1,9 +1,9 @@
 extends State
 
-@export var indicator_duration: float = 2.0 
-@export var attack_angles: Array = [0.0, 90.0, 180.0, 270.0] # Cardinal directions in degrees
+@export var indicator_duration: float = 2.0  # Duration for the indicators
+@export var attack_angles: Array = [45.0, 135.0, 215.0, 315.0]  # Cardinal directions in degrees
 
-@export var Inter_state: State
+@export var cleaveL_State: State
 
 @export var cone_scene: PackedScene
 
@@ -29,17 +29,16 @@ func process_physics(delta: float) -> State:
 
 func process_frame(delta: float) -> State:
 	if attack_timer != null and not attack_timer.is_stopped():
-		return null
+		return null 
 	elif attack_timer != null and attack_timer.is_stopped():
-		attack_timer.queue_free() 
-		return Inter_state
+		attack_timer.queue_free()
+		return cleaveL_State
 	return null
 
-# Display red triangular indicators in all cardinal directions
 func display_attack_indicators() -> void:
 	for angle in attack_angles:
 		spawn_triangle_indicator(angle)
-# Create a triangular indicator for the given angle
+
 func spawn_triangle_indicator(angle: float) -> void:
 	if parent == null:
 		print("Error: Parent is not set. Aborting triangle creation.")
@@ -57,9 +56,10 @@ func spawn_triangle_indicator(angle: float) -> void:
 	cone_instance.global_position = parent.global_position
 	cone_instance.rotation_degrees = angle
 
-	# Remove the attack
 	if indicator_duration > 0:
 		await get_tree().create_timer(indicator_duration).timeout
 		cone_instance.apply_damage()
 		cone_instance.queue_free()
 	
+
+		 

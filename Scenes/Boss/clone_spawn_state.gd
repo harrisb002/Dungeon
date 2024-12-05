@@ -1,11 +1,11 @@
 extends State
 
 @export
-var cloneSpawn_state: State
+var clone_cleaveL_state: State
 var time_waited = 0.0
 
 func enter() -> void:
-	print("second")
+	print("clone spawn")
 	super()
 	pass
 
@@ -16,4 +16,4 @@ func process_physics(delta: float) -> State:
 	return null
 	
 func process_frame(delta: float) -> State:
-	return cloneSpawn_state
+	return clone_cleaveL_state
