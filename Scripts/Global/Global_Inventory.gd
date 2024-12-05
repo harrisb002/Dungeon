@@ -9,15 +9,8 @@ signal inventory_updated
 var tile_map: TileMapLayer = null
 
 @onready var inventory_slot_scene = preload("res://Scenes/Inventory/Inventory_Slot.tscn")
-@onready var inventory_item_scene = preload("res://Scenes/Inventory/Inventory_Item.tscn")
-
-# Export, Allows setting it through the inspector
-@export var item_id = ""
-@export var item_name = ""
-@export var item_type = ""
-@export var item_texture = Texture
-@export var item_effect = ""
-@export var item_scale = Vector2(1, 1) # Default scale
+@onready var inventory_item_scene = preload("res://Scenes/Inventory/Inventory_item.tscn")
+var Inventory_Script = preload("res://Scripts/Inventory/Inventory_Item.gd").new()
 
 var inventory = []
 var hotbar_size = 5
@@ -25,8 +18,12 @@ var hotbar_inventory = []
 
 # Items used to spawn within the area defined (Will update to use tile map later)
 var spawnable_items = [
+	{"id": "coin", "quantity": 1, "type": "Currency", "name": "Coin", "effect": "Purchase", "texture": preload("res://allart/InventoryItems/coin.png"), "scale": Vector2(2, 2)},
 	{"id": "common_key", "quantity": 0, "type": "Common", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/commonKey.png"), "scale": Vector2(2, 2)},
-	{"id": "flash_ring", "quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "duration": 5, "texture": preload("res://allart/InventoryItems/increaseSpeed.png"), "scale": Vector2(2, 2)},
+	{"id": "gold_key", "quantity": 0, "type": "Golden", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/goldKey.png"), "scale": Vector2(2, 2)},
+	{"id": "boss_key", "quantity": 0, "type": "Boss", "name": "Key", "effect": "Open Chest", "texture": preload("res://allart/InventoryItems/bossKey.png"), "scale": Vector2(2, 2)},
+	{"id": "flash_ring", "quantity": 0, "type": "Attachment", "name": "Flash Ring", "effect": "Increase Speed", "duration": 20, "texture": preload("res://allart/InventoryItems/increaseSpeed.png"), "scale": Vector2(2, 2)},
+	{"id": "shroom", "quantity": 0, "type": "Consumable", "name": "Shroom", "effect": "Increase Slots", "texture": preload("res://allart/InventoryItems/inventoryBoost.png"), "scale": Vector2(2, 2)},
 	{"id": "arrow", "quantity": 0, "type": "Weapon", "name": "Arrow", "effect": "", "texture": preload("res://allart/InventoryItems/arrow.png"), "scale": Vector2(2, 2)},
 	{"id": "fire_skin", "quantity": 0, "type": "Potion", "name": "Fire Skin", "effect": "Reduce fire damage", "texture": preload("res://allart/InventoryItems/fireResistance.png"), "scale": Vector2(2, 2)},
 	{"id": "health_potion", "quantity": 0, "type": "Potion", "name": "Health Potion", "effect": "+20 Health", "texture": preload("res://allart/InventoryItems/healthPotion.png"), "scale": Vector2(2, 2)},
@@ -43,7 +40,7 @@ var quest_items = [
 ]
 
 func _ready():
-	inventory.resize(9)
+	inventory.resize(3)
 	hotbar_inventory.resize(hotbar_size)
 
 # Adds reward item from quest completion
@@ -62,21 +59,14 @@ func recieve_quest_item(item):
 			return true
 	return false
 
-# Set the properties to allow items to be dropped and utilize saved values
-func set_item_data(data):
-	item_type = data["type"]
-	item_name = data["name"]
-	item_effect = data["effect"]
-	item_texture = data["texture"]
-	item_scale = data["scale"]
-
 # Adds item and returns true if successfull
 func add_item(item, to_hotbar = false):
 	## Bool for item used for Quest completion
 	var item_used
-	
+	print("Item info: ", item)
 	## Check if item is needed for an active quest
 	if Global_Inventory.is_item_needed(item.id):
+		print("Item info: ", item)
 		## Update the objective with the type collection (if item was used then dont add it to inventory)
 		item_used = Global_Player.check_quest_objectives(item.id, "collection")
 	else: 
@@ -194,8 +184,7 @@ func adjust_drop_position(pos):
 
 # Drops an item at a specified position, adjusting for nearby items
 func drop_item(item_data, drop_position):
-	var item_scene = load(item_data["scene_path"])
-	var item_instance = item_scene.instantiate()
+	var item_instance = inventory_item_scene.instantiate()
 	
 	## Set the data to be used after being dropped
 	item_instance.set_item_data(item_data)

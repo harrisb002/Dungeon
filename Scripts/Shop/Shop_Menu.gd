@@ -3,7 +3,8 @@ extends StaticBody2D
 @onready var icon = $Icon
 @onready var price = $Price
 @onready var buyButton = $BuyButtonColor
-
+var Inventory = Global_Inventory.Inventory_Script  
+ 
 var shop_items = [
 	{"id": "flash_ring", "type": "Attachment", "name": "FlashRing", "effect": "Increase Speed", "price": 100, "duration": 5, "texture": preload("res://allart/InventoryItems/increaseSpeed.png"), "scale": Vector2(2, 2)},
 	{"id": "health_potion", "type": "Potion", "name": "HealthPotion", "effect": "+20 Health", "price": 100, "texture": preload("res://allart/InventoryItems/healthPotion.png"), "scale": Vector2(2, 2)},
@@ -64,5 +65,5 @@ func buy(item_price):
 	Global_Player.update_coins()
 	print("Item purchased: %s for %d coins" % [curr_item["name"], item_price])
 	
-	Global_Inventory.set_item_data(curr_item)
+	Inventory.set_item_data(curr_item)
 	Global_Inventory.add_item(curr_item)

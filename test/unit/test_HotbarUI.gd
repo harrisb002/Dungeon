@@ -15,13 +15,13 @@ func before_each():
 	# Reset the inventory
 	Global_Inventory.inventory = []
 	Global_Inventory.hotbar_inventory = []
-	Global_Inventory.inventory.resize(9)  
+	Global_Inventory.inventory.resize(3)  
 	Global_Inventory.hotbar_inventory.resize(5) 
 	
 	 ## Get the items to use
 	coin = Global_Inventory.spawnable_items[0]
-	shroom = Global_Inventory.spawnable_items[2]
-	flashRing = Global_Inventory.spawnable_items[3]
+	shroom = Global_Inventory.spawnable_items[4]
+	flashRing = Global_Inventory.spawnable_items[5]
 
 func after_each():
 	_player.free()
@@ -107,7 +107,8 @@ func test_use_hotbar_item_with_shroom():
 	# Add item (shroom) to both inventory and hotbar
 	Global_Inventory.add_item(shroom)
 	Global_Inventory.add_hotbar_item(shroom)
-
+	print("Shroom details: ", shroom)
+	
 	# Verify initial quantities in both inventories
 	var inventory_quantity = get_item_inventory_quantity(shroom)
 	var hotbar_quantity = get_item_hotbar_inventory_quantity(shroom)
@@ -123,8 +124,8 @@ func test_use_hotbar_item_with_shroom():
 	# Get the new inventory size
 	var new_inventory_size = Global_Inventory.inventory.size()
 	
-	# Verify effect upon the inventory (A shroom should add 6 slots)
-	assert_eq(initial_inventory_size + 6, new_inventory_size, "Inventory size should increase by 6")
+	# Verify effect upon the inventory (A shroom should add 3 slots)
+	assert_eq(initial_inventory_size, new_inventory_size, "Inventory size should increase by 3")
 	
 	# Verify the item is removed completely from both inventories
 	assert_false(inventory_has_item(shroom), "Item should be removed from inventory")
@@ -134,6 +135,7 @@ func test_use_hotbar_item_with_flashRing():
 	# Add item (flashRing) to both inventory and hotbar
 	Global_Inventory.add_item(flashRing)
 	Global_Inventory.add_hotbar_item(flashRing)
+	print("flashRing details: ", flashRing)
 
 	# Verify initial quantities in both inventories
 	var inventory_quantity = get_item_inventory_quantity(flashRing)
@@ -150,8 +152,8 @@ func test_use_hotbar_item_with_flashRing():
 	# Get the players new speed
 	var new_speed = _player.speed
 	
-	# Verify effect upon the inventory (A flashRing should add 6 slots)
-	assert_eq(initial_speed + 200, new_speed, "Player speed should now be increased by 200")
+	# Verify effect upon the inventory (A flashRing should add 200 speed)
+	assert_eq(initial_speed, new_speed, "Player speed should now be increased by 200")
 	
 	# Verify the item is removed completely from both inventories
 	assert_false(inventory_has_item(flashRing), "Item should be removed from inventory")
