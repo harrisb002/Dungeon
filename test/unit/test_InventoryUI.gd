@@ -7,7 +7,8 @@ func before_each():
 	Global_Inventory.inventory = []
 	Global_Inventory.inventory.resize(9)  # Reset the inventory to its initial size 
 	coin = Global_Inventory.spawnable_items[0]
-
+	print("The coin details: ", coin)
+	
 # Helper Functions
 func get_item_quantity(item) -> int:
 	# Get item in inventory 

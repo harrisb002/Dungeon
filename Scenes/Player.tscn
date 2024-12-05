@@ -989,6 +989,7 @@ theme_override_font_sizes/font_size = 50
 text = "0"
 
 [node name="QuestTracker" type="ColorRect" parent="HUD"]
+visible = false
 offset_right = 300.0
 offset_bottom = 200.0
 scale = Vector2(2.10053, 1.29529)
@@ -1018,7 +1019,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Quest_Manager" parent="." instance=ExtResource("14_efdkd")]
-visible = true
 
 [node name="HealthBar" parent="." instance=ExtResource("15_srbkm")]
 offset_left = -24.0
@@ -1026,10 +1026,14 @@ offset_top = 19.0
 offset_right = 24.0
 offset_bottom = 27.0
 
+
 [node name="collison" type="CollisionShape2D" parent="."]
 position = Vector2(-0.652405, 6.37664)
 shape = SubResource("CircleShape2D_wbf4k")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+
+
 [connection signal="timeout" from="attack_time_out" to="." method="_on_attack_time_out_timeout"]
+[connection signal="timeout" from="ItemEffectTimer" to="." method="_on_item_effect_timer_timeout"]

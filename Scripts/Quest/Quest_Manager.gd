@@ -53,7 +53,25 @@ func complete_objective(quest_id: String, objective_id: String):
 	if quest:
 		quest.complete_objective(objective_id)
 		objective_updated.emit(quest_id, objective_id)
-		
+
+# Check if the player has all required items for the quest upon activation
+func check_quest_item_completion(quest: Quest):
+	for objective in quest.objectives:
+		if objective.target_type == "collection" and not objective.is_completed:
+			# Check if the item is in inventory
+			var required_quantity = objective.required_quantity
+			var collected_quantity = Global_Inventory.get_item_quantity(objective.target_id, objective.item_type)
+
+			if collected_quantity >= required_quantity:
+				# Mark the objective as completed
+				objective.is_completed = true
+				Global_Inventory.remove_item_quantity(objective.target_id, objective.item_type, required_quantity)
+
+	# Mark the quest as completed if all objectives are met
+	if quest.is_completed():
+		Global_Player.handle_quest_completion(quest)
+
+
 # Show/hide quest log
 func show_hide_log():
 	quest_ui.show_hide_log()

@@ -216,6 +216,109 @@
 						"state": "start",
 						"text": "Thank goodness an adventurer! What do you need?",
 						"options": {
+							"Ask About Items": "in_progress",
+							"Receive Quests": "give_quests",
+							"Say Farewell": "exit"
+						}
+					},
+					{
+						"state": "in_progress",
+						"text": "This dungeon is full of items, but some are special. I have in particular that might interest you.",
+						"options": {
+							"Say Farewell": "end",
+							"Go Back": "start"
+						}
+					},
+					{
+						"state": "give_quests",
+						"text": "I will give it to you for 60 gold coins.",
+						"options": {
+							"Say Farewell": "exit",
+							"Go Back": "start"
+						}
+					},
+					{
+						"state": "end",
+						"text": "I thank you for my wealth, adventurer!",
+						"options": {}
+					},
+					{
+						"state": "exit",
+						"text": "Come back soon I hope!",
+						"options": {}
+					}
+				]
+			},
+			{
+				"branch_id": "npc_3_2",
+				"dialogues": [
+					{
+						"state": "start",
+						"text": "Hello again adventurer, that was quick!",
+						"options": {
+							"Continue Asking About Item": "in_progress",
+							"Receive Quests": "give_quests",
+							"Say Farewell": "exit"
+						}
+					},
+					{
+						"state": "in_progress",
+						"text": "I know other's have gold, but you may have to do something for them to earn it. My item is worth the work!",
+						"options": {
+							"Say Farewell": "end",
+							"Go Back": "start"
+						}
+					},
+					{
+						"state": "give_quests",
+						"text": "Please, make me rich!",
+						"options": {
+							"Say Farewell": "exit",
+							"Go Back": "start"
+						}
+					},
+					{
+						"state": "end",
+						"text": "I thank you, adventurer!",
+						"options": {}
+					},
+					{
+						"state": "exit",
+						"text": "Come back soon!",
+						"options": {}
+					}
+				]
+			},
+			{
+				"branch_id": "npc_default",
+				"dialogues": [
+					{
+						"state": "start",
+						"text": "Hey adventurer! We all thank you for your help!",
+						"options": {
+							"Receive Quests": "give_quests",
+							"Say Farewell": "exit"
+						}
+					},
+					{
+						"state": "give_quests",
+						"text": "I honor your support!",
+						"options": {
+							"Go Back": "start"
+						}
+					}
+				]
+			}
+		]
+	},"npc_4": {
+		"trees": [
+			{
+				"branch_id": "npc_4_1",
+				"dialogues": [
+					{
+						"state": "start",
+						"text": "Thank goodness an adventurer! What do you need?",
+						"options": {
 							"Ask About Beast": "in_progress",
 							"Receive Quests": "give_quests",
 							"Say Farewell": "exit"
@@ -250,7 +353,7 @@
 				]
 			},
 			{
-				"branch_id": "npc_3_2",
+				"branch_id": "npc_4_2",
 				"dialogues": [
 					{
 						"state": "start",

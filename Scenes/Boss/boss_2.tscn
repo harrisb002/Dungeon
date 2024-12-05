@@ -1,0 +1,220 @@
+[gd_scene load_steps=35 format=3 uid="uid://s8eh4l0sa21d"]
+
+[ext_resource type="Script" path="res://Scripts/Boss/boss_2.gd" id="1_6wla5"]
+[ext_resource type="Texture2D" uid="uid://dydcl07arp0xp" path="res://allart/BossArt/Samurai_Archer/Idle.png" id="2_b73my"]
+[ext_resource type="PackedScene" uid="uid://btijf0rrchjjv" path="res://Scripts/Boss/health_bar.tscn" id="2_fvtby"]
+[ext_resource type="Script" path="res://Scenes/Boss/state_machine.gd" id="3_uib35"]
+[ext_resource type="Script" path="res://Scenes/Boss/idle.gd" id="4_jayr6"]
+[ext_resource type="Script" path="res://Scenes/Boss/attack.gd" id="6_mscet"]
+[ext_resource type="Script" path="res://Scenes/Boss/first.gd" id="7_0ost6"]
+[ext_resource type="Script" path="res://Scenes/Boss/card.gd" id="8_uurbq"]
+[ext_resource type="Script" path="res://Scenes/Boss/second.gd" id="9_vr3on"]
+[ext_resource type="Script" path="res://Scenes/Boss/third.gd" id="10_culrp"]
+[ext_resource type="PackedScene" uid="uid://dcxg0yymar8eh" path="res://Scenes/Boss/cone.tscn" id="11_h4ea0"]
+[ext_resource type="Script" path="res://Scenes/Boss/inter_card.gd" id="12_43q14"]
+[ext_resource type="PackedScene" uid="uid://bhh2cacikp2js" path="res://Scenes/Boss/cleave.tscn" id="13_5t0h7"]
+[ext_resource type="Script" path="res://Scenes/Boss/cleave_l.gd" id="13_kw8lm"]
+[ext_resource type="Script" path="res://Scenes/Boss/cleave_r.gd" id="14_bsddf"]
+[ext_resource type="Script" path="res://Scenes/Boss/in.gd" id="15_60vct"]
+[ext_resource type="Script" path="res://Scenes/Boss/out.gd" id="16_5d53s"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_cleave_l.gd" id="16_axlld"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_spawn_state.gd" id="16_kbogt"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_cleave_r.gd" id="17_13bfo"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_in.gd" id="18_44hjn"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_out.gd" id="19_udsoy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_voqyc"]
+atlas = ExtResource("2_b73my")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8ks7"]
+atlas = ExtResource("2_b73my")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3jo3"]
+atlas = ExtResource("2_b73my")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0qde"]
+atlas = ExtResource("2_b73my")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t18qb"]
+atlas = ExtResource("2_b73my")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkxke"]
+atlas = ExtResource("2_b73my")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ds31r"]
+atlas = ExtResource("2_b73my")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5bnb"]
+atlas = ExtResource("2_b73my")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71fsf"]
+atlas = ExtResource("2_b73my")
+region = Rect2(1024, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1bwak"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_voqyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8ks7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l3jo3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0qde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t18qb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkxke")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ds31r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5bnb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71fsf")
+}],
+"loop": true,
+"name": &"temp",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bd0m3"]
+radius = 2224.26
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3ulk7"]
+height = 66.0
+
+[node name="Boss_2" type="CharacterBody2D" node_paths=PackedStringArray("attack_state", "idle_state") groups=["enemy"]]
+collision_layer = 256
+script = ExtResource("1_6wla5")
+attack_state = NodePath("StateMachine/AttackDecider")
+idle_state = NodePath("StateMachine/Idle")
+
+[node name="animations" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -64)
+sprite_frames = SubResource("SpriteFrames_1bwak")
+animation = &"temp"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 257
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, -40)
+shape = SubResource("CircleShape2D_bd0m3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -32)
+shape = SubResource("CapsuleShape2D_3ulk7")
+
+[node name="HealthBar" parent="." instance=ExtResource("2_fvtby")]
+offset_left = -70.0
+offset_top = 11.0
+offset_right = 71.0
+offset_bottom = 29.0
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("3_uib35")
+starting_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_state")]
+script = ExtResource("4_jayr6")
+attack_state = NodePath("../AttackDecider")
+animation_name = "temp"
+
+[node name="AttackDecider" type="Node" parent="StateMachine" node_paths=PackedStringArray("first_state", "second_state", "third_state")]
+script = ExtResource("6_mscet")
+first_state = NodePath("../First")
+second_state = NodePath("../Second")
+third_state = NodePath("Third")
+animation_name = "temp"
+
+[node name="Third" type="Node" parent="StateMachine/AttackDecider"]
+script = ExtResource("10_culrp")
+
+[node name="Spin" type="Node" parent="StateMachine/AttackDecider/Third"]
+
+[node name="InterIn_InterOut_CardOut" type="Node" parent="StateMachine/AttackDecider/Third"]
+
+[node name="CardOut_InterOut_InterIn" type="Node" parent="StateMachine/AttackDecider/Third"]
+
+[node name="First" type="Node" parent="StateMachine" node_paths=PackedStringArray("card_state")]
+script = ExtResource("7_0ost6")
+card_state = NodePath("../Card")
+animation_name = "temp"
+
+[node name="Card" type="Node" parent="StateMachine" node_paths=PackedStringArray("Inter_state")]
+script = ExtResource("8_uurbq")
+Inter_state = NodePath("../InterCard")
+cone_scene = ExtResource("11_h4ea0")
+animation_name = "temp"
+
+[node name="InterCard" type="Node" parent="StateMachine" node_paths=PackedStringArray("cleaveL_State")]
+script = ExtResource("12_43q14")
+cleaveL_State = NodePath("../CleaveL")
+cone_scene = ExtResource("11_h4ea0")
+
+[node name="CleaveL" type="Node" parent="StateMachine" node_paths=PackedStringArray("cleaveaR_State")]
+script = ExtResource("13_kw8lm")
+cleaveaR_State = NodePath("../CleaveR")
+cleave_scene = ExtResource("13_5t0h7")
+
+[node name="CleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("second_state")]
+script = ExtResource("14_bsddf")
+second_state = NodePath("../Second")
+cleave_scene = ExtResource("13_5t0h7")
+
+[node name="Second" type="Node" parent="StateMachine" node_paths=PackedStringArray("cloneSpawn_state")]
+script = ExtResource("9_vr3on")
+cloneSpawn_state = NodePath("../CloneSpawnState")
+
+[node name="CloneSpawnState" type="Node" parent="StateMachine" node_paths=PackedStringArray("clone_cleaveL_state")]
+script = ExtResource("16_kbogt")
+clone_cleaveL_state = NodePath("../CloneCleaveL")
+
+[node name="CloneCleaveL" type="Node" parent="StateMachine" node_paths=PackedStringArray("cloneCleaveR_state")]
+script = ExtResource("16_axlld")
+cloneCleaveR_state = NodePath("../CloneCleaveR")
+cleave_scene = ExtResource("13_5t0h7")
+
+[node name="CloneCleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("attackDecider_state")]
+script = ExtResource("17_13bfo")
+attackDecider_state = NodePath("../First")
+cleave_scene = ExtResource("13_5t0h7")
+
+[node name="work in progress" type="Node" parent="."]
+
+[node name="CloneIn" type="Node" parent="work in progress" node_paths=PackedStringArray("cloneOut_state")]
+script = ExtResource("18_44hjn")
+cloneOut_state = NodePath("../CloneOut")
+
+[node name="CloneOut" type="Node" parent="work in progress" node_paths=PackedStringArray("attackDecider_state")]
+script = ExtResource("19_udsoy")
+attackDecider_state = NodePath("../../StateMachine/AttackDecider")
+
+[node name="In" type="Node" parent="work in progress" node_paths=PackedStringArray("out_state")]
+script = ExtResource("15_60vct")
+out_state = NodePath("../Out")
+
+[node name="Out" type="Node" parent="work in progress"]
+script = ExtResource("16_5d53s")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed = 1000 
+@export var speed = 800 
 
 @onready var animated_sprite = $AnimatedSprite2D
 
@@ -9,6 +9,7 @@ extends CharacterBody2D
 @onready var interact_ui_label = $InteractUI/ColorRect/Label
 @onready var inventory_ui = $InventoryUI
 @onready var inventory_hotbar = $InventoryHotbar/Inventory_Hotbar
+@onready var item_effect_timer = $ItemEffectTimer
 
 # Quest vars
 @onready var quest_manager_node = $Quest_Manager
@@ -59,8 +60,9 @@ func start():
 func _ready():
 	health = max_hp
 	
-	process_mode = Node.PROCESS_MODE_PAUSABLE
-	
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	set_process_input(true)
+
 	# Set the Player reference instance to access the player globally
 	Global_Player.set_player_ref(self)
 	
@@ -75,7 +77,6 @@ func _ready():
 	Global_Player.set_inventory_hotbar(inventory_hotbar)
 	
 	# Make the Quest tracker hidden until opened
-	Global_Player.quest_tracker.visible = true 
 	Global_Player.update_coins()
 	
 
@@ -110,10 +111,15 @@ func get_input():
 
 func _input(event):
 	if event.is_action_pressed("inventory"):
-		# Create a toggle switch
+		# Toggle the Inventory
 		inventory_ui.visible = !inventory_ui.visible
+
+		# Ensure the quest tracker visibility is the opposite of inventory
+		if Global_Player.selected_quest != null:
+			quest_tracker_node.visible = !inventory_ui.visible
+
 		# Pause the game, on/off
-		get_tree().paused = !get_tree().paused
+		get_tree().paused = inventory_ui.visible
 	
 	if can_move:
 		# Checking for interactions with NPC 
@@ -130,7 +136,7 @@ func _input(event):
 		# Opening the QuestUI
 		if event.is_action_pressed("quest_menu"):
 			Global_Player.quest_manager.show_hide_log()
-
+ 
 func _process(delta):
 	
 	if get_tree().paused:
@@ -257,11 +263,26 @@ func use_hotbar_item(slot_idx):
 func apply_item_effect(item):
 	match item["effect"]:
 		"Increase Speed":
-			speed += 200
+			apply_temporary_effect("speed", 200, item.get("duration", 5))
 		"Increase Slots":
-			Global_Inventory.increase_inventory_size(6)
+			Global_Inventory.increase_inventory_size(3)
+		"+20 Health":
+			health += 20
 		_:
 			print("No effect exists for this item")
+
+# Helper function for applying temporary effects
+func apply_temporary_effect(property: String, value: float, duration: float):
+	if has_node("EffectTimer"):
+		item_effect_timer.stop()  # Reset the timer if it's already running
+	self.set(property, self.get(property) + value)  # Apply the effect
+	item_effect_timer.wait_time = duration
+	item_effect_timer.start()  # Start the timer to end the effect
+
+func _on_item_effect_timer_timeout() -> void:
+	# Reset effects applied by temporary items
+	if speed > 800:
+		speed = 800  # Reset to default speed
 
 func _on_attack_time_out_timeout():
 	$attack_time_out.stop()
