@@ -169,22 +169,21 @@ script = ExtResource("13_kw8lm")
 cleaveaR_State = NodePath("../CleaveR")
 cleave_scene = ExtResource("13_5t0h7")
 
-[node name="CleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("in_state")]
+[node name="CleaveR" type="Node" parent="StateMachine"]
 script = ExtResource("14_bsddf")
-in_state = NodePath("../Second")
 cleave_scene = ExtResource("13_5t0h7")
 
 [node name="Second" type="Node" parent="StateMachine" node_paths=PackedStringArray("clone_cleaveL_state")]
 script = ExtResource("9_vr3on")
 clone_cleaveL_state = NodePath(".")
 
-[node name="CloneCleaveL" type="Node" parent="StateMachine/Second"]
+[node name="CloneCleaveL" type="Node" parent="StateMachine"]
 
-[node name="CloneCleaveR" type="Node" parent="StateMachine/Second"]
+[node name="CloneCleaveR" type="Node" parent="StateMachine"]
 
-[node name="CloneIn" type="Node" parent="StateMachine/Second"]
+[node name="CloneIn" type="Node" parent="StateMachine"]
 
-[node name="CloneOut" type="Node" parent="StateMachine/Second"]
+[node name="CloneOut" type="Node" parent="StateMachine"]
 
 [node name="work in progress" type="Node" parent="."]
 

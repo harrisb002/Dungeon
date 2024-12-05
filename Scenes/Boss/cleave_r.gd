@@ -1,7 +1,7 @@
 extends State
 
 @export var cleave_duration: float = 2.0  # Duration for the cleave attack
-@export var in_state: State # State to transition to after the attack
+@export var second_state: State # State to transition to after the attack
 @export var cleave_scene: PackedScene  # Packed scene for Cleave
 
 var attack_timer: Timer = null
@@ -30,7 +30,7 @@ func process_frame(delta: float) -> State:
 		return null  # Still waiting for the timer
 	elif attack_timer != null and attack_timer.is_stopped():
 		attack_timer.queue_free()  # Clean up the timer
-		return in_state  # Transition to the next state
+		return second_state  # Transition to the next state
 	return null
 
 func perform_cleave() -> void:
