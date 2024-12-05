@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://s8eh4l0sa21d"]
+[gd_scene load_steps=34 format=3 uid="uid://s8eh4l0sa21d"]
 
 [ext_resource type="Script" path="res://Scripts/Boss/boss_2.gd" id="1_6wla5"]
 [ext_resource type="Texture2D" uid="uid://dydcl07arp0xp" path="res://allart/BossArt/Samurai_Archer/Idle.png" id="2_b73my"]
@@ -17,6 +17,10 @@
 [ext_resource type="Script" path="res://Scenes/Boss/cleave_r.gd" id="14_bsddf"]
 [ext_resource type="Script" path="res://Scenes/Boss/in.gd" id="15_60vct"]
 [ext_resource type="Script" path="res://Scenes/Boss/out.gd" id="16_5d53s"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_cleave_l.gd" id="16_axlld"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_cleave_r.gd" id="17_13bfo"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_in.gd" id="18_44hjn"]
+[ext_resource type="Script" path="res://Scenes/Boss/clone_out.gd" id="19_udsoy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_voqyc"]
 atlas = ExtResource("2_b73my")
@@ -177,13 +181,21 @@ cleave_scene = ExtResource("13_5t0h7")
 script = ExtResource("9_vr3on")
 clone_cleaveL_state = NodePath(".")
 
-[node name="CloneCleaveL" type="Node" parent="StateMachine"]
+[node name="CloneCleaveL" type="Node" parent="StateMachine" node_paths=PackedStringArray("cloneCleaveR_state")]
+script = ExtResource("16_axlld")
+cloneCleaveR_state = NodePath("../CloneCleaveR")
 
-[node name="CloneCleaveR" type="Node" parent="StateMachine"]
+[node name="CloneCleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("cloneIn_state")]
+script = ExtResource("17_13bfo")
+cloneIn_state = NodePath("../CloneIn")
 
-[node name="CloneIn" type="Node" parent="StateMachine"]
+[node name="CloneIn" type="Node" parent="StateMachine" node_paths=PackedStringArray("cloneOut_state")]
+script = ExtResource("18_44hjn")
+cloneOut_state = NodePath("../CloneOut")
 
-[node name="CloneOut" type="Node" parent="StateMachine"]
+[node name="CloneOut" type="Node" parent="StateMachine" node_paths=PackedStringArray("attackDecider_state")]
+script = ExtResource("19_udsoy")
+attackDecider_state = NodePath("../AttackDecider")
 
 [node name="work in progress" type="Node" parent="."]
 
