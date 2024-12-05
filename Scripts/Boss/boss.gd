@@ -22,7 +22,6 @@ var health = 0
 var min_hp = 0
 var is_dead = false
 var melee_count = 0
-
 var stagger = 0
 @export var max_stagger = 50
 
