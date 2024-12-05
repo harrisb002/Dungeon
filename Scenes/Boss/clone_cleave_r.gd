@@ -1,7 +1,7 @@
 extends State
 
 @export
-var cloneIn_state: State
+var attackDecider_state: State
 var time_waited = 0.0
 
 func enter() -> void:

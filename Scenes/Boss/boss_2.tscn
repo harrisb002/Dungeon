@@ -185,19 +185,18 @@ clone_cleaveL_state = NodePath(".")
 script = ExtResource("16_axlld")
 cloneCleaveR_state = NodePath("../CloneCleaveR")
 
-[node name="CloneCleaveR" type="Node" parent="StateMachine" node_paths=PackedStringArray("cloneIn_state")]
+[node name="CloneCleaveR" type="Node" parent="StateMachine"]
 script = ExtResource("17_13bfo")
-cloneIn_state = NodePath("../CloneIn")
 
-[node name="CloneIn" type="Node" parent="StateMachine" node_paths=PackedStringArray("cloneOut_state")]
+[node name="work in progress" type="Node" parent="."]
+
+[node name="CloneIn" type="Node" parent="work in progress" node_paths=PackedStringArray("cloneOut_state")]
 script = ExtResource("18_44hjn")
 cloneOut_state = NodePath("../CloneOut")
 
-[node name="CloneOut" type="Node" parent="StateMachine" node_paths=PackedStringArray("attackDecider_state")]
+[node name="CloneOut" type="Node" parent="work in progress" node_paths=PackedStringArray("attackDecider_state")]
 script = ExtResource("19_udsoy")
-attackDecider_state = NodePath("../AttackDecider")
-
-[node name="work in progress" type="Node" parent="."]
+attackDecider_state = NodePath("../../StateMachine/AttackDecider")
 
 [node name="In" type="Node" parent="work in progress" node_paths=PackedStringArray("out_state")]
 script = ExtResource("15_60vct")
