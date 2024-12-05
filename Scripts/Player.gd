@@ -273,6 +273,8 @@ func apply_item_effect(item):
 
 # Helper function for applying temporary effects
 func apply_temporary_effect(property: String, value: float, duration: float):
+	if !item_effect_timer: 
+		return 
 	if has_node("EffectTimer"):
 		item_effect_timer.stop()  # Reset the timer if it's already running
 	self.set(property, self.get(property) + value)  # Apply the effect
@@ -327,7 +329,7 @@ func die():
 
 #
 #func _on_area_2d_area_entered(area: Area2D) -> void:
-	#if(area.owner == null):
+	#if !area:
 		#return
 	#
 	#if area.owner.is_in_group("enemy")  :
@@ -337,7 +339,7 @@ func die():
 		##if area.owner != null:
 		#area.owner.take_damage(10)
 		#
-#
+##
 #func _on_area_2d_area_exited(area: Area2D) -> void:
 	#if area.owner.is_in_group('enemy'):
 		#in_attackrange =  false
