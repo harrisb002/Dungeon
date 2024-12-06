@@ -23,6 +23,9 @@ extends CharacterBody2D
 # Quest vars
 @onready var ray_cast = $RayCast2D
 
+var attack_damage = 10 
+var in_attackrange = false
+
 var interact_ui_raycast_visible = false  # Flag to track if UI is shown due to RayCast
 
 # Player positioning
@@ -75,6 +78,8 @@ func _ready():
 	
 	# Make the Quest tracker hidden until opened
 	Global_Player.update_coins()
+	
+
 	
 	screen_size = get_viewport_rect().size
 	original_scale = scale  # Store the player's original scale
@@ -136,9 +141,11 @@ func _process(delta):
 	
 	if get_tree().paused:
 		return
+		
 	
 	if inside_hole:
 		fall()
+
 
 # Update the interaction label based on RayCast collision for NPCs
 func update_interact_ui():
@@ -199,7 +206,10 @@ func attack():
 		animated_sprite.play(animation_prefix + animation)
 		if animation_prefix == "mage_":
 			mage_attack()
-			
+		
+		
+
+
 func mage_attack():
 	var projectile_scene = preload("res://Scenes/Player/mage_projectile.tscn")
 	var projectile = projectile_scene.instantiate()
@@ -263,6 +273,8 @@ func apply_item_effect(item):
 
 # Helper function for applying temporary effects
 func apply_temporary_effect(property: String, value: float, duration: float):
+	if !item_effect_timer: 
+		return 
 	if has_node("EffectTimer"):
 		item_effect_timer.stop()  # Reset the timer if it's already running
 	self.set(property, self.get(property) + value)  # Apply the effect
@@ -313,3 +325,21 @@ func die():
 		return
 	else:	
 		queue_free()
+
+
+#
+#func _on_area_2d_area_entered(area: Area2D) -> void:
+	#if !area:
+		#return
+	#
+	#if area.owner.is_in_group("enemy")  :
+		#print("check")
+		##in_attackrange=true
+		##is_attacking = true
+		##if area.owner != null:
+		#area.owner.take_damage(10)
+		#
+##
+#func _on_area_2d_area_exited(area: Area2D) -> void:
+	#if area.owner.is_in_group('enemy'):
+		#in_attackrange =  false

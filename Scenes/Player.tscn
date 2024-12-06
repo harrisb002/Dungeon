@@ -14,11 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://c3fw07a62gonv" path="res://Scenes/Inventory/Inventory_Hotbar.tscn" id="10_yub7k"]
 [ext_resource type="Texture2D" uid="uid://dtir5kmhydso1" path="res://Assets/Icons/icon20.png" id="13_uggde"]
 [ext_resource type="PackedScene" uid="uid://ohiphwf318il" path="res://Scenes/Quest/Quest_Manager.tscn" id="14_efdkd"]
-[ext_resource type="PackedScene" uid="uid://btijf0rrchjjv" path="res://Scripts/Boss/health_bar.tscn" id="15_srbkm"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acllo"]
-radius = 13.0
-height = 27.0
+[ext_resource type="PackedScene" uid="uid://bgkgl3t2x1mv2" path="res://Scripts/Boss/health_bar.tscn" id="15_srbkm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yalnn"]
 atlas = ExtResource("3_1bhn6")
@@ -865,35 +861,35 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hrxyr"]
-radius = 5.22015
+[sub_resource type="CircleShape2D" id="CircleShape2D_pjtpr"]
+radius = 20.465
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wbf4k"]
+radius = 4.96191
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 process_mode = 3
-position = Vector2(5.96046e-08, 1000)
+position = Vector2(3.26202, -9.88321)
 scale = Vector2(5, 5)
-collision_mask = 2
+collision_mask = 0
 safe_margin = 0.5
 script = ExtResource("1_3s2n2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.2, -5)
-shape = SubResource("CapsuleShape2D_acllo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1.8, -5.6)
 sprite_frames = SubResource("SpriteFrames_vbrsu")
 animation = &"knight_back_attack"
+frame_progress = 0.467304
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 3
+
+[node name="hitbox" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.747596, -3.62336)
+shape = SubResource("CircleShape2D_pjtpr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
-
-[node name="HitBox" type="Area2D" parent="."]
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(1.2, -5)
-shape = SubResource("CircleShape2D_hrxyr")
 
 [node name="attack_time_out" type="Timer" parent="."]
 
@@ -1030,10 +1026,13 @@ offset_top = 19.0
 offset_right = 24.0
 offset_bottom = 27.0
 
+[node name="collison" type="CollisionShape2D" parent="."]
+position = Vector2(-0.652405, 6.37664)
+shape = SubResource("CircleShape2D_wbf4k")
+
 [node name="ItemEffectTimer" type="Timer" parent="."]
 
-[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
-[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
-[connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
 [connection signal="timeout" from="attack_time_out" to="." method="_on_attack_time_out_timeout"]
 [connection signal="timeout" from="ItemEffectTimer" to="." method="_on_item_effect_timer_timeout"]

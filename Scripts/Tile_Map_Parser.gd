@@ -4,10 +4,12 @@ extends Node2D
 @export var tile_map: TileMapLayer:
 	set(new_tile_map):
 		tile_map = new_tile_map
+
 #
 #@export var num_items_to_spawn = 10  # Number of items to spawn randomly
 #@export var items_per_row: int = 12 
 #
+
 func _ready():
 	### Init the tile map Global_Inventoryly
 	Global_Inventory.tile_map = tile_map

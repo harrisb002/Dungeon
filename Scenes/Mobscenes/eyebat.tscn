@@ -1,7 +1,40 @@
-[gd_scene load_steps=20 format=3 uid="uid://dx218wif0tlew"]
+[gd_scene load_steps=29 format=3 uid="uid://dx218wif0tlew"]
 
 [ext_resource type="PackedScene" uid="uid://bqpcj3r4s3qts" path="res://Scenes/Mobscenes/basemobstructer.tscn" id="1_tpcyr"]
+[ext_resource type="Texture2D" uid="uid://dfpfpbdb4mf8v" path="res://allart/MOBSS/Flying eye/Attack2.png" id="2_rf6yq"]
 [ext_resource type="Texture2D" uid="uid://c454rld47da7j" path="res://allart/MOBSS/Monsters_Creatures_Fantasy/Flying eye/Flight.png" id="2_xwq8w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anpxn"]
+atlas = ExtResource("2_rf6yq")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_it4md"]
+atlas = ExtResource("2_rf6yq")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sg55p"]
+atlas = ExtResource("2_rf6yq")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqjs3"]
+atlas = ExtResource("2_rf6yq")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldk34"]
+atlas = ExtResource("2_rf6yq")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cwfg"]
+atlas = ExtResource("2_rf6yq")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvgps"]
+atlas = ExtResource("2_rf6yq")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bumdg"]
+atlas = ExtResource("2_rf6yq")
+region = Rect2(1050, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p4okk"]
 atlas = ExtResource("2_xwq8w")
@@ -71,6 +104,35 @@ region = Rect2(1050, 0, 150, 150)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_anpxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_it4md")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sg55p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pqjs3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ldk34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cwfg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvgps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bumdg")
+}],
+"loop": true,
+"name": &"Attack",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_p4okk")
 }, {
 "duration": 1.0,
@@ -131,5 +193,16 @@ animations = [{
 [node name="eyebat" instance=ExtResource("1_tpcyr")]
 
 [node name="Animation" type="AnimatedSprite2D" parent="." index="0"]
+position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_3pi73")
-animation = &"Idle"
+animation = &"Attack"
+frame_progress = 0.740501
+
+[node name="attack_timer" parent="." index="4"]
+wait_time = 0.084
+
+[node name="HealthBar" parent="." index="7"]
+offset_left = -40.0
+offset_top = 24.0
+offset_right = 41.0
+offset_bottom = 34.0

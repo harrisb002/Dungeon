@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhh2cacikp2js"]
+
+[ext_resource type="Script" path="res://Scenes/Boss/cleave.gd" id="1_giqsj"]
+
+[node name="cleave" type="Area2D"]
+script = ExtResource("1_giqsj")
+
+[node name="Poly2d" type="Polygon2D" parent="."]
+modulate = Color(0.8, 0, 0, 0.678431)
+position = Vector2(-2.80635, 631.765)
+scale = Vector2(3.80631, 1.3651)
+polygon = PackedVector2Array(0, -2070, -886.1, -2065.6, -887, 1151, 1, 1143)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-1778, 962)
+polygon = PackedVector2Array(-1603, -3153, -1607, 1245, 1777, 1225, 1774, -3157)

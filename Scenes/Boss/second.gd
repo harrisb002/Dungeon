@@ -1,19 +1,19 @@
 extends State
 
 @export
-var clone_cleaveL_state: State
+var cloneSpawn_state: State
 var time_waited = 0.0
 
 func enter() -> void:
+	print("second")
 	super()
-	#parent.velocity = Vector2.ZERO
+	pass
 
 func process_input(event: InputEvent) -> State:
 	return null
 
 func process_physics(delta: float) -> State:
-	parent.move_and_slide()
 	return null
 	
 func process_frame(delta: float) -> State:
-	return null
+	return cloneSpawn_state

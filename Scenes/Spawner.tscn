@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://trdxidu7nsc2"]
+
+[ext_resource type="Script" path="res://Scenes/spawner.gd" id="1_al3xe"]
+[ext_resource type="Script" path="res://Scenes/area_2d.gd" id="2_l0gcq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b2wxw"]
+radius = 726.167
+
+[node name="Spawner" type="Node2D"]
+script = ExtResource("1_al3xe")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_l0gcq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_b2wxw")
+
+[node name="spawnlock" type="Timer" parent="."]
+wait_time = 600.006
+one_shot = true
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="timeout" from="spawnlock" to="." method="_on_spawnlock_timeout"]

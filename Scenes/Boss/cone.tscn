@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcxg0yymar8eh"]
+
+[ext_resource type="Script" path="res://Scenes/Boss/cone.gd" id="1_8i8ap"]
+
+[node name="Cone" type="Area2D"]
+position = Vector2(-2, -2)
+script = ExtResource("1_8i8ap")
+
+[node name="Poly2d2" type="Polygon2D" parent="."]
+modulate = Color(0.8, 0, 0, 0.678431)
+polygon = PackedVector2Array(2, 2, -849, -2072, 871, -2068)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+position = Vector2(6, 38)
+polygon = PackedVector2Array(-3, -37, -853, -2108, 865, -2107)

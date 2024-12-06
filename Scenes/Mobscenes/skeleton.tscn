@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://skeleton.gd" id="2_yf52q"]
 [ext_resource type="Texture2D" uid="uid://enr3cg8x45p4" path="res://allart/MOBSS/Monsters_Creatures_Fantasy/Skeleton/Idle.png" id="3_74le5"]
 [ext_resource type="Texture2D" uid="uid://cpi50rei580h4" path="res://allart/MOBSS/Monsters_Creatures_Fantasy/Skeleton/Walk.png" id="4_mxrq5"]
-[ext_resource type="PackedScene" uid="uid://btijf0rrchjjv" path="res://Scripts/Boss/health_bar.tscn" id="5_ou7wk"]
+[ext_resource type="PackedScene" uid="uid://bgkgl3t2x1mv2" path="res://Scripts/Boss/health_bar.tscn" id="5_ou7wk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wxeoe"]
 atlas = ExtResource("3_74le5")

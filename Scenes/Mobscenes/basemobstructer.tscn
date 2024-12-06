@@ -1,31 +1,32 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqpcj3r4s3qts"]
+[gd_scene load_steps=7 format=3 uid="uid://bqpcj3r4s3qts"]
 
 [ext_resource type="Script" path="res://Scripts/mobmovement.gd" id="1_dbe50"]
+[ext_resource type="PackedScene" uid="uid://bgkgl3t2x1mv2" path="res://Scripts/Boss/health_bar.tscn" id="2_1i5td"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ixn3b"]
 radius = 198.018
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_123ma"]
-radius = 20.3443
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_8j6mb"]
 radius = 445.92
 
-[node name="basemob" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent")]
-collision_layer = 0
+[sub_resource type="CircleShape2D" id="CircleShape2D_123ma"]
+radius = 20.5973
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3swso"]
+radius = 20.1587
+
+[node name="basemob" type="CharacterBody2D" node_paths=PackedStringArray("nav_agent") groups=["enemy"]]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_dbe50")
 nav_agent = NodePath("Navigation/NavigationAgent2D")
 
 [node name="bodyenterd" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 0
 
 [node name="bodyentered" type="CollisionShape2D" parent="bodyenterd"]
 position = Vector2(2, 0.333333)
 shape = SubResource("CircleShape2D_ixn3b")
-
-[node name="mainbody" type="CollisionShape2D" parent="."]
-position = Vector2(3, 0)
-shape = SubResource("CircleShape2D_123ma")
 
 [node name="Navigation" type="Node2D" parent="."]
 
@@ -37,10 +38,37 @@ wait_time = 0.1
 autostart = true
 
 [node name="bodyexited" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="bodyexited" type="CollisionShape2D" parent="bodyexited"]
 shape = SubResource("CircleShape2D_8j6mb")
 
+[node name="attack_timer" type="Timer" parent="."]
+
+[node name="collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_123ma")
+
+[node name="hitbox" type="Area2D" parent="."]
+position = Vector2(3, 0)
+collision_layer = 0
+
+[node name="hit" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(-3.01059, 0.060998)
+shape = SubResource("CircleShape2D_3swso")
+
+[node name="HealthBar" parent="." instance=ExtResource("2_1i5td")]
+offset_left = -55.0
+offset_top = 18.0
+offset_right = 62.0
+offset_bottom = 45.0
+
+[node name="randMov" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="area_entered" from="bodyenterd" to="." method="_on_detectionarea_area_entered"]
 [connection signal="timeout" from="Navigation/Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_exited" from="bodyexited" to="." method="_on_bodyexited_area_exited"]
+[connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_exited" from="hitbox" to="." method="_on_hitbox_area_exited"]
+[connection signal="timeout" from="randMov" to="." method="_on_rand_mov_timeout"]
