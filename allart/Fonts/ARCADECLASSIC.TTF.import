@@ -3,12 +3,11 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://bi04iecmbt37l"
-path="res://.godot/imported/ARCADECLASSIC.TTF-edea716ea41b1931f0714704bafacbdd.fontdata"
+valid=false
 
 [deps]
 
 source_file="res://allart/Fonts/ARCADECLASSIC.TTF"
-dest_files=["res://.godot/imported/ARCADECLASSIC.TTF-edea716ea41b1931f0714704bafacbdd.fontdata"]
 
 [params]
 
