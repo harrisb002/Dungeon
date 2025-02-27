@@ -3,11 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://do6g4q03tl1gj"
-valid=false
+path="res://.godot/imported/Schr”dinger.ttf-43029536ab965832f3384722c46df087.fontdata"
 
 [deps]
 
 source_file="res://allart/Fonts/Schr”dinger.ttf"
+dest_files=["res://.godot/imported/Schr”dinger.ttf-43029536ab965832f3384722c46df087.fontdata"]
 
 [params]
 
